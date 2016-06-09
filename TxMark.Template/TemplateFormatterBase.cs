@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TxMark.Template
+{
+    public abstract class TemplateFormatterBase : ITemplateFormatter
+    {
+        public void Write(TextWriter writer, string value)
+        {
+            writer.Write(value);
+        }
+
+        public void Write(TextWriter writer, int value)
+        {
+            writer.Write(value);
+        }
+
+        public void Write(TextWriter writer, bool value)
+        {
+            writer.Write(value);
+        }
+
+        public void Write(TextWriter writer, double value)
+        {
+            writer.Write(value);
+        }
+
+        public void Write(TextWriter writer, char value)
+        {
+            writer.Write(value);
+        }
+
+        public void Write(TextWriter writer, object value)
+        {
+            writer.Write(value);
+        }
+
+        public void Write(TextWriter writer, IValue value)
+        {
+            writer.Write(value);
+        }
+
+        public abstract void WriteCloseTag(TextWriter writer, string tagName);
+
+        public abstract bool WriteOpenTag(TextWriter writer, string tagName, IDictionary<string, object> attributes);
+    }
+}

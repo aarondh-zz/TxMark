@@ -1,0 +1,3 @@
+Hi there $name. (passage:("test"+42),"beta",$delta as $foo)[This is a passage] Where is (pronoun:) now? 
+
+There should be nothing shown here --> [This is a hook]:testHook1| |testHook2:[<div style="font-family:$coolFont;">This is <span class="bold">another</span> hook</div>] <-- But shown here are "?testHook1" and "''?testHook2''".  Hooks are great!

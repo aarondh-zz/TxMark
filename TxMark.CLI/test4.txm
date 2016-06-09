@@ -1,0 +1,12 @@
+Branches
+		(if: $IsFirstBranch)[`$`IsFirstBranch is true] 
+		(else-if:$IsSecondBranch)[this other thing is true]
+		(else-if:$IsThirdBranch)[this other other thing is true] 
+		(else:)[this is false]
+
+(set: $fubar to 3.14159 * 42 / 2)
+
+The answer to the above equation is: $fubar.
+
+(each: $array as $foo) [The value is $foo]
+

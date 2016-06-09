@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CodeGeneration.Roslyn</name>
+    </assembly>
+    <members>
+        <member name="T:CodeGeneration.Roslyn.DocumentTransform">
+            <summary>
+            The class responsible for generating compilation units to add to the project being built.
+            </summary>
+        </member>
+        <member name="M:CodeGeneration.Roslyn.DocumentTransform.TransformAsync(Microsoft.CodeAnalysis.Document,System.IProgress{Microsoft.CodeAnalysis.Diagnostic},System.Boolean)">
+            <summary>
+            Produces a new document in response to any code generation attributes found in the specified document.
+            </summary>
+            <param name="inputDocument">The document to scan for generator attributes.</param>
+            <param name="progress">Reports warnings and errors in code generation.</param>
+            <param name="simplify">
+            A value indicating whether to simplify the generated document.
+            This produces a more visually appealing code file, but costs significant time during code generation.
+            </param>
+            <returns>A task whose result is the generated document.</returns>
+        </member>
+        <member name="T:CodeGeneration.Roslyn.ICodeGenerator">
+            <summary>
+            Describes a code generator that responds to attributes on members to generate code.
+            </summary>
+        </member>
+        <member name="M:CodeGeneration.Roslyn.ICodeGenerator.GenerateAsync(Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax,Microsoft.CodeAnalysis.Document,System.IProgress{Microsoft.CodeAnalysis.Diagnostic},System.Threading.CancellationToken)">
+            <summary>
+            Create the syntax tree representing the expansion of some member to which this attribute is applied.
+            </summary>
+            <param name="applyTo">The syntax node this attribute is found on.</param>
+            <param name="document">The document with the semantic model in which this attribute was found.</param>
+            <param name="progress">A way to report diagnostic messages.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>The generated member syntax to be added to the project.</returns>
+        </member>
+        <member name="M:Microsoft.CodeAnalysis.CSharp.CSharpDeclarationComputer.GetExpressionBodySyntax(Microsoft.CodeAnalysis.CSharp.CSharpSyntaxNode)">
+            <summary>
+            Gets the expression-body syntax from an expression-bodied member. The
+            given syntax must be for a member which could contain an expression-body.
+            </summary>
+        </member>
+        <member name="T:Microsoft.CodeAnalysis.DeclarationInfo">
+            <summary>
+            Struct containing information about a source declaration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.DeclarationInfo.DeclaredNode">
+            <summary>
+            Topmost syntax node for this declaration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.DeclarationInfo.ExecutableCodeBlocks">
+            <summary>
+            Syntax nodes for executable code blocks (method body, initializers, etc.) associated with this declaration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.CodeAnalysis.DeclarationInfo.DeclaredSymbol">
+            <summary>
+            Symbol declared by this declaration.
+            </summary>
+        </member>
+    </members>
+</doc>

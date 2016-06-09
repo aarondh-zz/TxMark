@@ -1,0 +1,15 @@
+T__0=1
+T__1=2
+T__2=3
+T__3=4
+DIGITS=5
+TAB=6
+SPACE=7
+CARRIAGE_RETURN=8
+NON_WHITESPACE=9
+'*'=1
+'.'=2
+'>'=3
+'#'=4
+'\t'=6
+' '=7

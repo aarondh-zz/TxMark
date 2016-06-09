@@ -1,0 +1,40 @@
+﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using SF = Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+
+namespace TxMark.Compiler
+{
+    public class VariableHelper
+    {
+        public static ExpressionSyntax MakeStateVariableExpression(string variableName)
+        {
+            return SF.ElementAccessExpression(
+                SF.IdentifierName("_this"), 
+                SF.BracketedArgumentList(
+                    SF.SingletonSeparatedList<ArgumentSyntax>(
+                        SF.Argument(
+                            SF.LiteralExpression(
+                                SyntaxKind.StringLiteralExpression, 
+                                SF.Literal(variableName)
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
+        public static ExpressionSyntax MakeModelVariableExpression(string variableName)
+        {
+            return SF.MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                SF.IdentifierName("Model"),
+                SF.IdentifierName(variableName)
+            );
+        }
+    }
+}

@@ -1,0 +1,4 @@
+c:\Users\v-adai\documents\visual studio 2015\Projects\TxMark\TxMark.Template\bin\Debug\TxMark.Template.dll
+c:\Users\v-adai\documents\visual studio 2015\Projects\TxMark\TxMark.Template\bin\Debug\TxMark.Template.pdb
+c:\Users\v-adai\documents\visual studio 2015\Projects\TxMark\TxMark.Template\obj\Debug\TxMark.Template.dll
+c:\Users\v-adai\documents\visual studio 2015\Projects\TxMark\TxMark.Template\obj\Debug\TxMark.Template.pdb
