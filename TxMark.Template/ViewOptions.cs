@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TxMark.Template
+﻿namespace TxMark.Template
 {
     public class ViewOptions : IViewOptions
     {
         public static readonly IViewOptions Default = new ViewOptions()
         {
-            Formatter = new TemplateHtmlFormatter()
+            Formatter = new HtmlTemplateFormatter()
         };
         public ViewOptions()
         {

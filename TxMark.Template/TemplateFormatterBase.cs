@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TxMark.Template
 {
@@ -46,6 +42,6 @@ namespace TxMark.Template
 
         public abstract void WriteCloseTag(TextWriter writer, string tagName);
 
-        public abstract bool WriteOpenTag(TextWriter writer, string tagName, IDictionary<string, object> attributes);
+        public abstract bool WriteOpenTag(TextWriter writer, string tagName, bool hasContent, IDictionary<string, object> attributes);
     }
 }

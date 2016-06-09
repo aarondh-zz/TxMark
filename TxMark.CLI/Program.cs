@@ -1,55 +1,11 @@
 ﻿using System;
 using System.IO;
+using TxMark.Template;
+using TxMark.Utilities;
 
-namespace CLI
+namespace TxMark.CLI
 {
-    public class TestModel
-    {
-        public bool IsFirstBranch
-        {
-            get
-            {
-                return true;
-            }
-        }
-        public bool IsSecondBranch
-        {
-            get
-            {
-                return true;
-            }
-        }
-        public bool IsThirdBranch
-        {
-            get
-            {
-                return true;
-            }
-        }
-        public string[] array
-        {
-            get
-            {
-                return new string[] { "one", "two", "three", "four", "five", "six" };
-            }
-        }
-
-        public string CalendarService
-        {
-            get
-            {
-                return "MyOwnBloodyCalendarService";
-            }
-        }
-        public string Link
-        {
-            get
-            {
-                return "http://daisley-harrison.com/nowhere";
-            }
-        }
-    }
-    class Program
+    public class Program
     {
         static int Main(string[] args)
         {
@@ -62,6 +18,15 @@ namespace CLI
                 txMarkOptions.DiagnosticLevel = TxMark.DiagnosticLevel.Diagnostics;
                 txMarkOptions.OutputPreprocessor = options.OutputPreprocessor;
                 txMarkOptions.OutputParser = options.List;
+                switch ( options.OutputStyle)
+                {
+                    case OutputFormats.Html:
+                        txMarkOptions.Formatter = new HtmlTemplateFormatter();
+                        break;
+                    case OutputFormats.Text:
+                        txMarkOptions.Formatter = new TextTemplateFormatter();
+                        break;
+                }
                 var startTime = DateTime.Now;
                 var result = TxMark.Engine.Execute<TestModel>(options.TemplatePath, new TestModel(), txMarkOptions);
                 var endTime = DateTime.Now;

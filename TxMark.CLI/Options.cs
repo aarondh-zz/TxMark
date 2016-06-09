@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using CommandLine.Text;
 
-namespace CLI
+namespace TxMark.CLI
 {
     public class Options
     {

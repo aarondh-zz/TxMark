@@ -51,7 +51,7 @@ namespace TxMark.Compiler
             _templateBaseType = baseType;
             _location = new TemplateLocation(templatePath);
             _macroManager = new MacroManager(baseType);
-            _stateTypeName = $"IState<{modelType.FullName}>";
+            _stateTypeName = $"TxMark.Template.IState<{modelType.FullName}>";
 
             _nameTagManager = new NameTagManager();
 
@@ -76,16 +76,11 @@ namespace TxMark.Compiler
             AddNamespaceFor(typeof(string));
 
             AddNamespaceFor(baseType);
-            if (baseType.IsGenericType)
-            {
-                foreach (Type genericArgument in baseType.GetGenericArguments())
-                {
-                    AddNamespaceFor(genericArgument);
-                }
-            }
+
             AddNamespaceFor(modelType);
 
-            AddNamespaceFor(typeof(TemplateState<>));
+            AddNamespaceFor(typeof(TemplateState<object>));
+
             AddNamespaceFor(typeof(Dictionary<string, object>));
 
             _namespace = SF.NamespaceDeclaration(SF.IdentifierName(templateNamespace));
@@ -96,10 +91,10 @@ namespace TxMark.Compiler
                 List<UsingDirectiveSyntax> usingDirectives = new List<UsingDirectiveSyntax>();
                 foreach (var namespaceName in _usingNamespaces)
                 {
-                    usingDirectives.Add(SF.UsingDirective(SF.IdentifierName(namespaceName)));
+                    //usingDirectives.Add(SF.UsingDirective(SF.IdentifierName(namespaceName)));
                 }
-                _compilationUnit = SF.CompilationUnit()
-                    .AddUsings(usingDirectives.ToArray());
+                _compilationUnit = SF.CompilationUnit();
+                    //.AddUsings(usingDirectives.ToArray());
                 _compilationUnit = _compilationUnit.AddMembers(_namespace);
             });
         }

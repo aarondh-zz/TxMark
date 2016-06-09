@@ -217,7 +217,7 @@ element
 	;
 
 content     
-    : phrase? (element phrase?)*
+    : phrase? (element phrase?)*?
     ;
 
 phrase

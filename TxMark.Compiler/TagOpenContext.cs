@@ -74,7 +74,7 @@ namespace TxMark.Compiler
                     };
                     attributes.Add(SF.InitializerExpression(SyntaxKind.ComplexElementInitializerExpression, SF.SeparatedList<ExpressionSyntax>(attributeArgs)));
                 }
-                return SF.ObjectCreationExpression(SF.ParseTypeName("Dictionary<string,object>"),
+                return SF.ObjectCreationExpression(SF.ParseTypeName("System.Collections.Generic.Dictionary<string,object>"),
                     SF.ArgumentList(SF.SeparatedList<ArgumentSyntax>()),
                     SF.InitializerExpression(SyntaxKind.ComplexElementInitializerExpression,
                         SF.SeparatedList<ExpressionSyntax>(attributes)
@@ -91,20 +91,20 @@ namespace TxMark.Compiler
             FlushTextBuffer();
             bool hasContent = this.Block.ChildNodes().Any();
             var tagNameExpression = SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(_tagName));
-            var hasContentExpression = SF.LiteralExpression(hasContent? SyntaxKind.TrueLiteralExpression : SyntaxKind.FalseLiteralExpression);
+            var isClosingExpression = SF.LiteralExpression(hasContent? SyntaxKind.FalseLiteralExpression : SyntaxKind.TrueLiteralExpression);
             var attributesExpression = MakeAttributesExpression();
             StatementSyntax tagStatement;
             if (hasContent)
             {
                 Add(BlockContext.MakeStateMethodCallStatement("WriteCloseTag", tagNameExpression));
                 tagStatement = SF.IfStatement(
-                    BlockContext.MakeStateMethodCallExpression("WriteOpenTag", tagNameExpression, attributesExpression),
+                    BlockContext.MakeStateMethodCallExpression("WriteOpenTag", tagNameExpression, isClosingExpression, attributesExpression),
                     base.Block);
             }
             else
             {
                 tagStatement = SF.IfStatement(
-                    BlockContext.MakeStateMethodCallExpression("WriteOpenTag", tagNameExpression, attributesExpression),
+                    BlockContext.MakeStateMethodCallExpression("WriteOpenTag", tagNameExpression, isClosingExpression, attributesExpression),
                     BlockContext.MakeStateMethodCallStatement("WriteCloseTag", tagNameExpression)
                 );
             }

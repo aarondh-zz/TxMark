@@ -6,6 +6,7 @@ namespace TxMark
     {
         public Options()
         {
+            Formatter = new HtmlTemplateFormatter();
             DiagnosticLevel = DiagnosticLevel.Warnings;
             MarkdownPreprocessor = true;
             Encoding = Encoding.UTF8;

@@ -237,7 +237,7 @@ namespace TxMark.Compiler
         public override void EnterHook([NotNull] TxMarkParser.HookContext context)
         {
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
-            _compileContext.Push(CodeContextTypes.Hook, _compileContext.ResolveHookName(context));
+            _compileContext.Push(CodeContextTypes.Hook, _compileContext.ResolveHookName(context.Parent));
         }
 
         public override void ExitHook([NotNull] TxMarkParser.HookContext context)

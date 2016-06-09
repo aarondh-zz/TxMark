@@ -4,7 +4,9 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -145,7 +147,7 @@ namespace TxMark
             }
             return templateName;
         }
-        private static bool Compile(CompileContext compileContext, string templatePath, Options options, ref Result result)
+        private static bool Compile<TModel>(CompileContext compileContext, string templatePath, Options options, ref Result result)
         {
             DateTime startTime = DateTime.Now;
             if (options.DiagnosticLevel == DiagnosticLevel.Diagnostics)
@@ -158,9 +160,12 @@ namespace TxMark
             string templateName = MakeTemplateName(options, templatePath);
 
             string assemblyPath = MakeAssemblyPath(options, templateName);
-
+            var referenceManager = compileContext.MetadataReferenceManager;
             CSharpCompilationOptions compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
-            CSharpCompilation compilation = CSharpCompilation.Create(templateName, new[] { compileContext.CompilationUnit.SyntaxTree }, compileContext.MetadataReferenceManager.References, compilationOptions);
+            CSharpCompilation compilation = CSharpCompilation.Create(templateName)
+                .AddReferences(referenceManager.References)
+                .AddSyntaxTrees(compileContext.CompilationUnit.SyntaxTree)
+                .WithOptions(compilationOptions);
             var emitResult = compilation.Emit(assemblyPath);
             DateTime compileTime = DateTime.Now;
             result.CompileTime = compileTime - startTime;
@@ -209,7 +214,7 @@ namespace TxMark
             }
             DateTime startTime = DateTime.Now;
             var compileContext = Parse<TModel>(templateReader, templatePath, options, ref result);
-            result.Success = Compile(compileContext, templatePath, options, ref result);
+            result.Success = Compile<TModel>(compileContext, templatePath, options, ref result);
             return result;
         }
 
@@ -218,7 +223,7 @@ namespace TxMark
             Result result;
             var templateName = MakeTemplateName(options, templatePath);
             var templateQualifiedTypeName = MakeTemplateQualifiedTypeName(options, templateName);
-            string assemblyPath = MakeAssemblyPath(options, templatePath);
+            string assemblyPath = MakeAssemblyPath(options, templateName);
             if ( options.ForceCompile || !File.Exists(assemblyPath))
             {
                 result = Build<TModel>(templatePath, options);

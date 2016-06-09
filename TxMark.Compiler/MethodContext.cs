@@ -36,7 +36,7 @@ namespace TxMark.Compiler
         {
             Add(StateHelper.MakeStatePopReturnStatement());
 
-            var methodDeclaration = SF.MethodDeclaration(SF.ParseTypeName("IValue"), _methodName)
+            var methodDeclaration = SF.MethodDeclaration(SF.ParseTypeName("TxMark.Template.IValue"), _methodName)
                 .AddModifiers(_modifiers.ToArray())
                 .AddParameterListParameters(_parameters.ToArray())
                 .WithBody(base.Block);

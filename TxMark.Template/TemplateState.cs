@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 
 namespace TxMark.Template
@@ -352,9 +351,9 @@ namespace TxMark.Template
             }
         }
 
-        public bool WriteOpenTag(string tagName, IDictionary<string, object> attributes)
+        public bool WriteOpenTag(string tagName, bool isClosing, IDictionary<string, object> attributes)
         {
-            return this.ViewOptions.Formatter.WriteOpenTag(_currentFrame.Writer, tagName, attributes);
+            return this.ViewOptions.Formatter.WriteOpenTag(_currentFrame.Writer, tagName, isClosing, attributes);
         }
 
         public void WriteCloseTag(string tagName)

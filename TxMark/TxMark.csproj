@@ -7,8 +7,8 @@
     <ProjectGuid>{B695FDD4-5897-41DD-881B-057857CFCD01}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TxMark.Engine</RootNamespace>
-    <AssemblyName>TxMark.Engine</AssemblyName>
+    <RootNamespace>TxMark</RootNamespace>
+    <AssemblyName>TxMark</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,7 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>TxMark.pfx</AssemblyOriginatorKeyFile>

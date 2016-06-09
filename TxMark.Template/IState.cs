@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Dynamic;
 
 namespace TxMark.Template
 {
@@ -17,7 +16,7 @@ namespace TxMark.Template
         void Write(int value);
         void Write(double value);
         void Write(bool value);
-        bool WriteOpenTag(string tagName, IDictionary<string, object> attributes);
+        bool WriteOpenTag(string tagName, bool isClosing, IDictionary<string, object> attributes);
         void WriteCloseTag(string tagName);
     }
 }
