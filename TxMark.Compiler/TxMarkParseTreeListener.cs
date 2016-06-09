@@ -209,10 +209,12 @@ namespace TxMark.Compiler
         }
         public override void EnterVariable([NotNull] TxMarkParser.VariableContext context)
         {
+            _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.Variable(context.word().GetText());
         }
         public override void EnterMacroArgument([NotNull] TxMarkParser.MacroArgumentContext context)
         {
+            _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.Push(CodeContextTypes.Argument);
         }
         public override void ExitMacroArgument([NotNull] TxMarkParser.MacroArgumentContext context)

@@ -202,6 +202,7 @@ namespace TxMark
                 }
                 catch (Exception e)
                 {
+                    result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Builder, "Fatal", e.Message));
                     result.Success = false;
                     templateReader.Close();
                 }

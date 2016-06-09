@@ -28,7 +28,21 @@ namespace TxMark
 
         public override string ToString()
         {
-            return $"{Severity}: {Source} reported {Category} {Message} at or near line {Line}, column {Column}";
+            StringBuilder result = new StringBuilder();
+            result.Append($"{Severity}: {Source} reported {Category} {Message}");
+            if ( Line>=0 || Column >= 0)
+            {
+                result.Append(" at or near ");
+                if ( Line >= 0 )
+                {
+                    result.Append($"line {Line}");
+                    if (Column >= 0)
+                    {
+                        result.Append($", column {Column}");
+                    }
+                }
+            }
+            return result.ToString();
         }
 
     }

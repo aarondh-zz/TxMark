@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TxMark.Template
 {
@@ -353,62 +350,6 @@ namespace TxMark.Template
             {
                 return _values.GetEnumerator();
             }
-        }
-        private class DynamicStateMetaObject : DynamicMetaObject
-        {
-            internal DynamicStateMetaObject(System.Linq.Expressions.Expression parameter, TemplateState<TModel> value) : base(parameter, BindingRestrictions.Empty, value)
-            {
-            }
-
-            public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
-            {
-                // Method to call in the containing class:  
-                string methodName = "Set";
-                // setup the binding restrictions
-                BindingRestrictions restrictions =
-                    BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                // setup the parameters:
-                Expression[] args = new Expression[2];
-                // First parameter is the name of the property to Set 
-                args[0] = Expression.Constant(binder.Name);
-                // Second parameter is the value
-                args[1] = Expression.Convert(value.Expression, typeof(object));
-                // Setup the 'this' reference 
-                Expression self = Expression.Convert(Expression, LimitType);
-                // Setup the method call expression 
-                Expression methodCall = Expression.Call(self,
-                    typeof(TemplateState<TModel>).GetMethod(methodName),
-                    args);
-                // Create a meta object to invoke Set later:
-                DynamicMetaObject setMethod = new DynamicMetaObject(
-                    methodCall,
-                    restrictions);
-                // return that dynamic object 
-                return setMethod;
-            }
-
-            public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
-            {
-                // Method call in the containing class:
-                string methodName = "Get";
-                // One parameter
-                Expression[] parameters = new Expression[]
-                {
-                    Expression.Constant(binder.Name)
-                };
-                DynamicMetaObject getMethod = new DynamicMetaObject(
-                    Expression.Call(
-                        Expression.Convert(Expression, LimitType),
-                        typeof(TemplateState<TModel>).GetMethod(methodName),
-                        parameters),
-                    BindingRestrictions.GetTypeRestriction(Expression, LimitType));
-                return getMethod;
-            }
-        }
-
-        public DynamicMetaObject GetMetaObject(Expression parameter)
-        {
-            return new DynamicStateMetaObject(parameter, this);
         }
 
         public bool WriteOpenTag(string tagName, IDictionary<string, object> attributes)

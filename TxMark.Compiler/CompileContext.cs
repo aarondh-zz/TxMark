@@ -37,6 +37,7 @@ namespace TxMark.Compiler
             public TemplateLocation( string templatePath )
             {
                 this.File = templatePath;
+                this.Line = 1;
             }
         }
         private TemplateLocation _location;
@@ -84,12 +85,8 @@ namespace TxMark.Compiler
             }
             AddNamespaceFor(modelType);
 
-            AddNamespaceFor(typeof(ICompiledTemplate));
-            AddNamespaceFor(typeof(IDynamicMetaObjectProvider));
-            AddNamespaceFor(typeof(ExpandoObject));
-            AddNamespaceFor(typeof(IDictionary<string, object>));
-            AddNamespaceFor(typeof(System.Collections.Generic.Dictionary< string, object>));
-            AddNamespaceFor(typeof(INotifyPropertyChanged));
+            AddNamespaceFor(typeof(TemplateState<>));
+            AddNamespaceFor(typeof(Dictionary<string, object>));
 
             _namespace = SF.NamespaceDeclaration(SF.IdentifierName(templateNamespace));
 
