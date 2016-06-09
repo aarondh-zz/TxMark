@@ -351,8 +351,16 @@ namespace TxMark.Template
             }
         }
 
-        public bool WriteOpenTag(string tagName, bool isClosing, IDictionary<string, object> attributes)
+        public bool WriteOpenTag(string tagName, bool isClosing, params object[] attributeNameValues)
         {
+            Dictionary<string, string> attributes = new Dictionary<string, string>();
+            if ( attributeNameValues != null )
+            {
+                for (int i = 0; i < attributeNameValues.Length; i += 2)
+                {
+                    attributes[attributeNameValues[i].ToString()] = attributeNameValues[i + 1].ToString();
+                }
+            }
             return this.ViewOptions.Formatter.WriteOpenTag(_currentFrame.Writer, tagName, isClosing, attributes);
         }
 

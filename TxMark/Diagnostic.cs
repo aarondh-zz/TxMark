@@ -29,7 +29,7 @@ namespace TxMark
         public override string ToString()
         {
             StringBuilder result = new StringBuilder();
-            result.Append($"{Severity}: {Source} reported {Category} {Message}");
+            result.Append($"{Severity}: {Source} {Category} {Message}");
             if ( Line>=0 || Column >= 0)
             {
                 result.Append(" at or near ");

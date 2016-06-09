@@ -67,19 +67,14 @@ namespace TxMark.Compiler
                 List<ExpressionSyntax> attributes = new List<ExpressionSyntax>();
                 foreach (var attribute in _attributes)
                 {
-                    var attributeArgs = new ExpressionSyntax[]
-                    {
-                    SF.LiteralExpression(SyntaxKind.StringLiteralExpression,SF.Literal(attribute.Name)),
-                    attribute.Expression
-                    };
-                    attributes.Add(SF.InitializerExpression(SyntaxKind.ComplexElementInitializerExpression, SF.SeparatedList<ExpressionSyntax>(attributeArgs)));
+                    attributes.Add(SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(attribute.Name)));
+                   
+                    attributes.Add(attribute.Expression);
                 }
-                return SF.ObjectCreationExpression(SF.ParseTypeName("System.Collections.Generic.Dictionary<string,object>"),
-                    SF.ArgumentList(SF.SeparatedList<ArgumentSyntax>()),
-                    SF.InitializerExpression(SyntaxKind.ComplexElementInitializerExpression,
+                return SF.ImplicitArrayCreationExpression(SF.InitializerExpression(SyntaxKind.ComplexElementInitializerExpression,
                         SF.SeparatedList<ExpressionSyntax>(attributes)
-                    )
-                );
+                    ));
+                    
             }
             else
             {

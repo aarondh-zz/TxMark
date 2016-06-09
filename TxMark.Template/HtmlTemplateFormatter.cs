@@ -10,7 +10,7 @@ namespace TxMark.Template
             writer.Write("</" + tagName + ">");
         }
 
-        public override bool WriteOpenTag(TextWriter writer, string tagName, bool isClosing, IDictionary<string, object> attributes)
+        public override bool WriteOpenTag(TextWriter writer, string tagName, bool isClosing, IDictionary<string, string> attributes)
         {
             writer.Write("<" + tagName);
             if ( attributes != null )

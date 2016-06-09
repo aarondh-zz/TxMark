@@ -9,7 +9,7 @@ namespace TxMark.Template
         {
         }
 
-        public override bool WriteOpenTag(TextWriter writer, string tagName, bool isClosing, IDictionary<string, object> attributes)
+        public override bool WriteOpenTag(TextWriter writer, string tagName, bool isClosing, IDictionary<string, string> attributes)
         {
             return true;
         }

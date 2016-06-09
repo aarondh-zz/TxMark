@@ -166,8 +166,11 @@ namespace TxMark
                 .AddReferences(referenceManager.References)
                 .AddSyntaxTrees(compileContext.CompilationUnit.SyntaxTree)
                 .WithOptions(compilationOptions);
+
             var emitResult = compilation.Emit(assemblyPath);
+
             DateTime compileTime = DateTime.Now;
+
             result.CompileTime = compileTime - startTime;
 
             foreach (var diagnostic in emitResult.Diagnostics)

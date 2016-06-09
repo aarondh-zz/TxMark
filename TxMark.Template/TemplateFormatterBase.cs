@@ -42,6 +42,6 @@ namespace TxMark.Template
 
         public abstract void WriteCloseTag(TextWriter writer, string tagName);
 
-        public abstract bool WriteOpenTag(TextWriter writer, string tagName, bool hasContent, IDictionary<string, object> attributes);
+        public abstract bool WriteOpenTag(TextWriter writer, string tagName, bool hasContent, IDictionary<string, string> attributes);
     }
 }

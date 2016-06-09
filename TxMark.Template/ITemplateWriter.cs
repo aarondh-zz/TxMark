@@ -12,7 +12,7 @@ namespace TxMark.Template
         void Write(TextWriter writer, int value);
         void Write(TextWriter writer, double value);
         void Write(TextWriter writer, bool value);
-        bool WriteOpenTag(TextWriter writer, string tagName, bool isClosing, IDictionary<string, object> attributes);
+        bool WriteOpenTag(TextWriter writer, string tagName, bool isClosing, IDictionary<string, string> attributes);
         void WriteCloseTag(TextWriter writer, string tagName);
     }
 }
