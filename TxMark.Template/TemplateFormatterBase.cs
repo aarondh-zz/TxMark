@@ -5,37 +5,37 @@ namespace TxMark.Template
 {
     public abstract class TemplateFormatterBase : ITemplateFormatter
     {
-        public void Write(TextWriter writer, string value)
+        public virtual void Write(TextWriter writer, string value)
         {
             writer.Write(value);
         }
 
-        public void Write(TextWriter writer, int value)
+        public virtual void Write(TextWriter writer, int value)
         {
             writer.Write(value);
         }
 
-        public void Write(TextWriter writer, bool value)
+        public virtual void Write(TextWriter writer, bool value)
         {
             writer.Write(value);
         }
 
-        public void Write(TextWriter writer, double value)
+        public virtual void Write(TextWriter writer, double value)
         {
             writer.Write(value);
         }
 
-        public void Write(TextWriter writer, char value)
+        public virtual void Write(TextWriter writer, char value)
         {
             writer.Write(value);
         }
 
-        public void Write(TextWriter writer, object value)
+        public virtual void Write(TextWriter writer, object value)
         {
             writer.Write(value);
         }
 
-        public void Write(TextWriter writer, IValue value)
+        public virtual void Write(TextWriter writer, IValue value)
         {
             writer.Write(value);
         }

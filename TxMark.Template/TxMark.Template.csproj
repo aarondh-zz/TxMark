@@ -41,11 +41,13 @@
   <ItemGroup>
     <Compile Include="CompiledTemplateBase.cs" />
     <Compile Include="ICompiledTemplate.cs" />
+    <Compile Include="IRawHtmlValue.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="ITemplateFormatter.cs" />
     <Compile Include="ITemplateWriter.cs" />
     <Compile Include="IValue.cs" />
     <Compile Include="IViewOptions.cs" />
+    <Compile Include="MappingHtmlTemplateFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateFormatterBase.cs" />
     <Compile Include="HtmlTemplateFormatter.cs" />
