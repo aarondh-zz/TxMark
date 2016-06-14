@@ -219,6 +219,42 @@ public class MarkdownPreprocessorBaseListener implements MarkdownPreprocessorLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAttributeContent(MarkdownPreprocessorParser.AttributeContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAttributeContent(MarkdownPreprocessorParser.AttributeContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOpenTag(MarkdownPreprocessorParser.OpenTagContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOpenTag(MarkdownPreprocessorParser.OpenTagContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCloseTag(MarkdownPreprocessorParser.CloseTagContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCloseTag(MarkdownPreprocessorParser.CloseTagContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNonWhitespace(MarkdownPreprocessorParser.NonWhitespaceContext ctx) { }
 	/**
 	 * {@inheritDoc}

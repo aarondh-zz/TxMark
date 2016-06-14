@@ -257,6 +257,58 @@ public partial class MarkdownPreprocessorBaseListener : IMarkdownPreprocessorLis
 	public virtual void ExitText([NotNull] MarkdownPreprocessorParser.TextContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.attributeContent"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAttributeContent([NotNull] MarkdownPreprocessorParser.AttributeContentContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.attributeContent"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAttributeContent([NotNull] MarkdownPreprocessorParser.AttributeContentContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.tag"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterTag([NotNull] MarkdownPreprocessorParser.TagContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.tag"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitTag([NotNull] MarkdownPreprocessorParser.TagContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.openTag"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterOpenTag([NotNull] MarkdownPreprocessorParser.OpenTagContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.openTag"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitOpenTag([NotNull] MarkdownPreprocessorParser.OpenTagContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.closeTag"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterCloseTag([NotNull] MarkdownPreprocessorParser.CloseTagContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.closeTag"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitCloseTag([NotNull] MarkdownPreprocessorParser.CloseTagContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.nonWhitespace"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

@@ -12,24 +12,28 @@ namespace TxMark.Compiler
     {
         private enum ContextTypes
         {
-            None,
+            Text,
             Heading,
             List,
             UnorderedList,
             OrderedList,
             ListItem,
-            Blockquote
+            Blockquote,
+            OpenTag,
+            CloseTag
         }
         private class Context
         {
             public ContextTypes Type { get; private set; }
             public Context Parent { get; private set; }
+            public string Tag { get; set; }
             public int Level { get; set; }
 
             private StringBuilder _content = new StringBuilder();
-            public Context(ContextTypes contextType = ContextTypes.None, Context parent = null)
+            public Context(ContextTypes contextType = ContextTypes.Text, string tag = null, Context parent = null)
             {
                 this.Type = contextType;
+                this.Tag = tag;
                 this.Parent = parent;
                 if ( parent != null)
                 {
@@ -75,16 +79,31 @@ namespace TxMark.Compiler
         }
         private Stack<Context> _contextStack = new Stack<Context>();
         private Context _context = new Context();
-        private void Push(ContextTypes contextType = ContextTypes.None)
+        private void Push(ContextTypes contextType = ContextTypes.Text, string tag = null)
         {
             _contextStack.Push(_context);
-            _context = new Context(contextType,_context);
+            _context = new Context(contextType,tag, _context);
         }
         private void Pop(string tag = null)
         {
             _context.Emit(tag);
-            
+
             _context = _contextStack.Pop();
+        }
+        private bool IsContext(ContextTypes contextType, string tag = null)
+        {
+            return _context.Type == contextType && string.Equals(_context.Tag, tag, StringComparison.InvariantCultureIgnoreCase);
+        }
+        private void PopTo(ContextTypes contextType, string tag = null)
+        {
+            while(_contextStack.Count > 0 && !IsContext(contextType, tag))
+            {
+                Pop();
+            }
+            if (IsContext(contextType, tag))
+            {
+                Pop();//pop the actual open tag context
+            }
         }
         private void PopAll()
         {
@@ -93,16 +112,19 @@ namespace TxMark.Compiler
                 Pop();
             }
         }
-        public override void EnterNonWhitespace([NotNull] MarkdownPreprocessorParser.NonWhitespaceContext context)
+        public override void EnterWhitespace([NotNull] MarkdownPreprocessorParser.WhitespaceContext context)
         {
-            if ( context.Parent is MarkdownPreprocessorParser.TextLineContext)
+            if (context.Parent is MarkdownPreprocessorParser.TextLineContext || context.Parent is MarkdownPreprocessorParser.TextContext)
             {
                 _context.Append(context.GetText());
             }
         }
         public override void EnterText([NotNull] MarkdownPreprocessorParser.TextContext context)
         {
-            _context.Append(context.GetText());
+            if ( context.openTag() == null && context.closeTag() == null)
+            {
+                _context.Append(context.GetText());
+            }
         }
         public override void ExitSoftCarriageReturn([NotNull] MarkdownPreprocessorParser.SoftCarriageReturnContext context)
         {
@@ -193,9 +215,9 @@ namespace TxMark.Compiler
             {
                 while (_context.Level < level)
                 {
-                    Push(listType);
+                    Push(listType, listType == ContextTypes.UnorderedList ? "ul" : "ol");
                     _context.Level++;
-                    Push(ContextTypes.ListItem);
+                    Push(ContextTypes.ListItem,"li");
                 }
                 return;
             }
@@ -213,10 +235,10 @@ namespace TxMark.Compiler
             if (_context.Type != listType)
             {
                 CloseList();
-                Push(listType);
+                Push(listType, listType== ContextTypes.UnorderedList?"ul":"ol");
                 _context.Level = level;
             }
-            Push(ContextTypes.ListItem);
+            Push(ContextTypes.ListItem,"li");
         }
         public override void EnterListItem([NotNull] MarkdownPreprocessorParser.ListItemContext context)
         {
@@ -248,7 +270,7 @@ namespace TxMark.Compiler
             var currentBlockQuote = FindBlockQuote();
             if (currentBlockQuote==null)
             {
-                Push(ContextTypes.Blockquote);
+                Push(ContextTypes.Blockquote,"blockquote");
                 _context.Level = 1;
             }
             else
@@ -256,7 +278,7 @@ namespace TxMark.Compiler
                 int currentLevel = currentBlockQuote.Level;
                 while (currentLevel < level)
                 {
-                    Push(ContextTypes.Blockquote);
+                    Push(ContextTypes.Blockquote, "blockquote");
                     _context.Level = ++currentLevel;
                 }
             }
@@ -271,6 +293,29 @@ namespace TxMark.Compiler
             {
                 Pop("blockquote");
             }
+        }
+
+        public override void EnterOpenTag([NotNull] MarkdownPreprocessorParser.OpenTagContext context)
+        {
+            Push(ContextTypes.OpenTag, context.tag().GetText());
+            _context.Append(context.GetText());
+            Push(ContextTypes.Text);
+        }
+        public override void ExitOpenTag([NotNull] MarkdownPreprocessorParser.OpenTagContext context)
+        {
+        }
+
+        public override void EnterCloseTag([NotNull] MarkdownPreprocessorParser.CloseTagContext context)
+        {
+            Push(ContextTypes.CloseTag, context.tag().GetText());
+            _context.Append(context.GetText());
+        }
+
+        public override void ExitCloseTag([NotNull] MarkdownPreprocessorParser.CloseTagContext context)
+        {
+            var tag = _context.Tag;
+            Pop();
+            PopTo(ContextTypes.OpenTag, tag);
         }
         public override string ToString()
         {

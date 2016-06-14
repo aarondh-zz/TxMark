@@ -69,12 +69,30 @@ textLine
 	;
 
 paragraph_end
-	: whitespace* carriageReturn
+	: (whitespace* carriageReturn)+
 	;
 
 text
    : nonWhitespace (whitespace|nonWhitespace|'#'|'*'|'>'|'.')*?
+   | openTag textLine*
+   | closeTag textLine*
    ;
+
+attributeContent
+	: (whitespace|nonWhitespace|'#'|'*'|'.'|CARRIAGE_RETURN)*
+	;
+
+tag
+	: nonWhitespace+
+	;
+
+openTag
+	: '<' tag attributeContent '/'? '>'
+	;
+
+closeTag
+	: '<' '/' tag whitespace* '>'
+	;
 
 nonWhitespace 
 	: NON_WHITESPACE
@@ -112,7 +130,7 @@ DIGITS
 	;
 
 PUNCTUATION
-	: [~`!@$%^&()_-+={\[}\]|\\:;"'<,?/]+
+	: [~`!@$%^&()_-+={\[}\]|\\:;"',?]+
 	;
 
 TAB
@@ -128,5 +146,5 @@ CARRIAGE_RETURN
    ;
 
 NON_WHITESPACE
-   : ~[ '\t' '\r' '\n' '#' '*' '>' '.']
+   : ~[ ' ' '\t' '\r' '\n' '#' '*' '/' '<' '>' '.']
    ;

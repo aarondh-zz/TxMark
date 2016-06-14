@@ -219,6 +219,50 @@ public interface IMarkdownPreprocessorListener : IParseTreeListener {
 	void ExitText([NotNull] MarkdownPreprocessorParser.TextContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.attributeContent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAttributeContent([NotNull] MarkdownPreprocessorParser.AttributeContentContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.attributeContent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAttributeContent([NotNull] MarkdownPreprocessorParser.AttributeContentContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.tag"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTag([NotNull] MarkdownPreprocessorParser.TagContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.tag"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTag([NotNull] MarkdownPreprocessorParser.TagContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.openTag"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOpenTag([NotNull] MarkdownPreprocessorParser.OpenTagContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.openTag"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOpenTag([NotNull] MarkdownPreprocessorParser.OpenTagContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.closeTag"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterCloseTag([NotNull] MarkdownPreprocessorParser.CloseTagContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.closeTag"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitCloseTag([NotNull] MarkdownPreprocessorParser.CloseTagContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.nonWhitespace"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

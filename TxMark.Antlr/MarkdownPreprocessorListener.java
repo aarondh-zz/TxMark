@@ -177,6 +177,36 @@ public interface MarkdownPreprocessorListener extends ParseTreeListener {
 	 */
 	void exitText(MarkdownPreprocessorParser.TextContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MarkdownPreprocessorParser#attributeContent}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttributeContent(MarkdownPreprocessorParser.AttributeContentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MarkdownPreprocessorParser#attributeContent}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttributeContent(MarkdownPreprocessorParser.AttributeContentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MarkdownPreprocessorParser#openTag}.
+	 * @param ctx the parse tree
+	 */
+	void enterOpenTag(MarkdownPreprocessorParser.OpenTagContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MarkdownPreprocessorParser#openTag}.
+	 * @param ctx the parse tree
+	 */
+	void exitOpenTag(MarkdownPreprocessorParser.OpenTagContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MarkdownPreprocessorParser#closeTag}.
+	 * @param ctx the parse tree
+	 */
+	void enterCloseTag(MarkdownPreprocessorParser.CloseTagContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MarkdownPreprocessorParser#closeTag}.
+	 * @param ctx the parse tree
+	 */
+	void exitCloseTag(MarkdownPreprocessorParser.CloseTagContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MarkdownPreprocessorParser#nonWhitespace}.
 	 * @param ctx the parse tree
 	 */

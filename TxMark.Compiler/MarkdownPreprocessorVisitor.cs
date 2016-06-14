@@ -152,6 +152,34 @@ public interface IMarkdownPreprocessorVisitor<Result> : IParseTreeVisitor<Result
 	Result VisitText([NotNull] MarkdownPreprocessorParser.TextContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.attributeContent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAttributeContent([NotNull] MarkdownPreprocessorParser.AttributeContentContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.tag"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTag([NotNull] MarkdownPreprocessorParser.TagContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.openTag"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOpenTag([NotNull] MarkdownPreprocessorParser.OpenTagContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.closeTag"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitCloseTag([NotNull] MarkdownPreprocessorParser.CloseTagContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.nonWhitespace"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
