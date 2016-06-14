@@ -209,61 +209,6 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	void ExitQuote([NotNull] TxMarkParser.QuoteContext context);
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TxMarkParser.indexSuffix"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterIndexSuffix([NotNull] TxMarkParser.IndexSuffixContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TxMarkParser.indexSuffix"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitIndexSuffix([NotNull] TxMarkParser.IndexSuffixContext context);
-
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TxMarkParser.indexExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterIndexExpression([NotNull] TxMarkParser.IndexExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TxMarkParser.indexExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitIndexExpression([NotNull] TxMarkParser.IndexExpressionContext context);
-
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TxMarkParser.booleanOperator"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterBooleanOperator([NotNull] TxMarkParser.BooleanOperatorContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TxMarkParser.booleanOperator"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitBooleanOperator([NotNull] TxMarkParser.BooleanOperatorContext context);
-
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TxMarkParser.subequation"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterSubequation([NotNull] TxMarkParser.SubequationContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TxMarkParser.subequation"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitSubequation([NotNull] TxMarkParser.SubequationContext context);
-
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TxMarkParser.equation"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterEquation([NotNull] TxMarkParser.EquationContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TxMarkParser.equation"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitEquation([NotNull] TxMarkParser.EquationContext context);
-
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.operand"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -275,15 +220,59 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	void ExitOperand([NotNull] TxMarkParser.OperandContext context);
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TxMarkParser.signed_operand"/>.
+	/// Enter a parse tree produced by <see cref="TxMarkParser.indexSuffix"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterSigned_operand([NotNull] TxMarkParser.Signed_operandContext context);
+	void EnterIndexSuffix([NotNull] TxMarkParser.IndexSuffixContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="TxMarkParser.signed_operand"/>.
+	/// Exit a parse tree produced by <see cref="TxMarkParser.indexSuffix"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitSigned_operand([NotNull] TxMarkParser.Signed_operandContext context);
+	void ExitIndexSuffix([NotNull] TxMarkParser.IndexSuffixContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.index_subexpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.index_subexpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.index_expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterIndex_expression([NotNull] TxMarkParser.Index_expressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.index_expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitIndex_expression([NotNull] TxMarkParser.Index_expressionContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.signed_index_expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSigned_index_expression([NotNull] TxMarkParser.Signed_index_expressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.signed_index_expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSigned_index_expression([NotNull] TxMarkParser.Signed_index_expressionContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.power_subexpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPower_subexpression([NotNull] TxMarkParser.Power_subexpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.power_subexpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPower_subexpression([NotNull] TxMarkParser.Power_subexpressionContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.power_expression"/>.
@@ -317,6 +306,39 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitMultiply_expression([NotNull] TxMarkParser.Multiply_expressionContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.subequation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSubequation([NotNull] TxMarkParser.SubequationContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.subequation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSubequation([NotNull] TxMarkParser.SubequationContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.equation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterEquation([NotNull] TxMarkParser.EquationContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.equation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitEquation([NotNull] TxMarkParser.EquationContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.booleanOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterBooleanOperator([NotNull] TxMarkParser.BooleanOperatorContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.booleanOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitBooleanOperator([NotNull] TxMarkParser.BooleanOperatorContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.subexpression"/>.

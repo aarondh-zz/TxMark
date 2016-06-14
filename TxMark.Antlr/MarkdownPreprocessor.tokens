@@ -1,0 +1,16 @@
+T__0=1
+T__1=2
+T__2=3
+T__3=4
+DIGITS=5
+PUNCTUATION=6
+TAB=7
+SPACE=8
+CARRIAGE_RETURN=9
+NON_WHITESPACE=10
+'*'=1
+'.'=2
+'>'=3
+'#'=4
+'\t'=7
+' '=8

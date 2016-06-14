@@ -65,7 +65,7 @@ headingIndicator
 
 
 textLine
-	: whitespace? text
+	: whitespace* text
 	;
 
 paragraph_end
@@ -78,6 +78,7 @@ text
 
 nonWhitespace 
 	: NON_WHITESPACE
+	| PUNCTUATION
 	| DIGITS
 	;
 
@@ -110,6 +111,10 @@ DIGITS
 	: [0123456789]+
 	;
 
+PUNCTUATION
+	: [~`!@$%^&()_-+={\[}\]|\\:;"'<,?/]+
+	;
+
 TAB
    : '\t'
    ;
@@ -123,5 +128,5 @@ CARRIAGE_RETURN
    ;
 
 NON_WHITESPACE
-   : ~[ \t\r\n]
+   : ~[ '\t' '\r' '\n' '#' '*' '>' '.']
    ;

@@ -22,6 +22,86 @@ namespace TxMark.Template
             var result = View(state);
             return result.ToString();
         }
+        [Macro]
+        public string Print(object value)
+        {
+            return value?.ToString();
+        }
+        private class RawHtmlValue : IRawHtmlValue
+        {
+            private string _value;
+            public RawHtmlValue( string value )
+            {
+                _value = value;
+            }
+
+            public override string ToString()
+            {
+                return _value;
+            }
+        }
+        [Macro]
+        public IValue Raw(object value)
+        {
+            return new RawHtmlValue(value?.ToString());
+        }
+
+        [Macro]
+        public double Pow(object value, object power)
+        {
+            double x;
+            double y;
+            if (value is double)
+            {
+                x = (double)value;
+            }
+            else if (value is float)
+            {
+                x = (double)value;
+            }
+            else if (value is int)
+            {
+                x = (double)value;
+            }
+            else if (value is long)
+            {
+                x = (double)value;
+            }
+            else
+            {
+                x = double.NaN;
+            }
+
+            if (power is double)
+            {
+                y = (double)power;
+            }
+            else if (power is float)
+            {
+                y = (double)power;
+            }
+            else if (power is int)
+            {
+                y = (double)power;
+            }
+            else if (power is long)
+            {
+                y = (double)power;
+            }
+            else
+            {
+                y = double.NaN;
+            }
+
+            try
+            {
+                return System.Math.Pow(x, y);
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
 
     }
 }

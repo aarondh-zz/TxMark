@@ -144,41 +144,6 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitQuote([NotNull] TxMarkParser.QuoteContext context);
 
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="TxMarkParser.indexSuffix"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitIndexSuffix([NotNull] TxMarkParser.IndexSuffixContext context);
-
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TxMarkParser.indexExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitIndexExpression([NotNull] TxMarkParser.IndexExpressionContext context);
-
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TxMarkParser.booleanOperator"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitBooleanOperator([NotNull] TxMarkParser.BooleanOperatorContext context);
-
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TxMarkParser.subequation"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitSubequation([NotNull] TxMarkParser.SubequationContext context);
-
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TxMarkParser.equation"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitEquation([NotNull] TxMarkParser.EquationContext context);
-
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.operand"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -186,11 +151,39 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitOperand([NotNull] TxMarkParser.OperandContext context);
 
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="TxMarkParser.signed_operand"/>.
+	/// Visit a parse tree produced by <see cref="TxMarkParser.indexSuffix"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitSigned_operand([NotNull] TxMarkParser.Signed_operandContext context);
+	Result VisitIndexSuffix([NotNull] TxMarkParser.IndexSuffixContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.index_subexpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.index_expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitIndex_expression([NotNull] TxMarkParser.Index_expressionContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.signed_index_expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSigned_index_expression([NotNull] TxMarkParser.Signed_index_expressionContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.power_subexpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPower_subexpression([NotNull] TxMarkParser.Power_subexpressionContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.power_expression"/>.
@@ -212,6 +205,27 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitMultiply_expression([NotNull] TxMarkParser.Multiply_expressionContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.subequation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSubequation([NotNull] TxMarkParser.SubequationContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.equation"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEquation([NotNull] TxMarkParser.EquationContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.booleanOperator"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitBooleanOperator([NotNull] TxMarkParser.BooleanOperatorContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.subexpression"/>.

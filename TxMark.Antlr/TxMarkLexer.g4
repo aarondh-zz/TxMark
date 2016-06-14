@@ -242,7 +242,7 @@ OPERATOR_TO
     ;
 
 OPERATOR_POSSESSIVE
-    : '\'s'
+    : '\'' S
     ;
 
 OPERATOR_PLUS
@@ -279,10 +279,6 @@ CLOSE_PARENTHESES
 
 DOUBLE_QUOTE_STRING
     : '"' ~["]* '"'
-    ;
-
-SINGLE_QUOTE_STRING
-    : '\'' ~[']* '\''
     ;
 
 MWORD:

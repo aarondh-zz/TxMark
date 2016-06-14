@@ -20,6 +20,8 @@ namespace TxMark.Compiler
             LessOrEqual,
             GreaterOrEqual,
             Is,
-            IsNot
+            IsNot,
+            Index,
+            Power,
     }
 }

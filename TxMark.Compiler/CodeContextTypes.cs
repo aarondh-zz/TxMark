@@ -19,10 +19,12 @@ namespace TxMark.Compiler
         Expression,
         Hook,
         If,
+        IndexExpression,
         Method,
         MethodCall,
         ParenthesizedExpression,
         Set,
+        SignedExpression,
         TagOpen,
         TagClose
     }

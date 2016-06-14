@@ -1,0 +1,1 @@
+grun MarkdownPreprocessor document %* -gui

@@ -29,19 +29,7 @@ namespace TxMark.Compiler
         }
         public override void EnterQuote([NotNull] TxMarkParser.QuoteContext context)
         {
-            string text;
-            if (context.SINGLE_QUOTE_STRING() != null)
-            {
-                text = context.SINGLE_QUOTE_STRING().GetText();
-            }
-            else if (context.DOUBLE_QUOTE_STRING() != null)
-            {
-                text = context.DOUBLE_QUOTE_STRING().GetText();
-            }
-            else
-            {
-                text = "\"\"";
-            }
+            string text = context.DOUBLE_QUOTE_STRING().GetText();
             text = text.Substring(1, text.Length - 2);
             _compileContext.Word(text);
         }
@@ -355,7 +343,7 @@ namespace TxMark.Compiler
         {
             _compileContext.Pop();
         }
-        private OperatorTypes? GetOperatorType(TxMarkParser.SubexpressionContext context)
+        private OperatorTypes? GetOperatorType(TxMarkParser.SubequationContext context)
         {
             if (context.OPERATOR_MINUS() != null)
             {
@@ -380,6 +368,22 @@ namespace TxMark.Compiler
             _compileContext.Pop();
         }
 
+        public override void EnterSigned_index_expression([NotNull] TxMarkParser.Signed_index_expressionContext context)
+        {
+            if ( context.OPERATOR_MINUS()!=null)
+            {
+                _compileContext.Push(CodeContextTypes.SignedExpression);
+            }
+        }
+
+        public override void ExitSigned_index_expression([NotNull] TxMarkParser.Signed_index_expressionContext context)
+        {
+            if (context.OPERATOR_MINUS() != null)
+            {
+                _compileContext.Pop();
+            }
+        }
+
         public override void EnterSubexpression([NotNull] TxMarkParser.SubexpressionContext context)
         {
             var operatorType = GetOperatorType(context);
@@ -390,6 +394,47 @@ namespace TxMark.Compiler
         }
 
         public override void ExitSubexpression([NotNull] TxMarkParser.SubexpressionContext context)
+        {
+            _compileContext.Pop();
+        }
+        public override void EnterIndex_expression([NotNull] TxMarkParser.Index_expressionContext context)
+        {
+            _compileContext.Push(CodeContextTypes.Expression);
+        }
+
+        public override void EnterIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context)
+        {
+            _compileContext.Push(CodeContextTypes.IndexExpression);
+        }
+
+        public override void ExitIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context)
+        {
+            _compileContext.Pop();
+        }
+        public override void ExitIndex_expression([NotNull] TxMarkParser.Index_expressionContext context)
+        {
+            _compileContext.Pop();
+        }
+
+        public override void EnterPower_expression([NotNull] TxMarkParser.Power_expressionContext context)
+        {
+            _compileContext.Push(CodeContextTypes.Expression);
+        }
+
+        public override void EnterPower_subexpression([NotNull] TxMarkParser.Power_subexpressionContext context)
+        {
+            _compileContext.Push(CodeContextTypes.BinaryExpression,
+                null,
+                new Bag<string>().Add<OperatorTypes>("operator", OperatorTypes.Power)
+                );
+        }
+
+        public override void ExitPower_subexpression([NotNull] TxMarkParser.Power_subexpressionContext context)
+        {
+            _compileContext.Pop();
+        }
+
+        public override void ExitPower_expression([NotNull] TxMarkParser.Power_expressionContext context)
         {
             _compileContext.Pop();
         }
@@ -448,7 +493,7 @@ namespace TxMark.Compiler
         {
             _compileContext.Pop();
         }
-        private OperatorTypes? GetOperatorType(TxMarkParser.SubequationContext context)
+        private OperatorTypes? GetOperatorType(TxMarkParser.SubexpressionContext context)
         {
             var booleanOperator = context.booleanOperator();
             if (booleanOperator.OPERATOR_AND() != null)

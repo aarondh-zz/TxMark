@@ -136,7 +136,6 @@
     <Compile Include="ILocation.cs" />
     <Compile Include="LogHandler.cs" />
     <Compile Include="LogLevel.cs" />
-    <Compile Include="MacroArgument.cs" />
     <Compile Include="MacroDefinition.cs" />
     <Compile Include="MacroManager.cs" />
     <Compile Include="MarkdownPreprocessorParseTreeListener.cs" />
@@ -162,6 +161,10 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="TxMark.pfx" />
+    <Antlr4 Include="TxMarkParser.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>TxMark.Compiler</CustomToolNamespace>
+    </Antlr4>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />

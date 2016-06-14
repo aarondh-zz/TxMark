@@ -62,7 +62,10 @@ namespace TxMark.Compiler
         public override void Exit()
         {
             WriteTextIfRequired(true);
-            _exitHandler(_expression);
+            if ( _exitHandler != null)
+            {
+                _exitHandler(_expression);
+            }
         }
         protected void Add( ExpressionSyntax expression)
         {
@@ -213,20 +216,55 @@ namespace TxMark.Compiler
                     {
                         _expression = expression;
                     });
+                case CodeContextTypes.SignedExpression:
+                    return new ExpressionContext((expression) =>
+                    {
+                        _expression = SF.PrefixUnaryExpression(SyntaxKind.UnaryMinusExpression, expression);
+                    });
                 case CodeContextTypes.ParenthesizedExpression:
                     return new ExpressionContext((expression) =>
                     {
                         _expression = SF.ParenthesizedExpression(expression);
                     });
-               case CodeContextTypes.BinaryExpression:
-                    if ( attributes?.Contains("operator")??false ) {
-                        SyntaxKind operatorSyntaxKind = GetSyntaxKind(attributes.Get<OperatorTypes>("operator"));
-                        return new ExpressionContext((expression) =>
+                case CodeContextTypes.BinaryExpression:
+                    if (attributes?.Contains("operator") ?? false)
+                    {
+                        var operatorType = attributes.Get<OperatorTypes>("operator");
+                        if (operatorType == OperatorTypes.Power)
                         {
-                            _expression = SF.BinaryExpression(operatorSyntaxKind,_expression, expression);
-                        });
-                   }
-                break;
+                            return new ExpressionContext((expression) =>
+                            {
+                                _expression = MethodCallContext.CreateMethodCall("Pow", false, new ArgumentSyntax[]{ SF.Argument(_expression), SF.Argument(expression) });
+                            });
+                        }
+                        else
+                        {
+                            SyntaxKind operatorSyntaxKind = GetSyntaxKind(operatorType);
+                            return new ExpressionContext((expression) =>
+                            {
+                                _expression = SF.BinaryExpression(operatorSyntaxKind, _expression, expression);
+                            });
+                        }
+                    }
+                    break;
+                case CodeContextTypes.IndexExpression:
+                    return new ExpressionContext((expression) =>
+                    {
+                        _expression = SF.ElementAccessExpression(
+                            _expression,
+                            SF.BracketedArgumentList(
+                                SF.SingletonSeparatedList<ArgumentSyntax>(
+                                    SF.Argument(
+                                        SF.BinaryExpression(
+                                            SyntaxKind.SubtractExpression,
+                                            expression,
+                                            SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(1))
+                                            )
+                                    )
+                                )
+                            )
+                        );
+                    });
             }
             return base.CreateContext(contextType, name, attributes);
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TxMark.Compiler
+namespace TxMark.Template
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class MacroAttribute : Attribute
