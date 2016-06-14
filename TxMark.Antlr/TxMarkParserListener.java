@@ -117,6 +117,16 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 */
 	void exitIndexSuffix(TxMarkParser.IndexSuffixContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#index_subexpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIndex_subexpression(TxMarkParser.Index_subexpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#index_subexpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIndex_subexpression(TxMarkParser.Index_subexpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#index_expression}.
 	 * @param ctx the parse tree
 	 */
@@ -136,6 +146,16 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSigned_index_expression(TxMarkParser.Signed_index_expressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#power_subexpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPower_subexpression(TxMarkParser.Power_subexpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#power_subexpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPower_subexpression(TxMarkParser.Power_subexpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#power_expression}.
 	 * @param ctx the parse tree
@@ -287,16 +307,6 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 */
 	void exitPunctuation(TxMarkParser.PunctuationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TxMarkParser#muinuta}.
-	 * @param ctx the parse tree
-	 */
-	void enterMuinuta(TxMarkParser.MuinutaContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TxMarkParser#muinuta}.
-	 * @param ctx the parse tree
-	 */
-	void exitMuinuta(TxMarkParser.MuinutaContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#htmlOpenTag}.
 	 * @param ctx the parse tree
 	 */
@@ -398,6 +408,16 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSuperscript(TxMarkParser.SuperscriptContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#muinuta}.
+	 * @param ctx the parse tree
+	 */
+	void enterMuinuta(TxMarkParser.MuinutaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#muinuta}.
+	 * @param ctx the parse tree
+	 */
+	void exitMuinuta(TxMarkParser.MuinutaContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#htmlAttribute}.
 	 * @param ctx the parse tree

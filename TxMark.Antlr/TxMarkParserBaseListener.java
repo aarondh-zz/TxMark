@@ -147,6 +147,18 @@ public class TxMarkParserBaseListener implements TxMarkParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIndex_subexpression(TxMarkParser.Index_subexpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIndex_subexpression(TxMarkParser.Index_subexpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIndex_expression(TxMarkParser.Index_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -166,6 +178,18 @@ public class TxMarkParserBaseListener implements TxMarkParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSigned_index_expression(TxMarkParser.Signed_index_expressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPower_subexpression(TxMarkParser.Power_subexpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPower_subexpression(TxMarkParser.Power_subexpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -351,18 +375,6 @@ public class TxMarkParserBaseListener implements TxMarkParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMuinuta(TxMarkParser.MuinutaContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMuinuta(TxMarkParser.MuinutaContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterHtmlOpenTag(TxMarkParser.HtmlOpenTagContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -466,6 +478,18 @@ public class TxMarkParserBaseListener implements TxMarkParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSuperscript(TxMarkParser.SuperscriptContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMuinuta(TxMarkParser.MuinutaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMuinuta(TxMarkParser.MuinutaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

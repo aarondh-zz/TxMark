@@ -291,13 +291,6 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitPunctuation([NotNull] TxMarkParser.PunctuationContext context);
 
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="TxMarkParser.muinuta"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitMuinuta([NotNull] TxMarkParser.MuinutaContext context);
-
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.htmlOpenTag"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -324,6 +317,13 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitEmphasis([NotNull] TxMarkParser.EmphasisContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.muinuta"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMuinuta([NotNull] TxMarkParser.MuinutaContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.htmlAttribute"/>.

@@ -144,18 +144,6 @@ punctuation
 	: PUNCTUATION
 	;
 
-muinuta 
-	:  DOLLAR_SIGN
-	| QUESTION_MARK
-	| COLON	
-	| SLASH	
-	| EQUALS	
-	| VERTICAL_BAR
-	| LESS_THAN
-	| GREATER_THAN	
-	| DOUBLE_QUOTE	
-	| SINGLE_QUOTE	
-	;
 htmlOpenTag
 	: LESS_THAN word htmlAttribute* GREATER_THAN
     | LESS_THAN word htmlAttribute* SLASH GREATER_THAN
@@ -179,6 +167,20 @@ emphasis
 	| DOUBLE_SLASH content DOUBLE_SLASH #italics
 	| DOUBLE_TILDA content DOUBLE_TILDA #deleted
 	| DOUBLE_CIRCUMFLEX content DOUBLE_CIRCUMFLEX #superscript
+	;
+
+muinuta 
+	:  DOLLAR_SIGN
+	| QUESTION_MARK
+	| COLON	
+	| SLASH	
+	| EQUALS	
+	| LESS_THAN
+	| GREATER_THAN
+	| VERTICAL_BAR
+	| GREATER_THAN	
+	| DOUBLE_QUOTE	
+	| SINGLE_QUOTE	
 	;
 
 htmlAttribute   

@@ -516,19 +516,6 @@ public partial class TxMarkParserBaseListener : ITxMarkParserListener {
 	public virtual void ExitPunctuation([NotNull] TxMarkParser.PunctuationContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TxMarkParser.muinuta"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterMuinuta([NotNull] TxMarkParser.MuinutaContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TxMarkParser.muinuta"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitMuinuta([NotNull] TxMarkParser.MuinutaContext context) { }
-
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.htmlOpenTag"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -579,6 +566,19 @@ public partial class TxMarkParserBaseListener : ITxMarkParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitEmphasis([NotNull] TxMarkParser.EmphasisContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.muinuta"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterMuinuta([NotNull] TxMarkParser.MuinutaContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.muinuta"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitMuinuta([NotNull] TxMarkParser.MuinutaContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.htmlAttribute"/>.
