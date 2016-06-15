@@ -314,24 +314,11 @@ namespace TxMark.Template
 
         public void Write(string value)
         {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                var writer = _currentFrame.Writer;
-                if (!_currentFrame.IsEmpty)
-                {
-                    char first = value[0];
-                    char last = _currentFrame.LastChar;
-                    if ( char.IsLetterOrDigit(last) && char.IsLetterOrDigit(first) )
-                    {
-                        this.ViewOptions.Formatter.Write(_currentFrame.Writer, ' ');
-                    }
-                }
-                this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
-            }
+            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
         }
         public void Write(IValue value)
         {
-            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value.ToString());
+            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
         }
 
         public void Write(object value)

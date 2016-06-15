@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using TxMark.Template;
+using TxMark.Template.Formatters;
+
 namespace TxMark
 {
     public class Options : IViewOptions

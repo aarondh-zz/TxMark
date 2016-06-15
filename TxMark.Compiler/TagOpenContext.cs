@@ -86,10 +86,14 @@ namespace TxMark.Compiler
             FlushTextBuffer();
             bool hasContent = this.Block.ChildNodes().Any();
             var tagNameExpression = SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(_tagName));
-            var isClosingExpression = SF.LiteralExpression(hasContent? SyntaxKind.FalseLiteralExpression : SyntaxKind.TrueLiteralExpression);
+            var isClosingExpression = SF.LiteralExpression(_isClosing? SyntaxKind.FalseLiteralExpression : SyntaxKind.TrueLiteralExpression);
             var attributesExpression = MakeAttributesExpression();
             StatementSyntax tagStatement;
-            if (hasContent)
+            if ( _isClosing )
+            {
+                tagStatement = BlockContext.MakeStateMethodCallStatement("WriteOpenTag", tagNameExpression, isClosingExpression, attributesExpression);
+            }
+            else if (hasContent)
             {
                 Add(BlockContext.MakeStateMethodCallStatement("WriteCloseTag", tagNameExpression));
                 tagStatement = SF.IfStatement(

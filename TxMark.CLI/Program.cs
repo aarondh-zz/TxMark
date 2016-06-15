@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using TxMark.Template;
+using TxMark.Template.Formatters;
 using TxMark.Utilities;
 
 namespace TxMark.CLI

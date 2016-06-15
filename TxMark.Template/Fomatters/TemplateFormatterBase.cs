@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace TxMark.Template
+namespace TxMark.Template.Formatters
 {
     public abstract class TemplateFormatterBase : ITemplateFormatter
     {
