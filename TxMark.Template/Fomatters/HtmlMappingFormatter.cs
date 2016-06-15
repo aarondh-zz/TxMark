@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TxMark.Template.Formatters
 {
-    public class MappingHtmlTemplateFormatter : HtmlTemplateFormatter
+    public class HtmlMappingFormatter : HtmlFormatter
     {
         public enum MergeOptions
         {

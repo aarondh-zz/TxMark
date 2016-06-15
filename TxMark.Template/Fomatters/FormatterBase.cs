@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TxMark.Template.Formatters
 {
-    public abstract class TemplateFormatterBase : ITemplateFormatter
+    public abstract class FormatterBase : IFormatter
     {
         public virtual void Write(TextWriter writer, string value)
         {

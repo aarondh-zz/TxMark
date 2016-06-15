@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TxMark.Template.Formatters
 {
-    public class TextTemplateFormatter : TemplateFormatterBase
+    public class TextFormatter : FormatterBase
     {
         char lastChar;
         public override void WriteCloseTag(TextWriter writer, string tagName)

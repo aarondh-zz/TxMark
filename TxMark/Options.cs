@@ -8,7 +8,7 @@ namespace TxMark
     {
         public Options()
         {
-            Formatter = new HtmlTemplateFormatter();
+            Formatter = new HtmlFormatter();
             DiagnosticLevel = DiagnosticLevel.Warnings;
             MarkdownPreprocessor = true;
             Encoding = Encoding.UTF8;
@@ -39,7 +39,7 @@ namespace TxMark
         public bool OutputParser { get; set; }
         public Encoding Encoding { get; set; }
 
-        public ITemplateFormatter Formatter { get; set; }
+        public IFormatter Formatter { get; set; }
         /// <summary>
         /// Force compile even if compiled template already exists in the specified compile path
         /// </summary>

@@ -22,10 +22,10 @@ namespace TxMark.CLI
                 switch ( options.OutputStyle)
                 {
                     case OutputFormats.Html:
-                        txMarkOptions.Formatter = new HtmlTemplateFormatter();
+                        txMarkOptions.Formatter = new HtmlFormatter();
                         break;
                     case OutputFormats.Text:
-                        txMarkOptions.Formatter = new TextTemplateFormatter();
+                        txMarkOptions.Formatter = new TextFormatter();
                         break;
                 }
                 var startTime = DateTime.Now;

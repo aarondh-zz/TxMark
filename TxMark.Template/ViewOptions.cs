@@ -6,12 +6,12 @@ namespace TxMark.Template
     {
         public static readonly IViewOptions Default = new ViewOptions()
         {
-            Formatter = new HtmlTemplateFormatter()
+            Formatter = new HtmlFormatter()
         };
         public ViewOptions()
         {
 
         }
-        public ITemplateFormatter Formatter { get; set; }
+        public IFormatter Formatter { get; set; }
     }
 }

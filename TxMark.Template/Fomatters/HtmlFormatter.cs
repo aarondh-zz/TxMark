@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TxMark.Template.Formatters
 {
-    public class HtmlTemplateFormatter : TemplateFormatterBase
+    public class HtmlFormatter : FormatterBase
     {
         public override void WriteCloseTag(TextWriter writer, string tagName)
         {

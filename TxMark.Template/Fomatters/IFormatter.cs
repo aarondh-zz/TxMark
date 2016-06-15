@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TxMark.Template.Formatters
 {
-    public interface ITemplateFormatter : ITemplateWriter
+    public interface IFormatter : ITemplateWriter
     {
     }
 }
