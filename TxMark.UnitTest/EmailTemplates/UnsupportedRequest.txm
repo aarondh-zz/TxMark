@@ -1,0 +1,12 @@
+﻿@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Shared.AgentEmail>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+<p>
+    Hi,
+</p>
+<p>
+    I wish I could help you out, but unfortunately I can only help with scheduling. Let me know if there is anything I can do in that regard.
+</p>

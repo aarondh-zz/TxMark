@@ -1,0 +1,132 @@
+﻿@using Kobe.Common.Users
+@using Kobe.Common.Models.Interfaces
+@using Kobe.Schemas.Meeting
+
+@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Meeting.Appointment>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+@* Helper Methods *@
+
+@helper Print_Attendees(IList<Kobe.Schemas.Framework.User> attendees)
+{
+    var attendeeCount = attendees.Count;
+
+    if (attendeeCount > 2)
+    {
+        for (var i = 0; i < attendeeCount - 2; i++)
+        {
+           @attendees[i].DisplayName(DisplayNameOptions.Casual) @(", ")
+        }
+    }
+    if (attendeeCount > 1)
+    {
+        @attendees[attendeeCount - 2].DisplayName(DisplayNameOptions.Casual) @(" and ")
+
+    }
+    if (attendees.Count > 0)
+    {
+        @attendees[attendeeCount - 1].DisplayName(DisplayNameOptions.Casual)
+    }
+}
+
+@helper Print_Contacts(IList<ContactInfo> contacts)
+{
+    if (contacts.Count == 1)
+    {
+        if(string.IsNullOrEmpty(contacts[0].Contact))
+        {
+               @(contacts[0].User.DisplayName(DisplayNameOptions.Casual)) @(" is to be called, but I do not have contact information. ")
+        }
+        else
+        {
+                 @("Reach ") @(contacts[0].User.DisplayName(DisplayNameOptions.Casual)) @(" at ")  @(contacts[0].Contact) @(". ")
+        }
+    }
+    else
+    {
+        <div>Contact information:</div>
+        for (var i = 0; i < contacts.Count; i++)
+        {
+            var casualName = contacts[i].User.DisplayName(DisplayNameOptions.Casual);
+            var contactInfo = string.IsNullOrEmpty(contacts[i].Contact) ? string.Format("I do not have contact information for {0}", casualName) :
+                contacts[i].Contact; 
+            <div>@(casualName) : @(contactInfo)</div>
+        }
+    }
+}
+
+@helper Print_Location_Phone_Conference(Kobe.Templates.Models.Emails.Meeting.Appointment appointment)
+{
+    var loc = appointment.Location;
+
+    if (loc.IsInPerson && !string.IsNullOrEmpty(loc.MeetingLocation))
+    {
+            @("The location is " + loc.MeetingLocation + ". ")
+    }
+
+    if (loc.IsPhoneCall &&
+        loc.ContactInfo != null &&
+        loc.ContactInfo.Count > 0 &&
+        loc.ContactInfo[0] != null)
+    {
+
+        @Print_Contacts(loc.ContactInfo);
+    }
+
+    if (!string.IsNullOrEmpty(loc.ConferenceInfo))
+    {
+        if (loc.IsInPerson)
+        {
+            @("If you're conferencing in, use: " + loc.ConferenceInfo + ". ")
+        }
+        else
+        {
+            @("To conference in, use: " + loc.ConferenceInfo + ". ")
+        }
+    }
+}
+
+@if (Model.IsUpdate)
+{
+    <p>This is a meeting update.</p>
+}
+
+@if (@Model.Attendees == null || @Model.Attendees.Count == 0)
+{
+    <p>
+        Hi@(Model.Creator.DisplayName(DisplayNameOptions.Space_FirstNameOrBlank)),
+    </p>
+    <p>
+        I've set aside @DurationInMinutesToString(@Model.DurationInMinutes, true) on your calendar at @(Model.MeetingTime) @(Model.TimeZone) on @Model.MeetingDate.
+        Let me know if there's anything else you need.
+    </p>
+}
+else if (@Model.Attendees.Count == 1)
+{
+    <p>
+        Hey there,
+    </p>
+    <p>
+        I've set aside time for you to meet on @Model.MeetingDate at @Model.MeetingTime @Model.TimeZone.
+        @Print_Location_Phone_Conference(@Model)
+    </p>
+    <p>
+        If there's anything else I can do for you, please let me know. Have a great meeting!
+    </p>
+}
+else
+{
+    <p>
+        Hi everyone,
+    </p>
+    <p>
+        I've scheduled your meeting on @Model.MeetingDate at @Model.MeetingTime @Model.TimeZone.
+        @Print_Location_Phone_Conference(@Model)
+    </p>
+    <p>
+        If there's anything else I can do for you, please let me know. Have a great meeting!
+    </p>
+}

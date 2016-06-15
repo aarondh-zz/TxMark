@@ -1,0 +1,15 @@
+﻿@using Kobe.Common.Users
+@using Kobe.Common.Models.Interfaces
+@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Meeting.RequestAck>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+<p>
+    Hi@(Model.Creator.DisplayName(DisplayNameOptions.Space_FirstNameOrBlank)),
+</p>
+<p>
+    I just wanted to confirm that I have received your request and am working on setting up a time for you.
+    I'll be in touch soon with a finalized meeting invitation.
+</p>

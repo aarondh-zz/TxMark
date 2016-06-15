@@ -21,17 +21,8 @@ namespace TxMark.Compiler
             _baseType = baseType;
             _modelType = modelType;
             _exitHandler = exitHandler;
+            var modelTypeName = GetTypeName(modelType);
             var constructor = SF.ConstructorDeclaration(_className)
-                .WithParameterList(
-                    SF.ParameterList(
-                        SF.SingletonSeparatedList<ParameterSyntax>(
-                            SF.Parameter(SF.Identifier("model")).WithType(SF.ParseTypeName(GetTypeName(modelType)))
-                        )
-                    )
-                )
-                .WithInitializer(
-                    SF.ConstructorInitializer(SyntaxKind.BaseConstructorInitializer, SF.ArgumentList(SF.SingletonSeparatedList<ArgumentSyntax>(SF.Argument(SF.IdentifierName("model")))))
-                )
                 .WithModifiers( SF.TokenList(SF.Token(SyntaxKind.PublicKeyword)) )
                 .WithBody(SF.Block());
             _memberDeclarations.Add(constructor);
@@ -56,6 +47,10 @@ namespace TxMark.Compiler
                 }
                 typeName += ">";
                 return typeName;
+            }
+            else if ( type.FullName == "System.Object")
+            {
+                return "dynamic";
             }
             else
             {

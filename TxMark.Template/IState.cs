@@ -6,6 +6,7 @@ namespace TxMark.Template
 {
     public interface IState<TModel> : IDictionary<string, object>, ICollection<KeyValuePair<string, object>>, IEnumerable<KeyValuePair<string, object>>, IEnumerable, INotifyPropertyChanged
     {
+        TModel Model { get; }
         IViewOptions ViewOptions { get; }
         void Push();
         IValue Pop();

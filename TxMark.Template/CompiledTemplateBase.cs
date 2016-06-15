@@ -5,24 +5,22 @@ namespace TxMark.Template
     {
         public delegate IValue HookDelegate(IState<TModel> state);
         public delegate IValue BranchDelegate(IState<TModel> state);
-        public CompiledTemplateBase( TModel model )
+        public CompiledTemplateBase(  )
         {
-            this.Model = model;
-        }
-        public TModel Model
-        {
-            get;
-            private set;
         }
         public abstract IValue View(IState<TModel> state);
 
-        public string View(IViewOptions viewOptions)
+        public string View(IViewOptions viewOptions, TModel model)
         {
-            var state = new TemplateState<TModel>(viewOptions);
+            var state = new TemplateState<TModel>(viewOptions, model);
             var result = View(state);
             return result.ToString();
         }
-        [Macro]
+        public string View(IViewOptions viewOptions, object model)
+        {
+            return View(viewOptions, (TModel)model);
+        }
+       [Macro]
         public string Print(object value)
         {
             return value?.ToString();

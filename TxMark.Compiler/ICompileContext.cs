@@ -10,6 +10,7 @@ namespace TxMark.Compiler
     {
         ILocation Location { get; }
         string StateTypeName { get; }
+        string ModelTypeName { get; }
         void AddNamespace(string namespaceName);
         void AddNamespaceFor(Type type);
         void AddNameTag(object reference, string nameTag);

@@ -23,6 +23,7 @@ namespace TxMark.Compiler
         private CompilationUnitSyntax _compilationUnit;
         private NamespaceDeclarationSyntax _namespace;
         private Type _templateBaseType;
+        private string _modelTypeName;
         private string _stateTypeName;
         private MacroManager _macroManager;
         private NameTagManager _nameTagManager;
@@ -51,7 +52,9 @@ namespace TxMark.Compiler
             _templateBaseType = baseType;
             _location = new TemplateLocation(templatePath);
             _macroManager = new MacroManager(baseType);
-            _stateTypeName = $"TxMark.Template.IState<{modelType.FullName}>";
+            _modelTypeName = ClassContext.GetTypeName(modelType);
+
+            _stateTypeName = $"TxMark.Template.IState<{_modelTypeName}>";
 
             _nameTagManager = new NameTagManager();
 
@@ -72,6 +75,12 @@ namespace TxMark.Compiler
             _codeContextStack = new Stack<ICodeContext>();
 
             _metadataReferenceManager = new MetadataReferenceManager();
+
+            if (_modelTypeName == "dynamic")
+            {
+                AddNamespaceFor(typeof(Microsoft.CSharp.RuntimeBinder.RuntimeBinderException));
+                AddNamespaceFor(typeof(DynamicObject));
+            }
 
             AddNamespaceFor(typeof(string));
 
@@ -269,6 +278,14 @@ namespace TxMark.Compiler
             get
             {
                 return _stateTypeName;
+            }
+        }
+
+        public string ModelTypeName
+        {
+            get
+            {
+                return _modelTypeName;
             }
         }
         public void Text(string text)

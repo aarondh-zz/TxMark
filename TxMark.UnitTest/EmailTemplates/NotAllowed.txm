@@ -1,0 +1,18 @@
+﻿@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Shared.AgentEmail>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+@*Still in waiting list but hasn’t been approved *@
+
+<p>
+    Hi,
+</p>
+<p>
+    I see you're signed up on our waitlist, but we're not quite ready for you.
+    Don't worry, we're letting more and more people in every day. 
+</p>
+<p>
+    I'll be in touch soon!
+</p>

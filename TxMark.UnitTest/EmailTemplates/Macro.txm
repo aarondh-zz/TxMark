@@ -1,0 +1,7 @@
+﻿@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Meeting.Macro>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+@Raw(Model.Body)

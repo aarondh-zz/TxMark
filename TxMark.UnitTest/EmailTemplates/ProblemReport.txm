@@ -1,0 +1,15 @@
+﻿@inherits Kobe.Templates.KobeTemplateBase < Kobe.Templates.Models.Emails.TopLevel.ProblemReport>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+<p>
+    @Model.Name has reported a problem
+</p>
+<p>
+    @Model.Message
+</p>
+<p>
+    Sorry to be the bearer of bad news.
+</p>

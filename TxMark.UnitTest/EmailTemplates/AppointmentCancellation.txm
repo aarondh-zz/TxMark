@@ -1,0 +1,12 @@
+﻿@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Shared.AgentEmail>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+<p>
+    Hello,
+</p>
+<p>
+    This meeting has been canceled. If there are any further updates, I will pass them along.
+</p>

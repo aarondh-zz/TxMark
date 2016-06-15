@@ -1,0 +1,14 @@
+﻿@using Kobe.Common.Users
+@using Kobe.Common.Models.Interfaces
+@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.TopLevel.ThreadlessReply>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+<p>
+    Hi@(Model.Sender.DisplayName(DisplayNameOptions.Space_FirstNameOrBlank)),
+</p>
+<p>
+    I would be happy to organize the meeting. To keep things orderly, let me contact everyone individually, or things might get out of hand! :)
+</p>

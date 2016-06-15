@@ -247,11 +247,11 @@ namespace TxMark
             var loadStartTime = DateTime.Now;
             var templateAssembly = Assembly.LoadFile(assemblyPath);
             Type templateType = templateAssembly.GetType(templateQualifiedTypeName);
-            var template = Activator.CreateInstance(templateType, model) as ICompiledTemplate;
+            var template = Activator.CreateInstance(templateType) as ICompiledTemplate;
             var loadEndTime = DateTime.Now;
             result.LoadTime = loadEndTime - loadStartTime;
             var executionStartTime = DateTime.Now;
-            string output = template.View(options);
+            string output = template.View(options, model);
             result.OutputStream = new MemoryStream(options.Encoding.GetBytes(output));
             var executionEndTime = DateTime.Now;
             result.ExecutionTime = executionEndTime - executionStartTime;

@@ -1,0 +1,23 @@
+﻿@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Framework.Nag>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+<p>
+    Hello,
+</p>
+<p>
+    I'm still waiting for a reply to the last email I sent you (see below).
+    Please get back to me as soon as you can, so I can finalize the meeting for everyone.
+</p>
+<p>
+    ------------
+</p>
+<p>
+    @Raw(@Model.EmailBody)
+</p>
+<p>
+    ------------
+</p>
+

@@ -1,0 +1,18 @@
+﻿@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Users.NotOnboarded>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+@* Signed up and through waitlist, but not onboarded *@
+
+<p>
+    Hi,
+</p>
+<p>
+    I see you're a registered client, but you haven't set up your account preferences yet.
+    Please visit <a href="@Model.Link">our website</a> to set up your preferences, so we can get started.    
+</p>
+<p>
+    Looking forward to working with you!
+</p>

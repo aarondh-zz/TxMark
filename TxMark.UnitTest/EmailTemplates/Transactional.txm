@@ -1,0 +1,48 @@
+﻿@using Kobe.Common.Users
+@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Shared.AgentEmail>
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Email</title>
+</head>
+<body style="font-family: sans-serif; font-size: 12pt;">
+    @RenderBody()
+    <div style="margin-top: 1em;">
+        @GetRandomClosing(),
+        <div>
+            @Model.AgentFirstName
+        </div>
+    </div>
+
+    <div style="font-size: 9pt; margin-top: 1em;">
+        @{
+            var tagline = GetRandomTagline(Model.AgentFirstName);
+        }
+        @if (Model.Creator != null)
+        {
+            <div>Scheduling assistant to @Model.Creator.DisplayName()</div>
+            @* The replace token is hardcoded in the BodyMailIdProvider.
+                We should pull this out into a Util constant that is referenced in both places if we encounter this
+                pattern again. *@
+            <div>
+                <a href="@(Model.RootUrl)api/redir/?id={##REPLACE-EMAILID##}{##REPLACE-INSTRUMENTATION##}&propname=signature&propvalue=@tagline.id">@tagline.text</a>
+            </div>
+        }
+        else
+        {
+            <div>Scheduling assistant</div>
+            <div>
+                <a href="@(Model.RootUrl)api/redir/?propname=signature&propvalue=@tagline.id">@tagline.text</a>
+            </div>
+        }
+        @* TODO: Add nice looking opt-out link, it should call /User/OptOut?userId=USER_ID*@
+    </div>
+    <div style="margin-top: 25px;font-size: 8px;">
+        Microsoft respects your privacy.  To learn more, please read our <a href="https://www.microsoft.com/en-us/privacystatement/default.aspx">Privacy Statement</a>. <br/>Microsoft Corporation, One Microsoft Way, Redmond, WA, USA 98052
+    </div>
+
+</body>
+</html>

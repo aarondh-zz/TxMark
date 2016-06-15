@@ -12,6 +12,7 @@ namespace TxMark.Compiler
         private ContentContextExitHandler<MethodDeclarationSyntax> _exitHandler;
         private List<ParameterSyntax> _parameters = new List<ParameterSyntax>();
         private List<SyntaxToken> _modifiers = new List<SyntaxToken>();
+        private bool _isOverride;
         public MethodContext(string methodName, ContentContextExitHandler<MethodDeclarationSyntax> exitHandler, bool isPublic = true, bool isOverride = false)
         {
             _methodName = methodName;
@@ -22,6 +23,7 @@ namespace TxMark.Compiler
             }
             if (isOverride)
             {
+                _isOverride = true;
                 _modifiers.Add(SF.Token(SyntaxKind.OverrideKeyword));
             }
             Add(StateHelper.MakeStatePushStatement());

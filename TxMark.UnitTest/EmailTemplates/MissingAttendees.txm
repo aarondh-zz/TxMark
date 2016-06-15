@@ -1,0 +1,18 @@
+﻿@using Kobe.Common.Users
+@using Kobe.Common.Models.Interfaces
+@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Meeting.MissingAttendees>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+<p>
+    Hi@(Model.Creator.DisplayName(DisplayNameOptions.Space_FirstNameOrBlank)),
+</p>
+<p>
+    Unfortunately. I don’t have the attendee contact details for @Model.MissingAtteendees.
+    Could you send this over at your convenience?
+</p>
+<p>
+    As soon as I have the details I’ll start scheduling. :)
+</p>

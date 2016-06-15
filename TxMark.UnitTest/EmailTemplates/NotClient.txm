@@ -1,0 +1,16 @@
+﻿@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Users.NotClient>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+@* Never even joined the waitlist *@
+
+<p>
+    Hi there,
+</p>
+<p>
+    Sorry, I don't recognize this email address: @Model.RecipientEmailAddress.<br/>
+    I only schedule meetings for registered clients, so I won't be able to help you out until you sign up.<br/>
+    Contact fuseschedule@microsoft.com if you have any questions.
+</p>

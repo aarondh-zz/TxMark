@@ -32,7 +32,11 @@ namespace TxMark.Compiler
         {
             return SF.MemberAccessExpression(
                 SyntaxKind.SimpleMemberAccessExpression,
-                SF.IdentifierName("Model"),
+                SF.MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    SF.IdentifierName("_this"),
+                    SF.IdentifierName("Model")
+                ),
                 SF.IdentifierName(variableName)
             );
         }

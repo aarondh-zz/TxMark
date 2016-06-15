@@ -11,6 +11,8 @@ namespace TxMark.CLI
         public string OutputPath { get; set; }
         [Option('m', "markdown", DefaultValue = true, HelpText = "Enable the markdown pre-processor.")]
         public bool MarkdownPreprocessor { get; set; }
+        [Option('d', "model", Required = false, HelpText = "The path for the dynamic json model source.")]
+        public string ModelPath { get; set; }
         [Option('x', "preproccessor", DefaultValue = false, HelpText = "Print the pre-processor to standard output.")]
         public bool OutputPreprocessor { get; set; }
 

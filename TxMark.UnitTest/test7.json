@@ -1,0 +1,15 @@
+﻿{
+  "IsFirstBranch": true,
+  "IsSecondBranch": true,
+  "IsThirdBranch": true,
+  "array": [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six"
+  ],
+  "CalendarService": "MyOwnBloodyCalendarService",
+  "Link": "http://daisley-harrison.com/nowhere"
+}

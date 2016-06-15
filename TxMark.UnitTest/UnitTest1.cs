@@ -4,12 +4,21 @@ using VoidNish.Diff;
 using System.IO;
 using System.Text;
 using TxMark.Utilities;
+using Newtonsoft.Json.Linq;
+using System.Dynamic;
 
 namespace TxMark.UnitTest
 {
     [TestClass]
     public class UnitTest1
     {
+        private dynamic LoadModel( string modelPath)
+        {
+            using (var reader = File.OpenText(modelPath))
+            {
+                return JObject.Parse(reader.ReadToEnd());
+            }
+        }
         private void AssertSuccess(TxMark.Result result)
         {
             StringBuilder message = new StringBuilder();
@@ -172,26 +181,26 @@ namespace TxMark.UnitTest
         [TestMethod]
         public void Text7()
         {
-            var model = new TestModel();
+            var model = LoadModel("test7.json");
             var options = new TxMark.Options()
             {
                 ForceCompile = true,
                 DiagnosticLevel = DiagnosticLevel.Information,
             };
-            TxMark.Result result = TxMark.Engine.Execute<TestModel>("test7.txm", model, options);
+            TxMark.Result result = TxMark.Engine.Execute<dynamic>("test7.txm", model, options);
             AssertSuccess(result);
             CheckOutput("test7.expected", result.OutputStream);
         }
         [TestMethod]
         public void Text8()
         {
-            var model = new TestModel();
+            var model = LoadModel("test7.json");
             var options = new TxMark.Options()
             {
                 ForceCompile = true,
                 DiagnosticLevel = DiagnosticLevel.Information,
             };
-            TxMark.Result result = TxMark.Engine.Execute<TestModel>("test8.txm", model, options);
+            TxMark.Result result = TxMark.Engine.Execute<dynamic>("test8.txm", model, options);
             AssertSuccess(result);
             CheckOutput("test8.expected", result.OutputStream);
         }

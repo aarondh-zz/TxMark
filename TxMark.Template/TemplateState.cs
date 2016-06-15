@@ -70,12 +70,14 @@ namespace TxMark.Template
         private Frame _currentFrame;
         private Stack<Frame> _frameStack;
         private Dictionary<string, object> _values;
-        public TemplateState(IViewOptions viewOptions)
+        public TemplateState(IViewOptions viewOptions, TModel model)
         {
+            this.Model = model;
             this.ViewOptions = viewOptions;
             _currentFrame = new Frame();
             _frameStack = new Stack<Frame>();
         }
+        public TModel Model { get; private set; }
         public object this[string key]
         {
             get

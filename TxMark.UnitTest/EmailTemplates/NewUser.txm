@@ -1,0 +1,20 @@
+﻿@using Kobe.Common.Users
+@using Kobe.Common.Models.Interfaces
+@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Users.NewUser>
+
+@{
+    Layout = "~/Shared/Transactional.cshtml";
+}
+
+<p>Hi@(Model.Creator.DisplayName(DisplayNameOptions.Space_FirstNameOrBlank)),</p>
+<p>
+    I'm @Model.AgentFirstName. It's great to meet you! The next time you need a meeting scheduled, just
+email me at <a href="mailto:@Model.AgentEmail">@Model.AgentEmail</a> and I’ll handle all the back and forth so you don't have to.
+</p>
+<p>
+It's easiest for me when you include me on emails with all the meeting attendees, then I'll take over from there.
+    I'll find the time that works best for everyone, and I'll set up the calendar event with all the meeting details.
+</p>
+<p>
+    I'm looking forward to working with you.
+</p>

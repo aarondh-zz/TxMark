@@ -40,6 +40,21 @@ namespace TxMark.Compiler
                 ));
         }
 
+        public static StatementSyntax MakeModelAssignmentStatement()
+        {
+
+            return SF.ExpressionStatement(
+                SF.AssignmentExpression(
+                    SyntaxKind.SimpleAssignmentExpression,
+                    SF.MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        SF.BaseExpression(),
+                        SF.IdentifierName("Model")
+                    ),
+                    SF.IdentifierName("model")
+                ));
+        }
+
         public static StatementSyntax MakeStatePopReturnStatement()
         {
             return SF.ReturnStatement(

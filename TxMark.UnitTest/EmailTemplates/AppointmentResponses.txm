@@ -1,0 +1,47 @@
+﻿@using Kobe.Schemas.Framework
+@using Kobe.Common.Users
+@using Kobe.Common.Models.Interfaces
+@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Meeting.AppointmentResponses>
+
+@{
+    Layout = "~/Shared/Assistant.cshtml";
+}
+
+@helper PrintNames(IList<User> users)
+{
+    for (var i = 0; i < users.Count; i++)
+    {
+        var user = users[i];
+        @user.DisplayName() if (i + 1 < users.Count){@(", ")}
+    }
+}
+
+<p>
+    Hi@(Model.Creator.DisplayName(DisplayNameOptions.Space_FirstNameOrBlank)),
+</p>
+<p>I have received some responses from your meeting's attendees, here's what I've gotten so far:</p><br />
+@if (@Model.Declines.Count > 0)
+{
+    @:<span>Declined:</span>
+    @PrintNames(@Model.Declines)
+    <br />
+}
+@if (@Model.Accepts.Count > 0)
+{
+    @:<span>Accepted:</span>
+    @PrintNames(@Model.Accepts)
+    <br />
+}
+@if (@Model.Tentatives.Count > 0)
+{
+    @:<span>Tentatively Accepted:</span>
+    @PrintNames(@Model.Tentatives)
+    <br />
+}
+@if (@Model.Unknowns.Count > 0)
+{
+    @:<span>Waiting for response:</span>
+    @PrintNames(@Model.Unknowns)
+    <br />
+}
+<br />

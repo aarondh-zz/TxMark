@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TxMark.UnitTest</RootNamespace>
     <AssemblyName>TxMark.UnitTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +36,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -57,6 +63,28 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="EmailTemplates\Appointment.txm" />
+    <None Include="EmailTemplates\AppointmentCancellation.txm" />
+    <None Include="EmailTemplates\AppointmentResponses.txm" />
+    <None Include="EmailTemplates\Assistant.txm" />
+    <None Include="EmailTemplates\Macro.txm" />
+    <None Include="EmailTemplates\MissingAttendees.txm" />
+    <None Include="EmailTemplates\MissingMeetingTimes.txm" />
+    <None Include="EmailTemplates\Nag.txm" />
+    <None Include="EmailTemplates\NewUser.txm" />
+    <None Include="EmailTemplates\NotAllowed.txm" />
+    <None Include="EmailTemplates\NotClient.txm" />
+    <None Include="EmailTemplates\NotOnboarded.txm" />
+    <None Include="EmailTemplates\Onboarding.txm" />
+    <None Include="EmailTemplates\ProblemReport.txm" />
+    <None Include="EmailTemplates\ReconnectCalendar.txm" />
+    <None Include="EmailTemplates\RequestAck.txm" />
+    <None Include="EmailTemplates\System.txm" />
+    <None Include="EmailTemplates\ThreadlessReply.txm" />
+    <None Include="EmailTemplates\Transactional.txm" />
+    <None Include="EmailTemplates\UnsupportedRequest.txm" />
+    <None Include="packages.config" />
     <None Include="test0.txm" />
     <None Include="test1.txm" />
     <None Include="test2.expected" />
@@ -67,6 +95,7 @@
     <None Include="test6.expected" />
     <None Include="test6.txm" />
     <None Include="test7.expected" />
+    <None Include="test7.json" />
     <None Include="test7.txm" />
     <None Include="test8.expected" />
     <None Include="test8.txm">

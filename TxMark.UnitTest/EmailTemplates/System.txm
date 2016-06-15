@@ -1,0 +1,20 @@
+﻿@inherits Kobe.Templates.KobeTemplateBase<Kobe.Templates.Models.Emails.Shared.ServiceEmail>
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>@Model.Title</title>
+</head>
+<body style="font-family: 'Segoe UI', Arial, 'Arial Black', Helvetica, Verdana, Geneva, Tahoma, sans-serif; font-size: 12;">
+    @RenderBody()
+    <div style="margin-top: 25px;">
+        Cheers,<br />
+        The @Model.ServiceName Team
+    </div>
+    <div style="margin-top: 25px;font-size: 8px;">
+        Microsoft respects your privacy.  To learn more, please read our <a href="https://www.microsoft.com/en-us/privacystatement/default.aspx">Privacy Statement</a>. <br />Microsoft Corporation, One Microsoft Way, Redmond, WA, USA 98052
+    </div>
+</body>
+</html>

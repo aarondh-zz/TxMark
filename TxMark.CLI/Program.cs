@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Dynamic;
 using System.IO;
 using TxMark.Template;
 using TxMark.Template.Formatters;
@@ -8,6 +10,20 @@ namespace TxMark.CLI
 {
     public class Program
     {
+        private static dynamic LoadModel(string modelPath)
+        {
+            if ( string.IsNullOrWhiteSpace(modelPath))
+            {
+                return new ExpandoObject();
+            }
+            else
+            {
+                using (var reader = File.OpenText(modelPath))
+                {
+                    return JObject.Parse(reader.ReadToEnd());
+                }
+            }
+        }
         static int Main(string[] args)
         {
             bool successful = false;
@@ -29,7 +45,8 @@ namespace TxMark.CLI
                         break;
                 }
                 var startTime = DateTime.Now;
-                var result = TxMark.Engine.Execute<TestModel>(options.TemplatePath, new TestModel(), txMarkOptions);
+                var model = LoadModel(options.ModelPath);
+                TxMark.Result result = TxMark.Engine.Execute<dynamic>(options.TemplatePath, model, txMarkOptions);
                 var endTime = DateTime.Now;
                 if (options.OutputPreprocessor)
                 {
