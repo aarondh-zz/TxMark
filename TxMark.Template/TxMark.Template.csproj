@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="CompiledTemplateBase.cs" />
     <Compile Include="ICompiledTemplate.cs" />
-    <Compile Include="IRawHtmlValue.cs" />
+    <Compile Include="IRawValue.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="Fomatters\IFormatter.cs" />
     <Compile Include="ITemplateWriter.cs" />

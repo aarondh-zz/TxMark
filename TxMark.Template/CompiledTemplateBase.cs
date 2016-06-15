@@ -27,10 +27,10 @@ namespace TxMark.Template
         {
             return value?.ToString();
         }
-        private class RawHtmlValue : IRawHtmlValue
+        private class RawValue : IRawValue
         {
             private string _value;
-            public RawHtmlValue( string value )
+            public RawValue( string value )
             {
                 _value = value;
             }
@@ -41,9 +41,9 @@ namespace TxMark.Template
             }
         }
         [Macro]
-        public IValue Raw(object value)
+        public IRawValue Raw(object value)
         {
-            return new RawHtmlValue(value?.ToString());
+            return new RawValue(value?.ToString());
         }
 
         [Macro]

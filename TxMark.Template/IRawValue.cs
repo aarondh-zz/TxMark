@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TxMark.Template
 {
-    public interface IRawHtmlValue : IValue
+    public interface IRawValue : IValue
     {
     }
 }

@@ -28,7 +28,7 @@ namespace TxMark.Template.Formatters
             {
                 return;
             }
-            else if (value is IRawHtmlValue)
+            else if (value is IRawValue)
             {
                 writer.Write(value.ToString());
             }
@@ -44,7 +44,7 @@ namespace TxMark.Template.Formatters
             {
                 return;
             }
-            else if (value is IRawHtmlValue)
+            else if (value is IRawValue)
             {
                 writer.Write(value.ToString());
             }

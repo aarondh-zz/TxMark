@@ -55,18 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="test0.txm" />
-    <None Include="test1.txm" />
-    <None Include="test2.txm" />
-    <None Include="test3.txm" />
-    <None Include="test3a.txm" />
-    <None Include="test4.txm" />
-    <None Include="test5.txm" />
-    <None Include="test6.txm" />
-    <None Include="test7.txm" />
-    <None Include="test8.txm">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="TxMark.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -82,9 +70,6 @@
       <Project>{b695fdd4-5897-41dd-881b-057857cfcd01}</Project>
       <Name>TxMark</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
