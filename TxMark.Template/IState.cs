@@ -10,9 +10,7 @@ namespace TxMark.Template
         IViewOptions ViewOptions { get; }
         void Push();
         IValue Pop();
-        void Write(IValue value);
         void Write(object value);
-        void Write(string value);
         void Write(char value);
         void Write(int value);
         void Write(double value);

@@ -20,6 +20,7 @@ namespace TxMark
             public const string Parser = "Parser";
             public const string Preprocessor = "Preprocessor";
             public const string Roslyn = "Roslyn";
+            public const string Template = "Template";
         }
 
         public Result()

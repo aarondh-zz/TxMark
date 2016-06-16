@@ -169,6 +169,13 @@ namespace TxMark.Compiler
             _text.Append(word);
         }
 
+        public override void Quote(string quote)
+        {
+            _text.Append('"');
+            _text.Append(quote);
+            _text.Append('"');
+        }
+
         public override void Punctuation(char punctuation)
         {
             _text.Append(punctuation);
@@ -250,19 +257,23 @@ namespace TxMark.Compiler
                 case CodeContextTypes.IndexExpression:
                     return new ExpressionContext((expression) =>
                     {
-                        _expression = SF.ElementAccessExpression(
-                            _expression,
-                            SF.BracketedArgumentList(
-                                SF.SingletonSeparatedList<ArgumentSyntax>(
-                                    SF.Argument(
-                                        SF.BinaryExpression(
-                                            SyntaxKind.SubtractExpression,
-                                            expression,
-                                            SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(1))
-                                            )
-                                    )
-                                )
-                            )
+                        _expression = MethodCallContext.CreateMethodCall("Index", false,
+                            new ArgumentSyntax[]
+                            {
+                                SF.Argument(_expression),
+                                SF.Argument(expression)
+                            }
+                        );
+                    });
+                case CodeContextTypes.OfExpression:
+                    return new ExpressionContext((expression) =>
+                    {
+                        _expression = MethodCallContext.CreateMethodCall("Index", false,
+                            new ArgumentSyntax[]
+                            {
+                                SF.Argument(expression),
+                                SF.Argument(_expression)
+                            }
                         );
                     });
             }

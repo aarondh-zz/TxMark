@@ -5,9 +5,7 @@ namespace TxMark.Template
 {
     public interface ITemplateWriter
     {
-        void Write(TextWriter writer, IValue value);
         void Write(TextWriter writer, object value);
-        void Write(TextWriter writer, string value);
         void Write(TextWriter writer, char value);
         void Write(TextWriter writer, int value);
         void Write(TextWriter writer, double value);

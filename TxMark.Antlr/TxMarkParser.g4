@@ -57,7 +57,8 @@ indexSuffix
 	;
 
 index_subexpression
-	: OPERATOR_POSSESSIVE ( (number indexSuffix) | ( OPEN_PARENTHESES expression CLOSE_PARENTHESES ) )
+	: OPERATOR_POSSESSIVE ( (number indexSuffix) | ( OPEN_PARENTHESES expression CLOSE_PARENTHESES ) | quote )
+	| OPERATOR_OF operand
 	;
 
 index_expression
@@ -127,8 +128,8 @@ constant
   | constantTrue
   | constantFalse
   | constantNull
-
   | quote
+  | word
   ;
 
 macroArgument:

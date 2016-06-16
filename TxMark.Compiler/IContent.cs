@@ -15,7 +15,8 @@ namespace TxMark.Compiler
         void Number(string numberText);
         void Text(string text);
         void Variable(string variableName);
-        void Word(string text);
+        void Word(string word);
+        void Quote(string quote);
         void Whitespace();
         void NewLine();
     }

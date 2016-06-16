@@ -14,14 +14,6 @@ namespace TxMark.Template.Formatters
             writer.Write(System.Net.WebUtility.HtmlEncode(value.ToString()));
         }
 
-        public override void Write(TextWriter writer, string value)
-        {
-            if ( value != null)
-            {
-                writer.Write(System.Net.WebUtility.HtmlEncode(value.ToString()));
-            }
-        }
-
         public override void Write(TextWriter writer, object value)
         {
             if (value == null)
@@ -37,23 +29,6 @@ namespace TxMark.Template.Formatters
                 writer.Write(System.Net.WebUtility.HtmlEncode(value.ToString()));
             }
         }
-
-        public override void Write(TextWriter writer, IValue value)
-        {
-            if (value == null)
-            {
-                return;
-            }
-            else if (value is IRawValue)
-            {
-                writer.Write(value.ToString());
-            }
-            else
-            {
-                writer.Write(System.Net.WebUtility.HtmlEncode(value.ToString()));
-            }
-        }
-
         public override bool WriteOpenTag(TextWriter writer, string tagName, bool isClosing, IDictionary<string, string> attributes)
         {
             writer.Write("<" + tagName);

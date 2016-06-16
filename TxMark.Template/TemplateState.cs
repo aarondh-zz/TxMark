@@ -314,15 +314,6 @@ namespace TxMark.Template
             this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
         }
 
-        public void Write(string value)
-        {
-            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
-        }
-        public void Write(IValue value)
-        {
-            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
-        }
-
         public void Write(object value)
         {
             this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);

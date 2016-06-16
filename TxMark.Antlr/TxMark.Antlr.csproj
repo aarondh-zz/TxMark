@@ -52,7 +52,6 @@
   <ItemGroup>
     <None Include="antlr4.bat" />
     <None Include="build.bat" />
-    <None Include="build1.bat" />
     <None Include="grun.bat" />
     <None Include="packages.config" />
     <Antlr4 Include="TxMarkLexer.g4">

@@ -245,6 +245,10 @@ OPERATOR_POSSESSIVE
     : '\'' S
     ;
 
+OPERATOR_OF
+	: O F
+	;
+
 OPERATOR_PLUS
     : '+'
     ;

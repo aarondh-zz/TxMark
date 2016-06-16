@@ -15,17 +15,25 @@ namespace TxMark.Template.Formatters
             return true;
         }
 
-        public override void Write(TextWriter writer, string value)
+        public override void Write(TextWriter writer, object value)
         {
-            if (!string.IsNullOrEmpty(value) )
+            if ( value == null)
             {
-                char nextChar = value[0];
-                if (char.IsLetterOrDigit(lastChar) && char.IsLetterOrDigit(nextChar))
+                return;
+            }
+            else
+            {
+                var text = value.ToString();
+                if (!string.IsNullOrEmpty(text))
                 {
-                    writer.Write(' ');
+                    char nextChar = text[0];
+                    if (char.IsLetterOrDigit(lastChar) && char.IsLetterOrDigit(nextChar))
+                    {
+                        writer.Write(' ');
+                    }
+                    writer.Write(text);
+                    lastChar = text[text.Length - 1];
                 }
-                writer.Write(value);
-                lastChar = value[value.Length - 1];
             }
         }
     }

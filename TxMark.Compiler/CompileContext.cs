@@ -255,6 +255,11 @@ namespace TxMark.Compiler
         {
             Push(CodeContextTypes.MethodCall, macroDefinition.Name, new Bag<string>().Set<MacroDefinition>("definition", macroDefinition).Set<string>("hook", hookName));
         }
+
+        public void Quote( string quote )
+        {
+            _codeContext.Quote(quote);
+        }
         public string ResolveHookName(object reference)
         {
             return _nameTagManager.ResolveHookName(reference);

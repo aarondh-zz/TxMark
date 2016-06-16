@@ -49,6 +49,7 @@
     <Compile Include="IViewOptions.cs" />
     <Compile Include="MacroArgument.cs" />
     <Compile Include="Fomatters\HtmlMappingFormatter.cs" />
+    <Compile Include="NullValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Fomatters\FormatterBase.cs" />
     <Compile Include="Fomatters\HtmlFormatter.cs" />

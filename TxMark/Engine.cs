@@ -251,8 +251,18 @@ namespace TxMark
             var loadEndTime = DateTime.Now;
             result.LoadTime = loadEndTime - loadStartTime;
             var executionStartTime = DateTime.Now;
-            string output = template.View(options, model);
-            result.OutputStream = new MemoryStream(options.Encoding.GetBytes(output));
+            try
+            {
+                string output = template.View(options, model);
+                if (output != null)
+                {
+                    result.OutputStream = new MemoryStream(options.Encoding.GetBytes(output));
+                }
+            }
+            catch(Exception e)
+            {
+                result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Template, e.GetType().FullName, e.Message));
+            }
             var executionEndTime = DateTime.Now;
             result.ExecutionTime = executionEndTime - executionStartTime;
             return result;

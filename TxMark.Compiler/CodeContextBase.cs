@@ -82,5 +82,9 @@ namespace TxMark.Compiler
         {
             Context.Log(LogLevel.Error, $"Word not supported in {Label} context", Context.Location.Line, Context.Location.Column);
         }
+        public virtual void Quote(string quote)
+        {
+            Context.Log(LogLevel.Error, $"Quote not supported in {Label} context", Context.Location.Line, Context.Location.Column);
+        }
     }
 }

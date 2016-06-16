@@ -5,11 +5,6 @@ namespace TxMark.Template.Formatters
 {
     public abstract class FormatterBase : IFormatter
     {
-        public virtual void Write(TextWriter writer, string value)
-        {
-            writer.Write(value);
-        }
-
         public virtual void Write(TextWriter writer, int value)
         {
             writer.Write(value);
@@ -31,11 +26,6 @@ namespace TxMark.Template.Formatters
         }
 
         public virtual void Write(TextWriter writer, object value)
-        {
-            writer.Write(value);
-        }
-
-        public virtual void Write(TextWriter writer, IValue value)
         {
             writer.Write(value);
         }

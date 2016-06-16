@@ -29,9 +29,9 @@ namespace TxMark.Compiler
         }
         public override void EnterQuote([NotNull] TxMarkParser.QuoteContext context)
         {
-            string text = context.DOUBLE_QUOTE_STRING().GetText();
-            text = text.Substring(1, text.Length - 2);
-            _compileContext.Word(text);
+            string quote = context.DOUBLE_QUOTE_STRING().GetText();
+            quote = quote.Substring(1, quote.Length - 2);
+            _compileContext.Quote(quote);
         }
         public override void EnterNumber([NotNull] TxMarkParser.NumberContext context)
         {
@@ -404,7 +404,14 @@ namespace TxMark.Compiler
 
         public override void EnterIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context)
         {
-            _compileContext.Push(CodeContextTypes.IndexExpression);
+            if (context.OPERATOR_POSSESSIVE() != null)
+            {
+                _compileContext.Push(CodeContextTypes.IndexExpression);
+            }
+            else if (context.OPERATOR_OF() != null)
+            {
+                _compileContext.Push(CodeContextTypes.OfExpression);
+            }
         }
 
         public override void ExitIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context)

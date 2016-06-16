@@ -22,6 +22,7 @@ namespace TxMark.Compiler
         IndexExpression,
         Method,
         MethodCall,
+        OfExpression,
         ParenthesizedExpression,
         Set,
         SignedExpression,
