@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Reflection;
 
 namespace TxMark.Template
 {
@@ -21,6 +22,18 @@ namespace TxMark.Template
         public string View(IViewOptions viewOptions, object model)
         {
             return View(viewOptions, (TModel)model);
+        }
+        private static MemberInfo GetPropertyOrField(Type type, string name)
+        {
+            var property = type.GetProperty(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
+            if (property == null)
+            {
+                return type.GetField(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
+            }
+            else
+            {
+                return property;
+            }
         }
         public object Index(object value, object key)
         {
@@ -67,18 +80,18 @@ namespace TxMark.Template
                 {
                     var type = value.GetType();
                     var name = key.ToString();
-                    var property = type.GetProperty(name);
-                    if ( property == null)
+                    var member = GetPropertyOrField(type, name);
+                    if ( member == null && name.Equals("length",StringComparison.InvariantCultureIgnoreCase) )
                     {
-                        var field = type.GetField(name);
-                        if (field != null)
-                        {
-                            return field.GetValue(value);
-                        }
+                        member = GetPropertyOrField(type, "Count");
                     }
-                    else
+                    if (member is PropertyInfo)
                     {
-                        return property.GetValue(value);
+                        return ((PropertyInfo)member).GetValue(value);
+                    }
+                    else if (member is FieldInfo)
+                    {
+                        return ((FieldInfo)member).GetValue(value);
                     }
                 }
             }

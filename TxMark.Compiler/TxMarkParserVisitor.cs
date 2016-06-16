@@ -88,13 +88,6 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitDocument([NotNull] TxMarkParser.DocumentContext context);
 
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="TxMarkParser.word"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitWord([NotNull] TxMarkParser.WordContext context);
-
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.whitespace"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -128,6 +121,13 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitHookName([NotNull] TxMarkParser.HookNameContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.word"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitWord([NotNull] TxMarkParser.WordContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.number"/>.
@@ -324,6 +324,13 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitMuinuta([NotNull] TxMarkParser.MuinutaContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.htmlAttributeName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitHtmlAttributeName([NotNull] TxMarkParser.HtmlAttributeNameContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.htmlAttribute"/>.

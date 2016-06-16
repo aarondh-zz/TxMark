@@ -17,16 +17,6 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 */
 	void exitDocument(TxMarkParser.DocumentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TxMarkParser#word}.
-	 * @param ctx the parse tree
-	 */
-	void enterWord(TxMarkParser.WordContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TxMarkParser#word}.
-	 * @param ctx the parse tree
-	 */
-	void exitWord(TxMarkParser.WordContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#whitespace}.
 	 * @param ctx the parse tree
 	 */
@@ -76,6 +66,16 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitHookName(TxMarkParser.HookNameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#word}.
+	 * @param ctx the parse tree
+	 */
+	void enterWord(TxMarkParser.WordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#word}.
+	 * @param ctx the parse tree
+	 */
+	void exitWord(TxMarkParser.WordContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#number}.
 	 * @param ctx the parse tree

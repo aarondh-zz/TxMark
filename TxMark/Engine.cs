@@ -31,9 +31,20 @@ namespace TxMark
             markdownParser.BuildParseTree = true;
             preprocessorParseTree = markdownParser.document();
             var markdownListener = new MarkdownPreprocessorParseTreeListener();
-            ParseTreeWalker.Default.Walk(markdownListener, preprocessorParseTree);
+            try
+            {
+                ParseTreeWalker.Default.Walk(markdownListener, preprocessorParseTree);
+            }
+            catch (Exception e)
+            {
+                result.AddDiagnostic(
+                    new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Preprocessor, "parse tree walking", e.Message)
+                    );
+                result.Success = false;
+                return new StringReader("");
+            }
 
-            var endTime = DateTime.Now;
+    var endTime = DateTime.Now;
             result.PreprocessorTime = endTime - startTime;
             if ( options.OutputPreprocessor)
             {
@@ -87,9 +98,19 @@ namespace TxMark
 
                 });
             var txMarkListener = new TxMarkParseTreeListener(compileContext);
-            ParseTreeWalker.Default.Walk(txMarkListener, parseTree);
-            result.Success = true;
-            foreach( var diagnostic in diagnostics)
+            try
+            {
+                ParseTreeWalker.Default.Walk(txMarkListener, parseTree);
+                result.Success = true;
+            }
+            catch (Exception e)
+            {
+                diagnostics.Add(
+                    new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Parser, "parse tree walking", e.Message)
+                    );
+                result.Success = false;
+            }
+            foreach ( var diagnostic in diagnostics)
             {
                 if ( diagnostic.Severity == DiagnosticSeverity.Error)
                 {
@@ -215,9 +236,15 @@ namespace TxMark
                     templateReader.Close();
                 }
             }
-            DateTime startTime = DateTime.Now;
-            var compileContext = Parse<TModel>(templateReader, templatePath, options, ref result);
-            result.Success = Compile<TModel>(compileContext, templatePath, options, ref result);
+            if (result.Success)
+            {
+                DateTime startTime = DateTime.Now;
+                var compileContext = Parse<TModel>(templateReader, templatePath, options, ref result);
+                if (result.Success)
+                {
+                    result.Success = Compile<TModel>(compileContext, templatePath, options, ref result);
+                }
+            }
             return result;
         }
 

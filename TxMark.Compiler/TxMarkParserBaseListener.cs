@@ -139,19 +139,6 @@ public partial class TxMarkParserBaseListener : ITxMarkParserListener {
 	public virtual void ExitDocument([NotNull] TxMarkParser.DocumentContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TxMarkParser.word"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterWord([NotNull] TxMarkParser.WordContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TxMarkParser.word"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitWord([NotNull] TxMarkParser.WordContext context) { }
-
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.whitespace"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -215,6 +202,19 @@ public partial class TxMarkParserBaseListener : ITxMarkParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitHookName([NotNull] TxMarkParser.HookNameContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.word"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterWord([NotNull] TxMarkParser.WordContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.word"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitWord([NotNull] TxMarkParser.WordContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.number"/>.
@@ -579,6 +579,19 @@ public partial class TxMarkParserBaseListener : ITxMarkParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitMuinuta([NotNull] TxMarkParser.MuinutaContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.htmlAttributeName"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterHtmlAttributeName([NotNull] TxMarkParser.HtmlAttributeNameContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.htmlAttributeName"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitHtmlAttributeName([NotNull] TxMarkParser.HtmlAttributeNameContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.htmlAttribute"/>.

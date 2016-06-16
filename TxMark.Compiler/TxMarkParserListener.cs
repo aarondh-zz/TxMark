@@ -121,17 +121,6 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	void ExitDocument([NotNull] TxMarkParser.DocumentContext context);
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TxMarkParser.word"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterWord([NotNull] TxMarkParser.WordContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TxMarkParser.word"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitWord([NotNull] TxMarkParser.WordContext context);
-
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.whitespace"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -185,6 +174,17 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitHookName([NotNull] TxMarkParser.HookNameContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.word"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterWord([NotNull] TxMarkParser.WordContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.word"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitWord([NotNull] TxMarkParser.WordContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.number"/>.
@@ -493,6 +493,17 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitMuinuta([NotNull] TxMarkParser.MuinutaContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.htmlAttributeName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterHtmlAttributeName([NotNull] TxMarkParser.HtmlAttributeNameContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.htmlAttributeName"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitHtmlAttributeName([NotNull] TxMarkParser.HtmlAttributeNameContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.htmlAttribute"/>.

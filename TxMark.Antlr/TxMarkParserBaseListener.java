@@ -27,18 +27,6 @@ public class TxMarkParserBaseListener implements TxMarkParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWord(TxMarkParser.WordContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitWord(TxMarkParser.WordContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterWhitespace(TxMarkParser.WhitespaceContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -94,6 +82,18 @@ public class TxMarkParserBaseListener implements TxMarkParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitHookName(TxMarkParser.HookNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWord(TxMarkParser.WordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWord(TxMarkParser.WordContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

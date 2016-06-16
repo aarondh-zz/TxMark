@@ -110,7 +110,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArgumentContext.cs" />
     <Compile Include="AttributeContext.cs" />
     <Compile Include="Bag.cs" />
     <Compile Include="BlockContext.cs" />

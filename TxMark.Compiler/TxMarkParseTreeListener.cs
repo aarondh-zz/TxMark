@@ -39,9 +39,17 @@ namespace TxMark.Compiler
         }
         public override void EnterWord([NotNull] TxMarkParser.WordContext context)
         {
-            if ( context.Parent is TxMarkParser.PhraseContext)
+            if (context.Parent is TxMarkParser.PhraseContext)
             {
                 _compileContext.Word(context.GetText());
+            }
+            else if (context.Parent is TxMarkParser.ConstantContext)
+            {
+                _compileContext.Quote(context.GetText());
+            }
+            else if (context.Parent is TxMarkParser.HtmlAttributeContext)
+            {
+                _compileContext.Quote(context.GetText());
             }
         }
         public override void EnterWhitespace([NotNull] TxMarkParser.WhitespaceContext context)
@@ -198,7 +206,15 @@ namespace TxMark.Compiler
         public override void EnterVariable([NotNull] TxMarkParser.VariableContext context)
         {
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
-            _compileContext.Variable(context.word().GetText());
+            var word = context.word();
+            if (word == null )
+            {
+                _compileContext.Punctuation('$');
+            }
+            else
+            {
+                _compileContext.Variable(word.GetText());
+            }
         }
         public override void EnterMacroArgument([NotNull] TxMarkParser.MacroArgumentContext context)
         {
@@ -276,7 +292,7 @@ namespace TxMark.Compiler
         }
         public override void EnterHtmlAttribute([NotNull] TxMarkParser.HtmlAttributeContext context)
         {
-            _compileContext.Push(CodeContextTypes.Attribute, context.word().GetText());
+            _compileContext.Push(CodeContextTypes.Attribute, context.htmlAttributeName().GetText());
         }
 
         public override void ExitHtmlAttribute([NotNull] TxMarkParser.HtmlAttributeContext context)

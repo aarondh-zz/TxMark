@@ -83,7 +83,7 @@ namespace TxMark.Compiler
             switch (contextType)
             {
                 case CodeContextTypes.Argument:
-                    return new ArgumentContext((expression) =>
+                    return new ExpressionContext((expression) =>
                     {
                         if (expression == null)
                         {

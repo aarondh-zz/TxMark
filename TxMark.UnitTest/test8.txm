@@ -3,4 +3,5 @@
   This should also be "three": (print:$array's (3))
   This should also be "three": (print: 3 of $array)
   This should also be "three": (print: (5 * 2 - 7) of $array)
+  This should be "6": (print: length of $array)
 </div>

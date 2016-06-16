@@ -38,12 +38,12 @@
 }
 ]
 |Location_Phone_Conference:[
-    if (loc.IsInPerson && !string.IsNullOrEmpty(loc.MeetingLocation))
-    {
-            @("The location is " + loc.MeetingLocation + ". ")
-    }
+    (if: "IsInperson" of $location AND (count: "MeetingLocation" of $location) is 0)
+    [
+        The location is (print: "MeetingLocation" of $location).
+    ]
 
-    if (loc.IsPhoneCall &&
+    (if: "IsPhoneCall" of $location AND  (loc.IsPhoneCall &&
         loc.ContactInfo != null &&
         loc.ContactInfo.Count > 0 &&
         loc.ContactInfo[0] != null)

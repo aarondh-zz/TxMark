@@ -6,11 +6,6 @@ document
     : content EOF
     ;
 
-word
-	: WORD
-	| MWORD
-	;
-
 whitespace
 	: WHITESPACE
 	;
@@ -33,6 +28,11 @@ hookName
 	| MQUESTION_MARK word
 	;
 
+word
+	: WORD
+	| MWORD
+	;
+
 number
 	: NUMBER
 	| MNUMBER
@@ -45,7 +45,8 @@ quote
 operand
   : variable 
   | hookName 
-  | constant 
+  | constant
+  | word 
   | ( OPEN_PARENTHESES expression CLOSE_PARENTHESES ) 
   ;
 
@@ -57,7 +58,7 @@ indexSuffix
 	;
 
 index_subexpression
-	: OPERATOR_POSSESSIVE ( (number indexSuffix) | ( OPEN_PARENTHESES expression CLOSE_PARENTHESES ) | quote )
+	: OPERATOR_POSSESSIVE ( (number indexSuffix) | ( OPEN_PARENTHESES expression CLOSE_PARENTHESES ) | quote | word )
 	| OPERATOR_OF operand
 	;
 
@@ -184,8 +185,12 @@ muinuta
 	| SINGLE_QUOTE	
 	;
 
+htmlAttributeName
+	: word
+	;
+
 htmlAttribute   
-    : whitespace? word whitespace? EQUALS whitespace? htmlAttributeValue
+    : whitespace? htmlAttributeName whitespace? EQUALS whitespace? htmlAttributeValue
     ;
 
 htmlAttributeValueContent 

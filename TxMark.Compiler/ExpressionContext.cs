@@ -61,15 +61,13 @@ namespace TxMark.Compiler
 
         public override void Exit()
         {
-            WriteTextIfRequired(true);
             if ( _exitHandler != null)
             {
                 _exitHandler(_expression);
             }
         }
-        protected void Add( ExpressionSyntax expression)
+        protected virtual void Add( ExpressionSyntax expression)
         {
-            WriteTextIfRequired();
             if ( _expression == null)
             {
                 _expression = expression;
@@ -86,32 +84,6 @@ namespace TxMark.Compiler
                 return _expression == null;
             }
         }
-        protected virtual string TransformText( StringBuilder text, Position position)
-        {
-            return text.ToString();
-        }
-        protected void WriteTextIfRequired(bool isLast = true)
-        {
-            if ( _text.Length > 0 )
-            {
-                Position position;
-                if ( _expression == null)
-                {
-                    position = Position.First;
-                }
-                else if ( isLast)
-                {
-                    position = Position.Last;
-                }
-                else
-                {
-                    position = Position.Unknown;
-                }
-                string text = TransformText(_text, position);
-                _text.Length = 0;
-                Add(SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(text)));
-            }
-        }
         public override void Boolean(bool boolean)
         {
             if ( boolean)
@@ -125,7 +97,6 @@ namespace TxMark.Compiler
         }
         public override void NewLine()
         {
-            _text.AppendLine();
         }
         public override void Number(string numberText)
         {
@@ -159,31 +130,14 @@ namespace TxMark.Compiler
         {
             Add(SF.LiteralExpression(SyntaxKind.NullLiteralExpression));
         }
-        public override void Text(string text)
-        {
-            _text.Append(text);
-        }
-
-        public override void Word(string word)
-        {
-            _text.Append(word);
-        }
 
         public override void Quote(string quote)
         {
-            _text.Append('"');
-            _text.Append(quote);
-            _text.Append('"');
-        }
-
-        public override void Punctuation(char punctuation)
-        {
-            _text.Append(punctuation);
+            Add(SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(quote)));
         }
 
         public override void Whitespace()
         {
-            _text.Append(" ");
         }
 
         public override void Variable(string variableName)
@@ -268,13 +222,16 @@ namespace TxMark.Compiler
                 case CodeContextTypes.OfExpression:
                     return new ExpressionContext((expression) =>
                     {
-                        _expression = MethodCallContext.CreateMethodCall("Index", false,
-                            new ArgumentSyntax[]
-                            {
+                        if ( _expression != null && expression != null)
+                        {
+                            _expression = MethodCallContext.CreateMethodCall("Index", false,
+                                new ArgumentSyntax[]
+                                {
                                 SF.Argument(expression),
                                 SF.Argument(_expression)
-                            }
-                        );
+                                }
+                            );
+                        }
                     });
             }
             return base.CreateContext(contextType, name, attributes);
