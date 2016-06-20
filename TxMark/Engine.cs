@@ -60,9 +60,9 @@ namespace TxMark
 
             var inputStream = new AntlrInputStream(reader);
 
-            var harloweLexer = new TxMarkLexer(inputStream);
+            var txMarkLexer = new TxMarkLexer(inputStream);
 
-            var tokens = new CommonTokenStream(harloweLexer);
+            var tokens = new CommonTokenStream(txMarkLexer);
 
             var txMarkParser = new TxMarkParser(tokens);
 
