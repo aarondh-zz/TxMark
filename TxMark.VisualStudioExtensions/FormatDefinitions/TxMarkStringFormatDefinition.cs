@@ -8,18 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace TxMark.EditorClassifier
+namespace TxMark.VisualStudioExtensions.FormatDefinitions
 {
     [Export(typeof(EditorFormatDefinition))]
-    [Name("MarkerFormatDefinition/TxMarkPunctuationFormatDefinition")]
+    [Name("MarkerFormatDefinition/TxMarkStringFormatDefinition")]
     [UserVisible(true)]
-    public class TxMarkPunctuationFormatDefinition : MarkerFormatDefinition
+    public class TxMarkStringFormatDefinition : MarkerFormatDefinition
     {
 
-        public TxMarkPunctuationFormatDefinition()
+        public TxMarkStringFormatDefinition()
         {
-            this.ForegroundBrush = Brushes.Blue;
-            this.DisplayName = "Punctuation";
+            this.ForegroundBrush = Brushes.DarkMagenta;
+            this.DisplayName = "TxMark String";
             this.ZOrder = 5;
         }
     }

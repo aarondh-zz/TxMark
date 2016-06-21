@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{56579222-0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TxMark.UnitTest", "TxMark.UnitTest\TxMark.UnitTest.csproj", "{108CC3D8-8A31-4483-8B4A-8CF2C22C7417}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TxMark.EditorClassifier", "TxMark.EditorClassifier\TxMark.EditorClassifier.csproj", "{B3B87FB4-C4B1-4B07-B659-048D42E35789}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TxMark.VisualStudioExtensions", "TxMark.VisualStudioExtensions\TxMark.VisualStudioExtensions.csproj", "{B3B87FB4-C4B1-4B07-B659-048D42E35789}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

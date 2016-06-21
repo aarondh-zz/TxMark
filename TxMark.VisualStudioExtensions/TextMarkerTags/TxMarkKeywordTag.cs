@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TxMark.EditorClassifier
+namespace TxMark.VisualStudioExtensions.TextMarkerTags
 {
     public class TxMarkKeywordTag : TextMarkerTag
     {

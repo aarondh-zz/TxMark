@@ -8,18 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace TxMark.EditorClassifier
+namespace TxMark.VisualStudioExtensions.FormatDefinitions
 {
     [Export(typeof(EditorFormatDefinition))]
-    [Name("MarkerFormatDefinition/TxMarkStringFormatDefinition")]
+    [Name("MarkerFormatDefinition/TxMarkKeywordFormatDefinition")]
     [UserVisible(true)]
-    public class TxMarkStringFormatDefinition : MarkerFormatDefinition
+    public class TxMarkKeywordFormatDefinition : MarkerFormatDefinition
     {
 
-        public TxMarkStringFormatDefinition()
+        public TxMarkKeywordFormatDefinition()
         {
+            this.ForegroundCustomizable = true;
+            this.BackgroundCustomizable = true;
             this.ForegroundBrush = Brushes.DarkMagenta;
-            this.DisplayName = "HTML Attribute";
+            this.DisplayName = "TxMark Keyword";
             this.ZOrder = 5;
         }
     }

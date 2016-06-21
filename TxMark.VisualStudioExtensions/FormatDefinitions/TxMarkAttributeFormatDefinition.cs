@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace TxMark.EditorClassifier
+namespace TxMark.VisualStudioExtensions.FormatDefinitions
 {
     [Export(typeof(EditorFormatDefinition))]
     [Name("MarkerFormatDefinition/TxMarkAttributeFormatDefinition")]
@@ -19,7 +19,7 @@ namespace TxMark.EditorClassifier
         public TxMarkAttributeFormatDefinition()
         {
             this.ForegroundBrush = Brushes.DarkMagenta;
-            this.DisplayName = "HTML Attribute";
+            this.DisplayName = "TxMark Attribute";
             this.ZOrder = 5;
         }
     }
