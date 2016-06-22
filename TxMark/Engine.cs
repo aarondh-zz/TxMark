@@ -215,7 +215,7 @@ namespace TxMark
         }
         public static Result Build<TModel>(string templatePath, Options options)
         {
-            var result = new Result();
+            var result = new Result() { Success = true };
             if (options.DiagnosticLevel >= DiagnosticLevel.Information)
             {
                 result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Info,Result.Sources.Builder,"Information",$"Template read from: {templatePath}"));
