@@ -1,10 +1,12 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Tagging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,7 +34,13 @@ namespace TxMark.VisualStudioExtensions
         }
         ITag ITagProvider.MakeTag(string name)
         {
-            return new ClassificationTag(_registry.GetClassificationType(name));
+            var classificationType = _registry.GetClassificationType(name);
+            if ( classificationType == null)
+            {
+                Trace.WriteLine($"The classification type name \"{name}\" was not registered");
+                classificationType = _registry.GetClassificationType(PredefinedClassificationTypeNames.Other);
+            }
+            return new ClassificationTag(classificationType);
         }
 
         #region Classifier (lexical analysis)

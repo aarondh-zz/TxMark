@@ -48,7 +48,7 @@ namespace TxMark.VisualStudioExtensions
         {
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.macroName().MWORD().Symbol, Classify(PredefinedClassificationTypeNames.Identifier));
-            AddTag(context.MCOLON().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
             AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
         }
 
@@ -71,19 +71,24 @@ namespace TxMark.VisualStudioExtensions
             }
         }
 
+        public override void EnterQuote([NotNull] TxMarkParser.QuoteContext context)
+        {
+            AddTag(context.DOUBLE_QUOTE_STRING().Symbol, Classify(PredefinedClassificationTypeNames.String));
+        }
+
         public override void EnterConstantNull([NotNull] TxMarkParser.ConstantNullContext context)
         {
-            AddTag(context.CONSTANT_NULL().Symbol, Classify(PredefinedClassificationTypeNames.Literal));
+            AddTag(context.CONSTANT_NULL().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
         }
 
         public override void EnterConstantTrue([NotNull] TxMarkParser.ConstantTrueContext context)
         {
-            AddTag(context.CONSTANT_TRUE().Symbol, Classify(PredefinedClassificationTypeNames.Literal));
+            AddTag(context.CONSTANT_TRUE().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
         }
 
         public override void EnterConstantFalse([NotNull] TxMarkParser.ConstantFalseContext context)
         {
-            AddTag(context.CONSTANT_FALSE().Symbol, Classify(PredefinedClassificationTypeNames.Literal));
+            AddTag(context.CONSTANT_FALSE().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
         }
 
         public override void EnterVariable([NotNull] TxMarkParser.VariableContext context)
@@ -98,7 +103,7 @@ namespace TxMark.VisualStudioExtensions
         {
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.KEYWORD_IF().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
-            AddTag(context.MCOLON().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
             AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
         }
 
@@ -106,21 +111,24 @@ namespace TxMark.VisualStudioExtensions
         {
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.KEYWORD_ELSEIF().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
-            AddTag(context.MCOLON().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
+            AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
         }
 
         public override void EnterElse_clause([NotNull] TxMarkParser.Else_clauseContext context)
         {
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.KEYWORD_ELSE().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
-            AddTag(context.MCOLON().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
+            AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
         }
 
         public override void EnterSet_clause([NotNull] TxMarkParser.Set_clauseContext context)
         {
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.KEYWORD_SET().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
-            AddTag(context.MCOLON().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
+            AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
         }
 
         public override void EnterHtmlOpenTag([NotNull] TxMarkParser.HtmlOpenTagContext context)
@@ -144,7 +152,7 @@ namespace TxMark.VisualStudioExtensions
 
         public override void EnterHtmlAttribute([NotNull] TxMarkParser.HtmlAttributeContext context)
         {
-            AddTag(context.EQUALS().Symbol, Classify("HTML Tag Operator"));
+            AddTag(context.EQUALS().Symbol, Classify("HTML Operator"));
         }
 
         public override void EnterHtmlAttributeName([NotNull] TxMarkParser.HtmlAttributeNameContext context)
@@ -153,7 +161,7 @@ namespace TxMark.VisualStudioExtensions
         }
         public override void EnterHtmlAttributeValue([NotNull] TxMarkParser.HtmlAttributeValueContext context)
         {
-            AddTag(context.Start.StartIndex, context.Stop.StopIndex, Classify(PredefinedClassificationTypeNames.String));
+            AddTag(context.Start.StartIndex, context.Stop.StopIndex, Classify("HTML Attribute Value"));
         }
     }
 }
