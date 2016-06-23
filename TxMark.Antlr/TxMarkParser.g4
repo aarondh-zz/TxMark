@@ -70,29 +70,6 @@ signed_index_expression
   : (OPERATOR_MINUS)? index_expression
   ;
 
-power_subexpression
-	: OPERATOR_POWER expression
-	;
-
-power_expression
-	: signed_index_expression power_subexpression*
-	;
-
-multiply_subexpression
-	:  (OPERATOR_MULTIPLY | OPERATOR_DIVIDE | OPERATOR_MODULO ) power_expression
-	;
-
-multiply_expression
-  : power_expression multiply_subexpression*
-  ;
-
-subequation 
-	: ( OPERATOR_PLUS | OPERATOR_MINUS ) multiply_expression
-	;
-
-equation
-  : multiply_expression subequation*
-  ;
 
 booleanOperator:
 	  OPERATOR_AND
@@ -103,14 +80,20 @@ booleanOperator:
 	| OPERATOR_GREATER_OR_EQUAL
 	| OPERATOR_IS OPERATOR_NOT
 	| OPERATOR_IS
+	| OPERATOR_POWER
+	| OPERATOR_MULTIPLY 
+	| OPERATOR_DIVIDE 
+	| OPERATOR_MODULO
+	| OPERATOR_PLUS 
+	| OPERATOR_MINUS 
 	;
 
 subexpression
-	: booleanOperator equation
+	: booleanOperator expression
 	;
 
 expression:
-	equation subexpression*
+	signed_index_expression subexpression*
 	;
 
 constantTrue

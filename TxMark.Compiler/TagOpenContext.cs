@@ -49,7 +49,7 @@ namespace TxMark.Compiler
                 {
                     var context = new ExpressionContext((expression) =>
                     {
-                        _attributes.Add(new Attribute() { Name = attribute.Key, Expression = expression });
+                        _attributes.Add(new Attribute() { Name = attribute.Key, Expression = expression.ToExpression() });
                     });
                     if ( attribute.Value!=null)
                     {
@@ -116,7 +116,7 @@ namespace TxMark.Compiler
                 case CodeContextTypes.Attribute:
                     return new AttributeContext(name,(expression) =>
                     {
-                        _attributes.Add(new Attribute() { Name = name, Expression = expression });
+                        _attributes.Add(new Attribute() { Name = name, Expression = expression.ToExpression() });
                     });
             }
             return base.CreateContext(contextType, name, attributes);

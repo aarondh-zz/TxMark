@@ -97,6 +97,9 @@
     <None Include="test7.expected" />
     <None Include="test7.json" />
     <None Include="test7.txm" />
+    <None Include="test9.txm">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="test8.expected" />
     <None Include="test8.txm">
       <SubType>Designer</SubType>

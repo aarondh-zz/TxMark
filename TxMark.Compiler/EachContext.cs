@@ -65,7 +65,7 @@ namespace TxMark.Compiler
                         }
                         else
                         {
-                            _expression = expression;
+                            _expression = expression.ToExpression();
                         }
                     });
             }

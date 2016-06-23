@@ -52,7 +52,7 @@ namespace TxMark.Compiler
                         }
                         else
                         {
-                            _valueExpression = expression;
+                            _valueExpression = expression.ToExpression();
                         }
                     });
             }

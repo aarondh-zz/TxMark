@@ -359,21 +359,6 @@ namespace TxMark.Compiler
         {
             _compileContext.Pop();
         }
-        private OperatorTypes? GetOperatorType(TxMarkParser.SubequationContext context)
-        {
-            if (context.OPERATOR_MINUS() != null)
-            {
-                return OperatorTypes.Subtract;
-            }
-            else if (context.OPERATOR_PLUS() != null)
-            {
-                return OperatorTypes.Add;
-            }
-            else
-            {
-                return null;
-            }
-        }
         public override void EnterExpression([NotNull] TxMarkParser.ExpressionContext context)
         {
             _compileContext.Push(CodeContextTypes.Expression);
@@ -397,6 +382,70 @@ namespace TxMark.Compiler
             if (context.OPERATOR_MINUS() != null)
             {
                 _compileContext.Pop();
+            }
+        }
+        private OperatorTypes? GetOperatorType(TxMarkParser.SubexpressionContext context)
+        {
+            var booleanOperator = context.booleanOperator();
+            if (booleanOperator.OPERATOR_AND() != null)
+            {
+                return OperatorTypes.And;
+            }
+            else if (booleanOperator.OPERATOR_OR() != null)
+            {
+                return OperatorTypes.Or;
+            }
+            else if (booleanOperator.OPERATOR_GREATER_OR_EQUAL() != null)
+            {
+                return OperatorTypes.GreaterOrEqual;
+            }
+            else if (booleanOperator.OPERATOR_GREATER_THAN() != null)
+            {
+                return OperatorTypes.GreaterThan;
+            }
+            else if (booleanOperator.OPERATOR_IS() != null)
+            {
+                return OperatorTypes.Is;
+            }
+            else if (booleanOperator.OPERATOR_LESS_OR_EQUAL() != null)
+            {
+                return OperatorTypes.LessOrEqual;
+            }
+            else if (booleanOperator.OPERATOR_LESS_THAN() != null)
+            {
+                return OperatorTypes.LessThan;
+            }
+            else if (booleanOperator.OPERATOR_NOT() != null)
+            {
+                return OperatorTypes.IsNot;
+            }
+            else if (booleanOperator.OPERATOR_MINUS() != null)
+            {
+                return OperatorTypes.Subtract;
+            }
+            else if (booleanOperator.OPERATOR_PLUS() != null)
+            {
+                return OperatorTypes.Add;
+            }
+            else if (booleanOperator.OPERATOR_MULTIPLY() != null)
+            {
+                return OperatorTypes.Multiply;
+            }
+            else if (booleanOperator.OPERATOR_MODULO() != null)
+            {
+                return OperatorTypes.Modulo;
+            }
+            else if (booleanOperator.OPERATOR_DIVIDE() != null)
+            {
+                return OperatorTypes.Divide;
+            }
+            else if (booleanOperator.OPERATOR_POWER() != null)
+            {
+                return OperatorTypes.Power;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -439,29 +488,6 @@ namespace TxMark.Compiler
             _compileContext.Pop();
         }
 
-        public override void EnterPower_expression([NotNull] TxMarkParser.Power_expressionContext context)
-        {
-            _compileContext.Push(CodeContextTypes.Expression);
-        }
-
-        public override void EnterPower_subexpression([NotNull] TxMarkParser.Power_subexpressionContext context)
-        {
-            _compileContext.Push(CodeContextTypes.BinaryExpression,
-                null,
-                new Bag<string>().Add<OperatorTypes>("operator", OperatorTypes.Power)
-                );
-        }
-
-        public override void ExitPower_subexpression([NotNull] TxMarkParser.Power_subexpressionContext context)
-        {
-            _compileContext.Pop();
-        }
-
-        public override void ExitPower_expression([NotNull] TxMarkParser.Power_expressionContext context)
-        {
-            _compileContext.Pop();
-        }
-
         public override void EnterOperand([NotNull] TxMarkParser.OperandContext context)
         {
             if ( context.OPEN_PARENTHESES()!=null)
@@ -476,108 +502,6 @@ namespace TxMark.Compiler
         public override void ExitOperand([NotNull] TxMarkParser.OperandContext context)
         {
             _compileContext.Pop();
-        }
-        private OperatorTypes? GetOperatorType(TxMarkParser.Multiply_subexpressionContext context)
-        {
-            if (context.OPERATOR_MULTIPLY() != null)
-            {
-                return OperatorTypes.Multiply;
-            }
-            else if (context.OPERATOR_MODULO() != null)
-            {
-                return OperatorTypes.Modulo;
-            }
-            else if (context.OPERATOR_DIVIDE() != null)
-            {
-                return OperatorTypes.Divide;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public override void EnterMultiply_expression([NotNull] TxMarkParser.Multiply_expressionContext context)
-        {
-            _compileContext.Push(CodeContextTypes.Expression);
-        }
-        public override void ExitMultiply_expression([NotNull] TxMarkParser.Multiply_expressionContext context)
-        {
-            _compileContext.Pop();
-        }
-        public override void EnterMultiply_subexpression([NotNull] TxMarkParser.Multiply_subexpressionContext context)
-        {
-            var operatorType = GetOperatorType(context);
-                _compileContext.Push(CodeContextTypes.BinaryExpression,
-                    null,
-                    new Bag<string>().Add<OperatorTypes>("operator", operatorType.Value)
-                );
-        }
-        public override void ExitMultiply_subexpression([NotNull] TxMarkParser.Multiply_subexpressionContext context)
-        {
-            _compileContext.Pop();
-        }
-        private OperatorTypes? GetOperatorType(TxMarkParser.SubexpressionContext context)
-        {
-            var booleanOperator = context.booleanOperator();
-            if (booleanOperator.OPERATOR_AND() != null)
-            {
-                return OperatorTypes.And;
-            }
-            else if (booleanOperator.OPERATOR_OR() != null)
-            {
-                return OperatorTypes.Or;
-            }
-            else if (booleanOperator.OPERATOR_GREATER_OR_EQUAL() != null)
-            {
-                return OperatorTypes.GreaterOrEqual;
-            }
-            else if (booleanOperator.OPERATOR_GREATER_THAN() != null)
-            {
-                return OperatorTypes.GreaterThan;
-            }
-            else if (booleanOperator.OPERATOR_IS() != null)
-            {
-                return OperatorTypes.Is;
-            }
-            else if (booleanOperator.OPERATOR_LESS_OR_EQUAL() != null)
-            {
-                return OperatorTypes.LessOrEqual;
-            }
-            else if (booleanOperator.OPERATOR_LESS_THAN() != null)
-            {
-                return OperatorTypes.LessThan;
-            }
-            else if (booleanOperator.OPERATOR_NOT() != null)
-            {
-                return OperatorTypes.IsNot;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public override void EnterEquation([NotNull] TxMarkParser.EquationContext context)
-        {
-            _compileContext.Push(CodeContextTypes.Expression);
-
-        }
-        public override void ExitEquation([NotNull] TxMarkParser.EquationContext context)
-        {
-            _compileContext.Pop();
-        }
-        public override void EnterSubequation([NotNull] TxMarkParser.SubequationContext context)
-        {
-            var operatorType = GetOperatorType(context);
-         
-                _compileContext.Push(CodeContextTypes.BinaryExpression,
-                    null,
-                    new Bag<string>().Add<OperatorTypes>("operator", operatorType.Value)
-                    );
-        }
-
-        public override void ExitSubequation([NotNull] TxMarkParser.SubequationContext context)
-        {
-                _compileContext.Pop();
         }
     }
 }

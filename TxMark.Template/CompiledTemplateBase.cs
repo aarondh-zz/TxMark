@@ -145,15 +145,15 @@ namespace TxMark.Template
             }
             else if (value is float)
             {
-                x = (double)value;
+                x = (float)value;
             }
             else if (value is int)
             {
-                x = (double)value;
+                x = (int)value;
             }
             else if (value is long)
             {
-                x = (double)value;
+                x = (long)value;
             }
             else
             {
@@ -166,15 +166,15 @@ namespace TxMark.Template
             }
             else if (power is float)
             {
-                y = (double)power;
+                y = (float)power;
             }
             else if (power is int)
             {
-                y = (double)power;
+                y = (int)power;
             }
             else if (power is long)
             {
-                y = (double)power;
+                y = (long)power;
             }
             else
             {

@@ -13,16 +13,16 @@ namespace TxMark.Compiler
     {
         string _attributeName;
         private StringBuilder _text = new StringBuilder();
-        public AttributeContext(string attributeName, ContentContextExitHandler<ExpressionSyntax> exitHandler)
+        public AttributeContext(string attributeName, ContentContextExitHandler<ExpressionNode> exitHandler)
             :base(exitHandler)
         {
             _attributeName = attributeName;
         }
 
-        protected override void Add(ExpressionSyntax expression)
+        protected override void Add(OperatorTypes operatorType, ExpressionNode expressionNode)
         {
             FlushTextBuffer();
-            base.Add(expression);
+            base.Add(operatorType, expressionNode);
         }
 
         public override void Exit()
@@ -36,7 +36,7 @@ namespace TxMark.Compiler
             {
                 string text = _text.ToString();
                 _text.Length = 0;
-                Add(SF.LiteralExpression(
+                Add(OperatorTypes.Add,SF.LiteralExpression(
                     SyntaxKind.StringLiteralExpression,
                     SF.Literal(text)
                 ));

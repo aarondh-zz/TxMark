@@ -121,7 +121,17 @@ namespace TxMark
             if ( options.OutputParser )
             {
                 var formatStartTime = DateTime.Now;
-                result.ParserStream = compileContext.ToStream(options.Encoding);
+                try
+                {
+                    result.ParserStream = compileContext.ToStream(options.Encoding);
+                }
+                catch( Exception e )
+                {
+                    diagnostics.Add(
+                        new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Parser, "formatting parser output", e.Message)
+                        );
+                    result.Success = false;
+                }
                 var formatEndTime = DateTime.Now;
                 result.FormatTime = formatEndTime - formatStartTime;
             }

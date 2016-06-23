@@ -147,66 +147,6 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 */
 	void exitSigned_index_expression(TxMarkParser.Signed_index_expressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TxMarkParser#power_subexpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterPower_subexpression(TxMarkParser.Power_subexpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TxMarkParser#power_subexpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitPower_subexpression(TxMarkParser.Power_subexpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TxMarkParser#power_expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterPower_expression(TxMarkParser.Power_expressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TxMarkParser#power_expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitPower_expression(TxMarkParser.Power_expressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TxMarkParser#multiply_subexpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultiply_subexpression(TxMarkParser.Multiply_subexpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TxMarkParser#multiply_subexpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultiply_subexpression(TxMarkParser.Multiply_subexpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TxMarkParser#multiply_expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultiply_expression(TxMarkParser.Multiply_expressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TxMarkParser#multiply_expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultiply_expression(TxMarkParser.Multiply_expressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TxMarkParser#subequation}.
-	 * @param ctx the parse tree
-	 */
-	void enterSubequation(TxMarkParser.SubequationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TxMarkParser#subequation}.
-	 * @param ctx the parse tree
-	 */
-	void exitSubequation(TxMarkParser.SubequationContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TxMarkParser#equation}.
-	 * @param ctx the parse tree
-	 */
-	void enterEquation(TxMarkParser.EquationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TxMarkParser#equation}.
-	 * @param ctx the parse tree
-	 */
-	void exitEquation(TxMarkParser.EquationContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#booleanOperator}.
 	 * @param ctx the parse tree
 	 */
@@ -418,6 +358,16 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMuinuta(TxMarkParser.MuinutaContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#htmlAttributeName}.
+	 * @param ctx the parse tree
+	 */
+	void enterHtmlAttributeName(TxMarkParser.HtmlAttributeNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#htmlAttributeName}.
+	 * @param ctx the parse tree
+	 */
+	void exitHtmlAttributeName(TxMarkParser.HtmlAttributeNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#htmlAttribute}.
 	 * @param ctx the parse tree

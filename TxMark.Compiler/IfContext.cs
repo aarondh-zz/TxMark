@@ -49,7 +49,7 @@ namespace TxMark.Compiler
                         }
                         else
                         {
-                            _condition = expression;
+                            _condition = expression.ToExpression();
                         }
                     });
                 case CodeContextTypes.ElseIf:

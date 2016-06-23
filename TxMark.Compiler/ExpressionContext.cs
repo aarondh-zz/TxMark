@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,71 +12,182 @@ namespace TxMark.Compiler
 {
     public class ExpressionContext : CodeContextBase
     {
-        private ContentContextExitHandler<ExpressionSyntax> _exitHandler;
-        private ExpressionSyntax _expression;
+        private ContentContextExitHandler<ExpressionNode> _exitHandler;
+        private ExpressionNode _expression;
         private StringBuilder _text = new StringBuilder();
-        protected enum Position
+        public class Operator
         {
-            Unknown,
-            First,
-            Last
-        }
-        public ExpressionContext(ContentContextExitHandler<ExpressionSyntax> exitHandler)
-        {
-            _exitHandler = exitHandler;
-        }
-        private static SyntaxKind GetSyntaxKind(OperatorTypes operatorType)
-        {
-            switch (operatorType)
+            public static readonly Operator Noop = new Operator(OperatorTypes.Noop, 1, SyntaxKind.None);
+            public OperatorTypes OperatorType { get; private set; }
+            public int Precidence { get; private set; }
+            public SyntaxKind SyntaxKind { get; private set; }
+
+            public Operator(OperatorTypes operatorType, int precidence, SyntaxKind syntaxKind)
             {
-                case OperatorTypes.Add:
-                    return SyntaxKind.AddExpression;
-                case OperatorTypes.And:
-                    return SyntaxKind.LogicalAndExpression;
-                case OperatorTypes.Divide:
-                    return SyntaxKind.DivideExpression;
-                case OperatorTypes.GreaterOrEqual:
-                    return SyntaxKind.GreaterThanOrEqualExpression;
-                case OperatorTypes.GreaterThan:
-                    return SyntaxKind.GreaterThanExpression;
-                case OperatorTypes.Is:
-                    return SyntaxKind.IsExpression;
-                case OperatorTypes.IsNot:
-                    return SyntaxKind.NotEqualsExpression;
-                case OperatorTypes.LessOrEqual:
-                    return SyntaxKind.LessThanOrEqualExpression;
-                case OperatorTypes.LessThan:
-                    return SyntaxKind.LessThanExpression;
-                case OperatorTypes.Modulo:
-                    return SyntaxKind.ModuloExpression;
-                case OperatorTypes.Multiply:
-                    return SyntaxKind.MultiplyExpression;
-                case OperatorTypes.Or:
-                    return SyntaxKind.LogicalOrExpression;
-                case OperatorTypes.Subtract:
-                    return SyntaxKind.SubtractExpression;
-                default:
-                    return SyntaxKind.AddExpression;
+                this.OperatorType = operatorType;
+                this.Precidence = precidence;
+                this.SyntaxKind = syntaxKind;
+            }
+
+            public override string ToString()
+            {
+                return $"{this.OperatorType}[{this.Precidence}]";
             }
         }
 
+        public class ExpressionNode
+        {
+            public ExpressionNode Left { get; private set; }
+            public ExpressionNode Right { get; private set; }
+            public ExpressionSyntax Expression { get; private set; }
+            public Operator Operator { get; private set; }
+
+            public bool IsUnary
+            {
+                get
+                {
+                    if ( this.Expression != null)
+                    {
+                        return true;
+                    }
+                    else if ( this.Right == null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            public ExpressionNode(Operator operatorMap = null, ExpressionNode left = null, ExpressionNode right = null)
+            {
+                this.Operator = operatorMap??Operator.Noop;
+                this.Left = left;
+                this.Right = right;
+            }
+            public ExpressionNode(ExpressionSyntax expression)
+            {
+                this.Operator = Operator.Noop;
+                this.Expression = expression;
+            }
+
+            public ExpressionSyntax ToExpression()
+            {
+                if ( this.Expression != null)
+                {
+                    return this.Expression;
+                }
+                switch( this.Operator.OperatorType)
+                {
+                    case OperatorTypes.Parenthesis:
+                        return SF.ParenthesizedExpression(Left.ToExpression());
+                    case OperatorTypes.Power:
+                        return MethodCallContext.CreateMethodCall("Pow", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression()) });
+                    case OperatorTypes.Index:
+                        return MethodCallContext.CreateMethodCall("Index", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression()) });
+                    case OperatorTypes.Noop:
+                        return Left.ToExpression();
+                    default:
+                        return SF.BinaryExpression(this.Operator.SyntaxKind, Left.ToExpression(), Right.ToExpression());
+                }
+            }
+            public override string ToString()
+            {
+                try
+                {
+                    return ToExpression().ToString();
+                }
+                catch(Exception e)
+                {
+                    return e.Message;
+                }
+            }
+        }
+        private static Dictionary<OperatorTypes, Operator> _operatorMapByType = new Dictionary<OperatorTypes, Operator>();
+        private static void RegisterOperator(OperatorTypes operatorType, int precidence, SyntaxKind syntaxKind)
+        {
+            _operatorMapByType.Add(operatorType, new Operator(operatorType, precidence, syntaxKind));
+        }
+
+        static ExpressionContext()
+        {
+            RegisterOperator(OperatorTypes.Parenthesis, 1, SyntaxKind.ParenthesizedExpression);
+
+            RegisterOperator(OperatorTypes.Noop, 1, SyntaxKind.None);
+
+            RegisterOperator(OperatorTypes.UnaryMinus, 1, SyntaxKind.UnaryMinusExpression);
+
+            RegisterOperator(OperatorTypes.Power, 2, SyntaxKind.None);
+
+            RegisterOperator(OperatorTypes.Index, 3, SyntaxKind.None);
+
+            RegisterOperator(OperatorTypes.Divide, 5, SyntaxKind.DivideExpression);
+            RegisterOperator(OperatorTypes.Modulo, 5, SyntaxKind.ModuloExpression);
+            RegisterOperator(OperatorTypes.Multiply, 5, SyntaxKind.MultiplyExpression);
+
+            RegisterOperator(OperatorTypes.Subtract, 10, SyntaxKind.SubtractExpression);
+            RegisterOperator(OperatorTypes.Add, 10, SyntaxKind.AddExpression);
+
+            RegisterOperator(OperatorTypes.GreaterOrEqual, 20, SyntaxKind.GreaterThanOrEqualExpression);
+            RegisterOperator(OperatorTypes.GreaterThan, 20, SyntaxKind.GreaterThanExpression);
+            RegisterOperator(OperatorTypes.Is, 20, SyntaxKind.IsExpression);
+            RegisterOperator(OperatorTypes.IsNot, 20, SyntaxKind.NotEqualsExpression);
+            RegisterOperator(OperatorTypes.LessOrEqual, 20, SyntaxKind.LessThanOrEqualExpression);
+            RegisterOperator(OperatorTypes.LessThan, 20, SyntaxKind.LessThanExpression);
+
+            RegisterOperator(OperatorTypes.And, 30, SyntaxKind.LogicalAndExpression);
+            RegisterOperator(OperatorTypes.Or, 30, SyntaxKind.LogicalOrExpression);
+
+        }
+        public ExpressionContext(ContentContextExitHandler<ExpressionNode> exitHandler)
+        {
+            _exitHandler = exitHandler;
+        }
+        private static Operator GetOperatorMap(OperatorTypes operatorType)
+        {
+            return _operatorMapByType[operatorType];
+        }
         public override void Exit()
         {
+            Debug.WriteLine($"Expression: {_expression}");
             if ( _exitHandler != null)
             {
                 _exitHandler(_expression);
             }
         }
-        protected virtual void Add( ExpressionSyntax expression)
+        protected virtual void Add(OperatorTypes operatorType, ExpressionNode expressionNode)
         {
+            var oper = GetOperatorMap(operatorType);
             if ( _expression == null)
             {
-                _expression = expression;
+                _expression = expressionNode;
+            }
+            else if (oper.Precidence < expressionNode.Operator.Precidence)
+            {
+                if (expressionNode.IsUnary)
+                {
+                    _expression = new ExpressionNode(oper, _expression, expressionNode);
+                }
+                else
+                {
+                    var left = new ExpressionNode(
+                            oper,
+                            _expression,
+                            expressionNode.Left
+                            );
+                    _expression = new ExpressionNode(expressionNode.Operator, left, expressionNode.Right);
+                }
             }
             else
             {
-                _expression = SF.BinaryExpression(SyntaxKind.AddExpression, _expression, expression);
+                _expression = new ExpressionNode(oper, _expression, expressionNode);
             }
+        }
+        protected void Add(OperatorTypes operatorType, ExpressionSyntax expression)
+        {
+            Add(operatorType, new ExpressionNode(expression));
         }
         public bool IsEmpty
         {
@@ -88,11 +200,11 @@ namespace TxMark.Compiler
         {
             if ( boolean)
             {
-                Add(SF.LiteralExpression(SyntaxKind.TrueLiteralExpression));
+                Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.TrueLiteralExpression));
             }
             else
             {
-                Add(SF.LiteralExpression(SyntaxKind.FalseLiteralExpression));
+                Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.FalseLiteralExpression));
             }
         }
         public override void NewLine()
@@ -110,30 +222,30 @@ namespace TxMark.Compiler
             {
                 if (double.TryParse(numberText, out doubleValue))
                 {
-                    Add(SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(doubleValue)));
+                    Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(doubleValue)));
                 }
                 else
                 {
-                    Add(SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(double.NaN)));
+                    Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(double.NaN)));
                 }
             }
             else if ( int.TryParse(numberText, out intValue))
             {
-                Add(SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(intValue)));
+                Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(intValue)));
             }
             else
             {
-                Add(SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(0)));
+                Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(0)));
             }
         }
         public override void Null()
         {
-            Add(SF.LiteralExpression(SyntaxKind.NullLiteralExpression));
+            Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NullLiteralExpression));
         }
 
         public override void Quote(string quote)
         {
-            Add(SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(quote)));
+            Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(quote)));
         }
 
         public override void Whitespace()
@@ -142,7 +254,7 @@ namespace TxMark.Compiler
 
         public override void Variable(string variableName)
         {
-            Add(this.Context.IsStateVariable(variableName) ?
+            Add(OperatorTypes.Add, this.Context.IsStateVariable(variableName) ?
                 VariableHelper.MakeStateVariableExpression(variableName) :
                 VariableHelper.MakeModelVariableExpression(variableName)
             );
@@ -155,7 +267,7 @@ namespace TxMark.Compiler
             {
                 foreach (var hook in hooks)
                 {
-                    Add(MethodCallContext.CreateMethodCall(hook,true));
+                    Add(OperatorTypes.Add, MethodCallContext.CreateMethodCall(hook,true));
                 }
             }
             else
@@ -170,67 +282,44 @@ namespace TxMark.Compiler
                 case CodeContextTypes.MethodCall:
                     return new MethodCallContext(name, (methodCall) =>
                     {
-                        _expression = methodCall;
+                        Add(OperatorTypes.Noop,methodCall);
                     }, attributes?.Get<string>("hook"));
                 case CodeContextTypes.Expression:
                     return new ExpressionContext((expression) =>
                     {
-                        _expression = expression;
+                        Add(OperatorTypes.Add, expression);
                     });
                 case CodeContextTypes.SignedExpression:
                     return new ExpressionContext((expression) =>
                     {
-                        _expression = SF.PrefixUnaryExpression(SyntaxKind.UnaryMinusExpression, expression);
+                        Add(OperatorTypes.UnaryMinus, expression);
                     });
                 case CodeContextTypes.ParenthesizedExpression:
                     return new ExpressionContext((expression) =>
                     {
-                        _expression = SF.ParenthesizedExpression(expression);
+                        Add( OperatorTypes.Add, new ExpressionNode( GetOperatorMap(OperatorTypes.Parenthesis),expression));
                     });
                 case CodeContextTypes.BinaryExpression:
                     if (attributes?.Contains("operator") ?? false)
                     {
                         var operatorType = attributes.Get<OperatorTypes>("operator");
-                        if (operatorType == OperatorTypes.Power)
+                        return new ExpressionContext((expression) =>
                         {
-                            return new ExpressionContext((expression) =>
-                            {
-                                _expression = MethodCallContext.CreateMethodCall("Pow", false, new ArgumentSyntax[]{ SF.Argument(_expression), SF.Argument(expression) });
-                            });
-                        }
-                        else
-                        {
-                            SyntaxKind operatorSyntaxKind = GetSyntaxKind(operatorType);
-                            return new ExpressionContext((expression) =>
-                            {
-                                _expression = SF.BinaryExpression(operatorSyntaxKind, _expression, expression);
-                            });
-                        }
+                            Add(operatorType, expression);
+                        });
                     }
                     break;
                 case CodeContextTypes.IndexExpression:
                     return new ExpressionContext((expression) =>
                     {
-                        _expression = MethodCallContext.CreateMethodCall("Index", false,
-                            new ArgumentSyntax[]
-                            {
-                                SF.Argument(_expression),
-                                SF.Argument(expression)
-                            }
-                        );
+                        Add(OperatorTypes.Index, expression);
                     });
                 case CodeContextTypes.OfExpression:
                     return new ExpressionContext((expression) =>
                     {
                         if ( _expression != null && expression != null)
                         {
-                            _expression = MethodCallContext.CreateMethodCall("Index", false,
-                                new ArgumentSyntax[]
-                                {
-                                SF.Argument(expression),
-                                SF.Argument(_expression)
-                                }
-                            );
+                            _expression = new ExpressionNode(GetOperatorMap(OperatorTypes.Index), left: expression, right: _expression);
                         }
                     });
             }
