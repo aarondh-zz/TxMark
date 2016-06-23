@@ -91,7 +91,8 @@ namespace TxMark.Compiler
                         }
                         else
                         {
-                            _arguments.Add(SF.Argument(expression.ToExpression()));
+                            var argumentExpression = expression.ToExpression();
+                            _arguments.Add(SF.Argument(argumentExpression));
                         }
                     });
             }

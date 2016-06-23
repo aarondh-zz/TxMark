@@ -13,35 +13,49 @@ namespace TxMark.Compiler
     public class ExpressionContext : CodeContextBase
     {
         private ContentContextExitHandler<ExpressionNode> _exitHandler;
-        private ExpressionNode _expression;
+        private ExpressionNode _first;
+        private ExpressionNode _last;
         private StringBuilder _text = new StringBuilder();
         public class Operator
         {
-            public static readonly Operator Noop = new Operator(OperatorTypes.Noop, 1, SyntaxKind.None);
+            public static readonly Operator Noop = new Operator(OperatorTypes.Noop, 1, SyntaxKind.None,"noop");
             public OperatorTypes OperatorType { get; private set; }
             public int Precidence { get; private set; }
             public SyntaxKind SyntaxKind { get; private set; }
+            public string Text { get; private set; }
 
-            public Operator(OperatorTypes operatorType, int precidence, SyntaxKind syntaxKind)
+            public Operator(OperatorTypes operatorType, int precidence, SyntaxKind syntaxKind, string text)
             {
                 this.OperatorType = operatorType;
                 this.Precidence = precidence;
                 this.SyntaxKind = syntaxKind;
+                this.Text = text;
             }
 
             public override string ToString()
             {
-                return $"{this.OperatorType}[{this.Precidence}]";
+                return $"{this.Text}[{this.Precidence}]";
             }
         }
-
         public class ExpressionNode
         {
-            public ExpressionNode Left { get; private set; }
-            public ExpressionNode Right { get; private set; }
-            public ExpressionSyntax Expression { get; private set; }
+            public ExpressionNode Left { get; set; }
+            public ExpressionNode Right { get; set; }
+            public ExpressionSyntax Expression { get; set; }
             public Operator Operator { get; private set; }
-
+            public ExpressionNode Clone()
+            {
+                return new ExpressionNode(this.Operator, this.Left, this.Right)
+                {
+                    Expression = this.Expression
+                };
+            }
+            public void Set(ExpressionNode expressionNode)
+            {
+                this.Operator = Operator.Noop;
+                this.Expression = null;
+                this.Right = expressionNode;
+            }
             public bool IsUnary
             {
                 get
@@ -50,7 +64,7 @@ namespace TxMark.Compiler
                     {
                         return true;
                     }
-                    else if ( this.Right == null)
+                    else if ( this.Left == null)
                     {
                         return true;
                     }
@@ -61,10 +75,15 @@ namespace TxMark.Compiler
                 }
             }
 
-            public ExpressionNode(Operator operatorMap = null, ExpressionNode left = null, ExpressionNode right = null)
+            public ExpressionNode(Operator operatorMap, ExpressionNode left, ExpressionNode right)
             {
-                this.Operator = operatorMap??Operator.Noop;
+                this.Operator = operatorMap;
                 this.Left = left;
+                this.Right = right;
+            }
+            public ExpressionNode(Operator operatorMap, ExpressionNode right)
+            {
+                this.Operator = operatorMap;
                 this.Right = right;
             }
             public ExpressionNode(ExpressionSyntax expression)
@@ -82,13 +101,13 @@ namespace TxMark.Compiler
                 switch( this.Operator.OperatorType)
                 {
                     case OperatorTypes.Parenthesis:
-                        return SF.ParenthesizedExpression(Left.ToExpression());
+                        return SF.ParenthesizedExpression(Right.ToExpression());
                     case OperatorTypes.Power:
                         return MethodCallContext.CreateMethodCall("Pow", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression()) });
                     case OperatorTypes.Index:
                         return MethodCallContext.CreateMethodCall("Index", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression()) });
                     case OperatorTypes.Noop:
-                        return Left.ToExpression();
+                        return Right.ToExpression();
                     default:
                         return SF.BinaryExpression(this.Operator.SyntaxKind, Left.ToExpression(), Right.ToExpression());
                 }
@@ -106,39 +125,39 @@ namespace TxMark.Compiler
             }
         }
         private static Dictionary<OperatorTypes, Operator> _operatorMapByType = new Dictionary<OperatorTypes, Operator>();
-        private static void RegisterOperator(OperatorTypes operatorType, int precidence, SyntaxKind syntaxKind)
+        private static void RegisterOperator(OperatorTypes operatorType, int precidence, SyntaxKind syntaxKind, string text)
         {
-            _operatorMapByType.Add(operatorType, new Operator(operatorType, precidence, syntaxKind));
+            _operatorMapByType.Add(operatorType, new Operator(operatorType, precidence, syntaxKind,text));
         }
 
         static ExpressionContext()
         {
-            RegisterOperator(OperatorTypes.Parenthesis, 1, SyntaxKind.ParenthesizedExpression);
+            RegisterOperator(OperatorTypes.Parenthesis, 1, SyntaxKind.ParenthesizedExpression,"()");
 
-            RegisterOperator(OperatorTypes.Noop, 1, SyntaxKind.None);
+            RegisterOperator(OperatorTypes.Noop, 1, SyntaxKind.None, "");
 
-            RegisterOperator(OperatorTypes.UnaryMinus, 1, SyntaxKind.UnaryMinusExpression);
+            RegisterOperator(OperatorTypes.UnaryMinus, 1, SyntaxKind.UnaryMinusExpression, "-");
 
-            RegisterOperator(OperatorTypes.Power, 2, SyntaxKind.None);
+            RegisterOperator(OperatorTypes.Power, 2, SyntaxKind.None, "^");
 
-            RegisterOperator(OperatorTypes.Index, 3, SyntaxKind.None);
+            RegisterOperator(OperatorTypes.Index, 3, SyntaxKind.None, "[]");
 
-            RegisterOperator(OperatorTypes.Divide, 5, SyntaxKind.DivideExpression);
-            RegisterOperator(OperatorTypes.Modulo, 5, SyntaxKind.ModuloExpression);
-            RegisterOperator(OperatorTypes.Multiply, 5, SyntaxKind.MultiplyExpression);
+            RegisterOperator(OperatorTypes.Divide, 5, SyntaxKind.DivideExpression,"/");
+            RegisterOperator(OperatorTypes.Modulo, 5, SyntaxKind.ModuloExpression,"%");
+            RegisterOperator(OperatorTypes.Multiply, 5, SyntaxKind.MultiplyExpression,"*");
 
-            RegisterOperator(OperatorTypes.Subtract, 10, SyntaxKind.SubtractExpression);
-            RegisterOperator(OperatorTypes.Add, 10, SyntaxKind.AddExpression);
+            RegisterOperator(OperatorTypes.Subtract, 10, SyntaxKind.SubtractExpression,"-");
+            RegisterOperator(OperatorTypes.Add, 10, SyntaxKind.AddExpression,"+");
 
-            RegisterOperator(OperatorTypes.GreaterOrEqual, 20, SyntaxKind.GreaterThanOrEqualExpression);
-            RegisterOperator(OperatorTypes.GreaterThan, 20, SyntaxKind.GreaterThanExpression);
-            RegisterOperator(OperatorTypes.Is, 20, SyntaxKind.IsExpression);
-            RegisterOperator(OperatorTypes.IsNot, 20, SyntaxKind.NotEqualsExpression);
-            RegisterOperator(OperatorTypes.LessOrEqual, 20, SyntaxKind.LessThanOrEqualExpression);
-            RegisterOperator(OperatorTypes.LessThan, 20, SyntaxKind.LessThanExpression);
+            RegisterOperator(OperatorTypes.GreaterOrEqual, 20, SyntaxKind.GreaterThanOrEqualExpression,">=");
+            RegisterOperator(OperatorTypes.GreaterThan, 20, SyntaxKind.GreaterThanExpression,">");
+            RegisterOperator(OperatorTypes.Is, 20, SyntaxKind.IsExpression,"==");
+            RegisterOperator(OperatorTypes.IsNot, 20, SyntaxKind.NotEqualsExpression,"!=");
+            RegisterOperator(OperatorTypes.LessOrEqual, 20, SyntaxKind.LessThanOrEqualExpression,"<=");
+            RegisterOperator(OperatorTypes.LessThan, 20, SyntaxKind.LessThanExpression,"<");
 
-            RegisterOperator(OperatorTypes.And, 30, SyntaxKind.LogicalAndExpression);
-            RegisterOperator(OperatorTypes.Or, 30, SyntaxKind.LogicalOrExpression);
+            RegisterOperator(OperatorTypes.And, 30, SyntaxKind.LogicalAndExpression,"&&");
+            RegisterOperator(OperatorTypes.Or, 30, SyntaxKind.LogicalOrExpression,"||");
 
         }
         public ExpressionContext(ContentContextExitHandler<ExpressionNode> exitHandler)
@@ -151,38 +170,71 @@ namespace TxMark.Compiler
         }
         public override void Exit()
         {
-            Debug.WriteLine($"Expression: {_expression}");
+            Debug.WriteLine($"Expression: {_first}");
             if ( _exitHandler != null)
             {
-                _exitHandler(_expression);
+                _exitHandler(_first);
             }
         }
         protected virtual void Add(OperatorTypes operatorType, ExpressionNode expressionNode)
         {
+            var oldLast = _last;
             var oper = GetOperatorMap(operatorType);
-            if ( _expression == null)
+            if ( _first == null)
             {
-                _expression = expressionNode;
+                _first = _last = expressionNode;
             }
-            else if (oper.Precidence < expressionNode.Operator.Precidence)
+            else if ( expressionNode.IsUnary)
             {
-                if (expressionNode.IsUnary)
+                if (_last.IsUnary)
                 {
-                    _expression = new ExpressionNode(oper, _expression, expressionNode);
+                    _last = new ExpressionNode(oper, _last, expressionNode);
+                }
+                else if (oper.Precidence <= _last.Operator.Precidence)
+                {
+                    _last = _last.Right = new ExpressionNode(oper, _last.Right, expressionNode);
                 }
                 else
                 {
-                    var left = new ExpressionNode(
-                            oper,
-                            _expression,
-                            expressionNode.Left
-                            );
-                    _expression = new ExpressionNode(expressionNode.Operator, left, expressionNode.Right);
+                    _last.Set(new ExpressionNode(oper, _last.Clone(), expressionNode));
                 }
+            }
+            else if (oper.Precidence < expressionNode.Operator.Precidence)
+            {
+                if (_last.IsUnary)
+                {
+                    _last.Set(new ExpressionNode(
+                            oper,
+                            _last.Clone(),
+                            expressionNode.Left
+                            ));
+                }
+                else
+                {
+                    _last = _last.Right = new ExpressionNode(
+                        oper,
+                        _last.Right,
+                        expressionNode.Left
+                        );
+                }
+                if (_first == oldLast)
+                {
+                    _first = _last;
+                }
+                Add(expressionNode.Operator.OperatorType, expressionNode.Right);
+                return;
+            }
+            else if ( _first == _last)
+            {
+                _first = _last = new ExpressionNode(oper, _last, expressionNode);
             }
             else
             {
-                _expression = new ExpressionNode(oper, _expression, expressionNode);
+                _last.Set( new ExpressionNode(oper, _last.Clone(), expressionNode));
+            }
+            if ( _first == oldLast)
+            {
+                _first = _last;
             }
         }
         protected void Add(OperatorTypes operatorType, ExpressionSyntax expression)
@@ -193,7 +245,7 @@ namespace TxMark.Compiler
         {
             get
             {
-                return _expression == null;
+                return _first == null;
             }
         }
         public override void Boolean(bool boolean)
@@ -317,9 +369,9 @@ namespace TxMark.Compiler
                 case CodeContextTypes.OfExpression:
                     return new ExpressionContext((expression) =>
                     {
-                        if ( _expression != null && expression != null)
+                        if ( _last != null && expression != null)
                         {
-                            _expression = new ExpressionNode(GetOperatorMap(OperatorTypes.Index), left: expression, right: _expression);
+                            _last.Right = new ExpressionNode(GetOperatorMap(OperatorTypes.Index), left: expression, right: _last.Right);
                         }
                     });
             }
