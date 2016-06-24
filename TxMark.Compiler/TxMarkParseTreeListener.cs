@@ -305,6 +305,23 @@ namespace TxMark.Compiler
             _compileContext.Text(context.GetText());
         }
 
+        public override void EnterLiteral([NotNull] TxMarkParser.LiteralContext context)
+        {
+            var literal = context.GetText();
+            if ( literal != null)
+            {
+                if (literal == "``")
+                {
+                    literal = "`";
+                }
+                else
+                {
+                    literal = literal.Substring(1, literal.Length - 2);
+                }
+                _compileContext.Text(literal);
+            }
+        }
+
         public override void EnterConstantFalse([NotNull] TxMarkParser.ConstantFalseContext context)
         {
             _compileContext.Boolean(false);
@@ -356,6 +373,15 @@ namespace TxMark.Compiler
             _compileContext.Push(CodeContextTypes.TagOpen, "b");
         }
         public override void ExitBoldface([NotNull] TxMarkParser.BoldfaceContext context)
+        {
+            _compileContext.Pop();
+        }
+
+        public override void EnterDeleted([NotNull] TxMarkParser.DeletedContext context)
+        {
+            _compileContext.Push(CodeContextTypes.TagOpen, "del");
+        }
+        public override void ExitDeleted([NotNull] TxMarkParser.DeletedContext context)
         {
             _compileContext.Pop();
         }

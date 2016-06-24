@@ -1,3 +1,2 @@
-The <em> quick</em> <strong> brown</strong><br/>
-fox jumped <strong>over</strong> <sup>2</sup> the <b>lazy</b> dog.
-The <em>quick brown fox</em> <strong>jumped <b>over</b></strong> <b>the</b> lazy dog.
+The <em>quick</em> <strong>brown</strong> <i>fox</i> jumped <strong>over</strong> <sup>2</sup> <del>the</del> <b>lazy</b> dog.
+The <em>quick brown fox</em> <strong>jumped <b>over</b></strong> <del><b>the</b></del> lazy dog.

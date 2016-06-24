@@ -1,12 +1,8 @@
 grammar MarkdownPreprocessor;
 
 document    
-    : content EOF
+    : line* textLine? EOF
     ;
-
-content
-	: line*
-	;
 
 line
 	: heading carriageReturn
@@ -15,6 +11,20 @@ line
 	| textLine carriageReturn
 	| paragraph_end
 	;
+
+carriageReturn 
+	: softCarriageReturn
+	| hardCarriageReturn
+	;
+
+softCarriageReturn 
+	: CARRIAGE_RETURN
+	;
+
+hardCarriageReturn 
+	: space space CARRIAGE_RETURN
+	;
+
 
 list
 	: (listItem carriageReturn | indentedText carriageReturn )+
@@ -29,8 +39,8 @@ indentedText
 	;
 
 listItemIndicator
-	: '*'
-	| DIGITS '.'
+	: ASTERISK
+	| DIGIT+ PERIOD
 	;
 
 blockquote
@@ -52,7 +62,7 @@ blockQuoteListItem
 	;
 
 blockquoteIndicator
-	: '>'
+	: GREATER_THAN
 	;
 
 heading
@@ -60,7 +70,7 @@ heading
 	;
 
 headingIndicator
-	: '#'
+	: HASH
 	;
 
 
@@ -69,39 +79,51 @@ textLine
 	;
 
 paragraph_end
-	: (whitespace* carriageReturn)+
+	: (whitespace* softCarriageReturn)+
 	;
 
 text
-   : nonWhitespace (whitespace|nonWhitespace|'#'|'*'|'>'|'.')*?
+   : nonWhitespace+ (whitespace|nonWhitespace | HASH | ASTERISK | LESS_THAN | SLASH | PERIOD)*
    | openTag textLine*
    | closeTag textLine*
    ;
 
 attributeContent
-	: (whitespace|nonWhitespace|'#'|'*'|'.'|CARRIAGE_RETURN)*
+	: (whitespace|anyNonWhitespace|CARRIAGE_RETURN)*
+	;
+
+attributeValue
+	: DOUBLE_QUOTE (whitespace|anyNonWhitespace)*? DOUBLE_QUOTE
+	| SINGLE_QUOTE (whitespace|anyNonWhitespace)*? SINGLE_QUOTE
+	;
+
+attributeName
+	: identifier
+	;
+
+attribute
+	: anyWhitespace* attributeName  anyWhitespace*  EQUAL anyWhitespace* attributeValue
 	;
 
 tag
-	: nonWhitespace+
+	: identifier
 	;
 
 openTag
-	: '<' tag attributeContent '/'? '>'
+	: LESS_THAN tag attribute* anyWhitespace* SLASH? GREATER_THAN
 	;
 
 closeTag
-	: '<' '/' tag whitespace* '>'
+	: LESS_THAN SLASH tag anyWhitespace* GREATER_THAN
 	;
 
-nonWhitespace 
-	: NON_WHITESPACE
-	| PUNCTUATION
-	| DIGITS
+identifier
+	: (LETTER | COLON)+ (LETTER | DIGIT | COLON | UNDERBAR | DASH | PERIOD | COLON)*
 	;
 
 whitespace 
-	: space | tab
+	: space 
+	| tab
 	;
 
 space 
@@ -112,33 +134,97 @@ tab
 	: TAB
 	;
 
-carriageReturn 
-	: softCarriageReturn
-	| hardCarriageReturn
+anyNonWhitespace
+	: nonWhitespace | HASH | ASTERISK | LESS_THAN | GREATER_THAN | SLASH | PERIOD
 	;
 
-softCarriageReturn 
-	: CARRIAGE_RETURN
+nonWhitespace 
+	: NON_WHITESPACE
+	| PUNCTUATION
+	| DIGIT
+	| LETTER
+	| EQUAL
+	| DOUBLE_QUOTE
+	| SINGLE_QUOTE
+	| COLON 
+	| DASH 
+	| UNDERBAR
+	| PERIOD
 	;
 
-hardCarriageReturn 
-	: space space+ CARRIAGE_RETURN
+anyWhitespace
+	: whitespace
+	| CARRIAGE_RETURN
 	;
 
-DIGITS
-	: [0123456789]+
+DOUBLE_QUOTE
+	: '"'
+	;
+
+SINGLE_QUOTE
+	: '\''
+	;
+
+ASTERISK
+	: '*'
+	;
+
+HASH
+	: '#'
+	;
+
+PERIOD
+	: '.'
+	;
+
+
+COLON
+	: ':'
+	;
+
+UNDERBAR
+	: '_'
+	;
+
+DASH
+	: '-'
+	;
+
+
+DIGIT
+	: [0-9]
+	;
+
+LETTER
+	: [a-zA-Z]
 	;
 
 PUNCTUATION
-	: [~`!@$%^&()_-+={\[}\]|\\:;"',?]+
+	: [~`!@$%^&()+{\[}\]|\\;,?]
 	;
 
 TAB
    : '\t'
    ;
 
+EQUAL
+   : '='
+   ;
+
 SPACE
    : ' '
+   ;
+
+LESS_THAN
+   : '<'
+   ;
+
+GREATER_THAN
+   : '>'
+   ;
+
+SLASH
+   : '/'
    ;
 
 CARRIAGE_RETURN

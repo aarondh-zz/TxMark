@@ -114,7 +114,9 @@ namespace TxMark.Compiler
         }
         public override void EnterWhitespace([NotNull] MarkdownPreprocessorParser.WhitespaceContext context)
         {
-            if (context.Parent is MarkdownPreprocessorParser.TextLineContext || context.Parent is MarkdownPreprocessorParser.TextContext)
+            if (context.Parent is MarkdownPreprocessorParser.TextLineContext
+                || context.Parent is MarkdownPreprocessorParser.TextContext
+                || context.Parent is MarkdownPreprocessorParser.AttributeContentContext)
             {
                 _context.Append(context.GetText());
             }

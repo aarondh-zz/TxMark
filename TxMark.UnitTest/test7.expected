@@ -1,6 +1,6 @@
-﻿<div><p>
-<h1 style="margin-top:20px; color: #C4318B; font-size: 48px; font-weight: 100; line-height: 50px; margin-bottom: 0;">Reconnect your calendar</h1>
-<h2 style="color: #767676; font-size: 24px; font-weight: 300; line-height: 26px; margin: 10px 0 30px 0;">Our access to your calendar has expired</h2>
+<div><p>
+<h1 style="margin-top:20px; color: #C4318B; font-size: 48px; font-weight: 100; line-height: 50px; margin-bottom: 0;">Reconnect your calendar </h1>
+<h2 style="color: #767676; font-size: 24px; font-weight: 300; line-height: 26px; margin: 10px 0 30px 0;">Our access to your calendar has expired </h2>
 <section>
 <div style="margin-top: 20px;">
 Calendar.help works best when we have access to your calendar. Looks like our access to your MyOwnBloodyCalendarService calendar has expired.
@@ -10,7 +10,8 @@ Click the link or button below to reconnect your calendar to Calendar.help.
 </div>
 </section>
 </p><p>
-<ul><li>one<br/>
+
+<ul><li>one
 </li><li>two
 </li><li>three
 </li></ul></p>

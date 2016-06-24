@@ -87,14 +87,11 @@
     <None Include="packages.config" />
     <None Include="test0.txm" />
     <None Include="test1.txm" />
-    <None Include="test2.expected" />
     <None Include="test2.txm" />
-    <None Include="test3.expected" />
     <None Include="test3.txm" />
     <None Include="test4.txm" />
-    <None Include="test6.expected" />
+    <None Include="Test5.txm" />
     <None Include="test6.txm" />
-    <None Include="test7.expected" />
     <None Include="test7.json" />
     <None Include="test7.txm" />
     <None Include="test9.txm">

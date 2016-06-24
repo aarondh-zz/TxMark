@@ -10,9 +10,9 @@ The quick brown fox jumped over the lazy dog.
 The quick brown fox jumped over the lazy dog.
 <h6>header6</h6>
 </p><p>
-The quick brown fox jumped over the lazy dog. <br/>
-The quick brown fox jumped over the lazy dog. <br/>
-The quick brown fox jumped over the lazy dog. <br/>
+The quick brown fox jumped over the lazy dog.
+The quick brown fox jumped over the lazy dog.
+The quick brown fox jumped over the lazy dog.
 </p><p>
 <ul><li>list 1 item 1
 </li><li>list 1 item 2
@@ -30,12 +30,12 @@ The quick brown fox jumped over the lazy dog. <br/>
 <ol><li>list 3 item 3
 <ol><li>0. list 5 item 1
 </li></ol></li></ol></li></ol></li><li>list 1 item 3
-This is more text for item3 <br/>
+This is more text for item3
 And even more text!
 </li></ol></p><p>
-<blockquote>This is a block quote <br/>
+<blockquote>This is a block quote
 on more than one line.
-<blockquote>This is a double indented block quote <br/>
+<blockquote>This is a double indented block quote
 on more than one line.
 </blockquote></blockquote></p><p>
 <blockquote>The is a block quoted list:

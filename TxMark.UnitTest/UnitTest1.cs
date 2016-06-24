@@ -204,5 +204,18 @@ namespace TxMark.UnitTest
             AssertSuccess(result);
             CheckOutput("test8.expected", result.OutputStream);
         }
+        [TestMethod]
+        public void Text9()
+        {
+            var model = LoadModel("test7.json");
+            var options = new TxMark.Options()
+            {
+                ForceCompile = true,
+                DiagnosticLevel = DiagnosticLevel.Information,
+            };
+            TxMark.Result result = TxMark.Engine.Execute<dynamic>("test9.txm", model, options);
+            AssertSuccess(result);
+            CheckOutput("test9.expected", result.OutputStream);
+        }
     }
 }

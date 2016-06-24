@@ -90,7 +90,13 @@ namespace TxMark.Template
                 Set(key, value);
             }
         }
-
+        private void FirePropertyChanged( string propertyName )
+        {
+            if ( PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
         public void Set(string key, object value)
         {
             object oldValue = null;
@@ -106,7 +112,7 @@ namespace TxMark.Template
                 }
             }
             _values[key] = value;
-            PropertyChanged(this, new PropertyChangedEventArgs(key));
+            FirePropertyChanged(key);
         }
 
         public object Get(string key)

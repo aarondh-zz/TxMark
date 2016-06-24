@@ -178,6 +178,10 @@ namespace TxMark.Compiler
         }
         protected virtual void Add(OperatorTypes operatorType, ExpressionNode expressionNode)
         {
+            if (expressionNode == null)
+            {
+                return;
+            }
             var oldLast = _last;
             var oper = GetOperatorMap(operatorType);
             if ( _first == null)
@@ -199,7 +203,7 @@ namespace TxMark.Compiler
                     _last.Set(new ExpressionNode(oper, _last.Clone(), expressionNode));
                 }
             }
-            else if (oper.Precidence < expressionNode.Operator.Precidence)
+            else if (oper.Precidence <= expressionNode.Operator.Precidence)
             {
                 if (_last.IsUnary)
                 {
@@ -371,7 +375,14 @@ namespace TxMark.Compiler
                     {
                         if ( _last != null && expression != null)
                         {
-                            _last.Right = new ExpressionNode(GetOperatorMap(OperatorTypes.Index), left: expression, right: _last.Right);
+                            if ( _last.IsUnary )
+                            {
+                                _last.Set(new ExpressionNode(GetOperatorMap(OperatorTypes.Index), left: expression, right: _last.Clone()));
+                            }
+                            else
+                            {
+                                _last = _last.Right = new ExpressionNode(GetOperatorMap(OperatorTypes.Index), left: expression, right: _last.Right);
+                            }
                         }
                     });
             }

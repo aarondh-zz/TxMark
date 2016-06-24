@@ -48,7 +48,7 @@ namespace TxMark.Compiler
         }
         public virtual void NameTag(string nameTag)
         {
-            Context.Log(LogLevel.Error, $"Name tag not supported in {Label} context", Context.Location.Line, Context.Location.Column);
+            Context.Log(LogLevel.Error, $"Name tag ?{nameTag} not supported in {Label} context", Context.Location.Line, Context.Location.Column);
         }
         public virtual void NewLine()
         {
@@ -56,7 +56,7 @@ namespace TxMark.Compiler
         }
         public virtual void Number(string numberText)
         {
-            Context.Log(LogLevel.Error, $"Number not supported in {Label} context", Context.Location.Line, Context.Location.Column);
+            Context.Log(LogLevel.Error, $"Number {numberText} not supported in {Label} context", Context.Location.Line, Context.Location.Column);
         }
         public virtual void Null()
         {
@@ -64,15 +64,15 @@ namespace TxMark.Compiler
         }
         public virtual void Punctuation(char punctuation)
         {
-            Context.Log(LogLevel.Error, $"Punctuation not supported in {Label} context", Context.Location.Line, Context.Location.Column);
+            Context.Log(LogLevel.Error, $"Punctuation \"{punctuation}\" not supported in {Label} context", Context.Location.Line, Context.Location.Column);
         }
         public virtual void Text(string text)
         {
-            Context.Log(LogLevel.Error, $"Text not supported in {Label} context", Context.Location.Line, Context.Location.Column);
+            Context.Log(LogLevel.Error, $"Text \"{text}\" not supported in {Label} context", Context.Location.Line, Context.Location.Column);
         }
         public virtual void Variable(string name)
         {
-            Context.Log(LogLevel.Error, $"Variable not supported in {Label} context", Context.Location.Line, Context.Location.Column);
+            Context.Log(LogLevel.Error, $"Variable ${name} not supported in {Label} context", Context.Location.Line, Context.Location.Column);
         }
         public virtual void Whitespace()
         {
@@ -80,11 +80,11 @@ namespace TxMark.Compiler
         }
         public virtual void Word(string word)
         {
-            Context.Log(LogLevel.Error, $"Word not supported in {Label} context", Context.Location.Line, Context.Location.Column);
+            Context.Log(LogLevel.Error, $"Word \"{word}\" not supported in {Label} context", Context.Location.Line, Context.Location.Column);
         }
         public virtual void Quote(string quote)
         {
-            Context.Log(LogLevel.Error, $"Quote not supported in {Label} context", Context.Location.Line, Context.Location.Column);
+            Context.Log(LogLevel.Error, $"Quote \"{quote}\" not supported in {Label} context", Context.Location.Line, Context.Location.Column);
         }
     }
 }

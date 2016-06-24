@@ -92,6 +92,10 @@ namespace TxMark.Compiler
                         else
                         {
                             var argumentExpression = expression.ToExpression();
+#if never
+                            var parsedExpression = SF.ParseExpression(expression.ToString());//Hack because the expression tree isn't being build the way Roslyn would like it
+#endif
+
                             _arguments.Add(SF.Argument(argumentExpression));
                         }
                     });
