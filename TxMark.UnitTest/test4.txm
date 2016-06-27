@@ -8,5 +8,5 @@ Branches
 
 The answer to the above equation is: $fubar.
 
-(each: $array as $foo) [The value is $foo]
+(each: $array as $foo) [The value is $foo ]
 

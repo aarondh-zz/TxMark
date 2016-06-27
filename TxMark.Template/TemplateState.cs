@@ -106,7 +106,7 @@ namespace TxMark.Template
             }
             else if ( _values.TryGetValue(key, out oldValue))
             {
-                if ( !oldValue.Equals(value))
+                if ( oldValue.Equals(value))
                 {
                     return;
                 }
