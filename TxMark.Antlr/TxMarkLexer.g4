@@ -147,6 +147,18 @@ KEYWORD_IF
 	: I F
 	;
 
+KEYWORD_CHOOSE
+	: C H O O S E
+	;
+
+KEYWORD_WHEN
+	: W H E N
+	;
+
+KEYWORD_OTHERWISE
+	: O T H E R W I S E
+	;
+
 KEYWORD_SET
 	: S E T
 	;

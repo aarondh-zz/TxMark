@@ -113,6 +113,7 @@
     <Compile Include="AttributeContext.cs" />
     <Compile Include="Bag.cs" />
     <Compile Include="BlockContext.cs" />
+    <Compile Include="WhenContext.cs" />
     <Compile Include="ClassContext.cs" />
     <Compile Include="CodeContextBase.cs" />
     <Compile Include="CodeContextExitHandler.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="CompileContext.cs" />
     <Compile Include="EachContext.cs" />
     <Compile Include="ExpressionContext.cs" />
+    <Compile Include="ChooseContext.cs" />
     <Compile Include="MarkdownPreprocessorBaseListener.cs" />
     <Compile Include="MarkdownPreprocessorLexer.cs" />
     <Compile Include="MarkdownPreprocessorListener.cs" />

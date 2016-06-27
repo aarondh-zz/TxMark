@@ -143,6 +143,57 @@ namespace TxMark.Compiler
             _compileContext.Pop();
         }
 
+        public override void EnterChoose_clause([NotNull] TxMarkParser.Choose_clauseContext context)
+        {
+            _compileContext.SetLocation(context.Start.Line, context.Start.Column);
+            _compileContext.Push(CodeContextTypes.Choose);
+        }
+
+        public override void ExitChoose_clause([NotNull] TxMarkParser.Choose_clauseContext context)
+        {
+            _compileContext.Pop();
+        }
+
+        public override void EnterWhen_clause([NotNull] TxMarkParser.When_clauseContext context)
+        {
+            string hookName = null;
+            if (context.hook() == null)
+            {
+                _compileContext.Log(LogLevel.Warning, $"Macro (when:) does nothing. Did you forget a hook?", context.Start.Line, context.Start.Column);
+            }
+            else
+            {
+                hookName = _compileContext.ResolveHookName(context.hook());
+            }
+            _compileContext.SetLocation(context.Start.Line, context.Start.Column);
+            _compileContext.Push(CodeContextTypes.When, hookName);
+        }
+
+        public override void ExitWhen_clause([NotNull] TxMarkParser.When_clauseContext context)
+        {
+            _compileContext.Pop();
+        }
+
+        public override void EnterOtherwise_clause([NotNull] TxMarkParser.Otherwise_clauseContext context)
+        {
+            string hookName = null;
+            if (context.hook() == null)
+            {
+                _compileContext.Log(LogLevel.Warning, $"Macro (otherwise:) does nothing. Did you forget a hook?", context.Start.Line, context.Start.Column);
+            }
+            else
+            {
+                hookName = _compileContext.ResolveHookName(context.hook());
+            }
+            _compileContext.SetLocation(context.Start.Line, context.Start.Column);
+            _compileContext.Push(CodeContextTypes.Otherwise, hookName);
+        }
+
+        public override void ExitOtherwise_clause([NotNull] TxMarkParser.Otherwise_clauseContext context)
+        {
+            _compileContext.Pop();
+        }
+
         public override void EnterIf_clause([NotNull] TxMarkParser.If_clauseContext context)
         {
             string hookName = null;

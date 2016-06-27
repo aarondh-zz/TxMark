@@ -201,6 +201,7 @@ style
 
 element 
 	: if_clause
+	| choose_clause
 	| each_clause
 	| set_clause
 	| macro_clause (whitespace? macro_clause)*
@@ -245,6 +246,20 @@ else_clause
 if_clause
 	: MACRO_OPEN KEYWORD_IF MCOLON macroArgument CLOSE_PARENTHESES (whitespace? hook)?
 	  (whitespace? (elseIf_clause | else_clause))?
+	;
+
+when_clause
+	: MACRO_OPEN KEYWORD_WHEN MCOLON macroArgument CLOSE_PARENTHESES (whitespace? hook)?
+	  (whitespace? (elseIf_clause | else_clause))?
+	;
+
+otherwise_clause
+	: MACRO_OPEN KEYWORD_OTHERWISE MCOLON CLOSE_PARENTHESES (whitespace? hook)?
+	;
+	
+choose_clause
+	: MACRO_OPEN KEYWORD_CHOOSE MCOLON macroArgument CLOSE_PARENTHESES (whitespace? hook)?
+	  (whitespace? (when_clause | otherwise_clause))?
 	;
 
 set_clause

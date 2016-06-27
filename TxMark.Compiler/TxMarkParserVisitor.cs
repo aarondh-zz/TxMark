@@ -389,6 +389,27 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitIf_clause([NotNull] TxMarkParser.If_clauseContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.when_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitWhen_clause([NotNull] TxMarkParser.When_clauseContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.otherwise_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOtherwise_clause([NotNull] TxMarkParser.Otherwise_clauseContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.choose_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitChoose_clause([NotNull] TxMarkParser.Choose_clauseContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.set_clause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

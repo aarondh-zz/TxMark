@@ -698,6 +698,45 @@ public partial class TxMarkParserBaseListener : ITxMarkParserListener {
 	public virtual void ExitIf_clause([NotNull] TxMarkParser.If_clauseContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.when_clause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterWhen_clause([NotNull] TxMarkParser.When_clauseContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.when_clause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitWhen_clause([NotNull] TxMarkParser.When_clauseContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.otherwise_clause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterOtherwise_clause([NotNull] TxMarkParser.Otherwise_clauseContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.otherwise_clause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitOtherwise_clause([NotNull] TxMarkParser.Otherwise_clauseContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.choose_clause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterChoose_clause([NotNull] TxMarkParser.Choose_clauseContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.choose_clause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitChoose_clause([NotNull] TxMarkParser.Choose_clauseContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.set_clause"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

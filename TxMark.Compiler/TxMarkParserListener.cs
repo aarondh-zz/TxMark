@@ -594,6 +594,39 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	void ExitIf_clause([NotNull] TxMarkParser.If_clauseContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.when_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterWhen_clause([NotNull] TxMarkParser.When_clauseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.when_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitWhen_clause([NotNull] TxMarkParser.When_clauseContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.otherwise_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOtherwise_clause([NotNull] TxMarkParser.Otherwise_clauseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.otherwise_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOtherwise_clause([NotNull] TxMarkParser.Otherwise_clauseContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.choose_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterChoose_clause([NotNull] TxMarkParser.Choose_clauseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.choose_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitChoose_clause([NotNull] TxMarkParser.Choose_clauseContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.set_clause"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="EmailTemplates\MeetingBallot.txm" />
     <None Include="EmailTemplates\Appointment.txm" />
     <None Include="EmailTemplates\AppointmentCancellation.txm" />
     <None Include="EmailTemplates\AppointmentResponses.txm" />

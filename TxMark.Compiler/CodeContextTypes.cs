@@ -12,6 +12,7 @@ namespace TxMark.Compiler
         Attribute,
         BinaryExpression,
         Block,
+        Choose,
         Document,
         Each,
         Else,
@@ -23,10 +24,12 @@ namespace TxMark.Compiler
         Method,
         MethodCall,
         OfExpression,
+        Otherwise,
         ParenthesizedExpression,
         Set,
         SignedExpression,
         TagOpen,
-        TagClose
+        TagClose,
+        When
     }
 }
