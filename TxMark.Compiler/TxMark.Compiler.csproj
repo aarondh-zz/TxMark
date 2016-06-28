@@ -164,10 +164,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="TxMark.pfx" />
-    <Antlr4 Include="TxMarkParser.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>TxMark.Compiler</CustomToolNamespace>
-    </Antlr4>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TxMark.Template\TxMark.Template.csproj">

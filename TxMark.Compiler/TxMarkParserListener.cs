@@ -231,6 +231,28 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	void ExitIndexSuffix([NotNull] TxMarkParser.IndexSuffixContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.indexOperand"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterIndexOperand([NotNull] TxMarkParser.IndexOperandContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.indexOperand"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitIndexOperand([NotNull] TxMarkParser.IndexOperandContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.indexOf_subexpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterIndexOf_subexpression([NotNull] TxMarkParser.IndexOf_subexpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.indexOf_subexpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitIndexOf_subexpression([NotNull] TxMarkParser.IndexOf_subexpressionContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.index_subexpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

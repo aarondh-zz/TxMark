@@ -13,6 +13,7 @@ namespace TxMark.Compiler
         Parenthesis,
         Add,
         And,
+        Contains,
         Subtract,
         Multiply,
         Divide,
@@ -24,7 +25,9 @@ namespace TxMark.Compiler
         GreaterOrEqual,
         Is,
         IsNot,
+        IsIn,
         Index,
+        IndexOf,
         Power,
     }
 }

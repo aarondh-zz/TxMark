@@ -269,6 +269,32 @@ public partial class TxMarkParserBaseListener : ITxMarkParserListener {
 	public virtual void ExitIndexSuffix([NotNull] TxMarkParser.IndexSuffixContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.indexOperand"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterIndexOperand([NotNull] TxMarkParser.IndexOperandContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.indexOperand"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitIndexOperand([NotNull] TxMarkParser.IndexOperandContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.indexOf_subexpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterIndexOf_subexpression([NotNull] TxMarkParser.IndexOf_subexpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.indexOf_subexpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitIndexOf_subexpression([NotNull] TxMarkParser.IndexOf_subexpressionContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.index_subexpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

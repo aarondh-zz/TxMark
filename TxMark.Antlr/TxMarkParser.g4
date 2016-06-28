@@ -57,13 +57,24 @@ indexSuffix
 	| OPERATOR_TH
 	;
 
+indexOperand
+	: number indexSuffix
+	| OPEN_PARENTHESES expression CLOSE_PARENTHESES
+	| quote
+	| word
+	;
+
+indexOf_subexpression
+	: OPERATOR_OF operand
+	;
+
 index_subexpression
-	: OPERATOR_POSSESSIVE ( (number indexSuffix) | ( OPEN_PARENTHESES expression CLOSE_PARENTHESES ) | quote | word )
-	| OPERATOR_OF operand
+	: OPERATOR_POSSESSIVE indexOperand
 	;
 
 index_expression
 	: operand index_subexpression*
+	| indexOperand OPERATOR_OF operand
 	;
 
 signed_index_expression
@@ -79,7 +90,9 @@ booleanOperator:
 	| OPERATOR_LESS_OR_EQUAL
 	| OPERATOR_GREATER_OR_EQUAL
 	| OPERATOR_IS OPERATOR_NOT
+	| OPERATOR_IS OPERATOR_IN
 	| OPERATOR_IS
+	| OPERATOR_CONTAINS
 	| OPERATOR_POWER
 	| OPERATOR_MULTIPLY 
 	| OPERATOR_DIVIDE 

@@ -13,9 +13,10 @@ namespace TxMark.Compiler
     public class ExpressionContext : CodeContextBase
     {
         private ContentContextExitHandler<ExpressionNode> _exitHandler;
-        private ExpressionNode _first;
-        private ExpressionNode _last;
+        protected ExpressionNode _first;
+        protected ExpressionNode _last;
         private StringBuilder _text = new StringBuilder();
+        private OperatorTypes _defaultOperator;
         public class Operator
         {
             public static readonly Operator Noop = new Operator(OperatorTypes.Noop, 1, SyntaxKind.None,"noop");
@@ -104,8 +105,14 @@ namespace TxMark.Compiler
                         return SF.ParenthesizedExpression(Right.ToExpression());
                     case OperatorTypes.Power:
                         return MethodCallContext.CreateMethodCall("Pow", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression()) });
+                    case OperatorTypes.IsIn:
+                        return MethodCallContext.CreateMethodCall("IsIn", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression()) });
+                    case OperatorTypes.Contains:
+                        return MethodCallContext.CreateMethodCall("Contains", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression()) });
                     case OperatorTypes.Index:
                         return MethodCallContext.CreateMethodCall("Index", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression()) });
+                    case OperatorTypes.IndexOf:
+                        return MethodCallContext.CreateMethodCall("Index", false, new ArgumentSyntax[] { SF.Argument(Right.ToExpression()), SF.Argument(Left.ToExpression()) });
                     case OperatorTypes.Noop:
                         return Right.ToExpression();
                     default:
@@ -141,6 +148,7 @@ namespace TxMark.Compiler
             RegisterOperator(OperatorTypes.Power, 2, SyntaxKind.None, "^");
 
             RegisterOperator(OperatorTypes.Index, 3, SyntaxKind.None, "[]");
+            RegisterOperator(OperatorTypes.IndexOf, 3, SyntaxKind.None, "of");
 
             RegisterOperator(OperatorTypes.Divide, 5, SyntaxKind.DivideExpression,"/");
             RegisterOperator(OperatorTypes.Modulo, 5, SyntaxKind.ModuloExpression,"%");
@@ -148,6 +156,9 @@ namespace TxMark.Compiler
 
             RegisterOperator(OperatorTypes.Subtract, 10, SyntaxKind.SubtractExpression,"-");
             RegisterOperator(OperatorTypes.Add, 10, SyntaxKind.AddExpression,"+");
+
+            RegisterOperator(OperatorTypes.IsIn, 15, SyntaxKind.None, "is in");
+            RegisterOperator(OperatorTypes.Contains, 15, SyntaxKind.None, "contains");
 
             RegisterOperator(OperatorTypes.GreaterOrEqual, 20, SyntaxKind.GreaterThanOrEqualExpression,">=");
             RegisterOperator(OperatorTypes.GreaterThan, 20, SyntaxKind.GreaterThanExpression,">");
@@ -160,8 +171,9 @@ namespace TxMark.Compiler
             RegisterOperator(OperatorTypes.Or, 30, SyntaxKind.LogicalOrExpression,"||");
 
         }
-        public ExpressionContext(ContentContextExitHandler<ExpressionNode> exitHandler)
+        public ExpressionContext(ContentContextExitHandler<ExpressionNode> exitHandler, OperatorTypes defaultOperator = OperatorTypes.Add)
         {
+            this._defaultOperator = defaultOperator;
             _exitHandler = exitHandler;
         }
         private static Operator GetOperatorMap(OperatorTypes operatorType)
@@ -197,6 +209,7 @@ namespace TxMark.Compiler
                 else if (oper.Precidence <= _last.Operator.Precidence)
                 {
                     _last = _last.Right = new ExpressionNode(oper, _last.Right, expressionNode);
+                    oldLast = null;
                 }
                 else
                 {
@@ -256,11 +269,11 @@ namespace TxMark.Compiler
         {
             if ( boolean)
             {
-                Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.TrueLiteralExpression));
+                Add(_defaultOperator, SF.LiteralExpression(SyntaxKind.TrueLiteralExpression));
             }
             else
             {
-                Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.FalseLiteralExpression));
+                Add(_defaultOperator, SF.LiteralExpression(SyntaxKind.FalseLiteralExpression));
             }
         }
         public override void NewLine()
@@ -278,30 +291,35 @@ namespace TxMark.Compiler
             {
                 if (double.TryParse(numberText, out doubleValue))
                 {
-                    Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(doubleValue)));
+                    Add(_defaultOperator, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(doubleValue)));
                 }
                 else
                 {
-                    Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(double.NaN)));
+                    Add(_defaultOperator, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(double.NaN)));
                 }
             }
             else if ( int.TryParse(numberText, out intValue))
             {
-                Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(intValue)));
+                Add(_defaultOperator, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(intValue)));
             }
             else
             {
-                Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(0)));
+                Add(_defaultOperator, SF.LiteralExpression(SyntaxKind.NumericLiteralExpression, SF.Literal(0)));
             }
         }
         public override void Null()
         {
-            Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.NullLiteralExpression));
+            Add(_defaultOperator, SF.LiteralExpression(SyntaxKind.NullLiteralExpression));
         }
 
         public override void Quote(string quote)
         {
-            Add(OperatorTypes.Add, SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(quote)));
+            Add(_defaultOperator, SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(quote)));
+        }
+
+        public override void Word(string word)
+        {
+            Add(_defaultOperator, SF.LiteralExpression(SyntaxKind.StringLiteralExpression, SF.Literal(word)));
         }
 
         public override void Whitespace()
@@ -310,7 +328,7 @@ namespace TxMark.Compiler
 
         public override void Variable(string variableName)
         {
-            Add(OperatorTypes.Add, this.Context.IsStateVariable(variableName) ?
+            Add(_defaultOperator, this.Context.IsStateVariable(variableName) ?
                 VariableHelper.MakeStateVariableExpression(variableName) :
                 VariableHelper.MakeModelVariableExpression(variableName)
             );
@@ -323,7 +341,7 @@ namespace TxMark.Compiler
             {
                 foreach (var hook in hooks)
                 {
-                    Add(OperatorTypes.Add, MethodCallContext.CreateMethodCall(hook,true));
+                    Add(_defaultOperator, MethodCallContext.CreateMethodCall(hook,true));
                 }
             }
             else
@@ -343,7 +361,7 @@ namespace TxMark.Compiler
                 case CodeContextTypes.Expression:
                     return new ExpressionContext((expression) =>
                     {
-                        Add(OperatorTypes.Add, expression);
+                        Add(_defaultOperator, expression);
                     });
                 case CodeContextTypes.SignedExpression:
                     return new ExpressionContext((expression) =>
@@ -353,7 +371,7 @@ namespace TxMark.Compiler
                 case CodeContextTypes.ParenthesizedExpression:
                     return new ExpressionContext((expression) =>
                     {
-                        Add( OperatorTypes.Add, new ExpressionNode( GetOperatorMap(OperatorTypes.Parenthesis),expression));
+                        Add( _defaultOperator, new ExpressionNode( GetOperatorMap(OperatorTypes.Parenthesis),expression));
                     });
                 case CodeContextTypes.BinaryExpression:
                     if (attributes?.Contains("operator") ?? false)
@@ -373,20 +391,21 @@ namespace TxMark.Compiler
                 case CodeContextTypes.OfExpression:
                     return new ExpressionContext((expression) =>
                     {
-                        if ( _last != null && expression != null)
-                        {
-                            if ( _last.IsUnary )
-                            {
-                                _last.Set(new ExpressionNode(GetOperatorMap(OperatorTypes.Index), left: expression, right: _last.Clone()));
-                            }
-                            else
-                            {
-                                _last = _last.Right = new ExpressionNode(GetOperatorMap(OperatorTypes.Index), left: expression, right: _last.Right);
-                            }
-                        }
-                    });
+                        Add(_defaultOperator, expression);
+                    }, OperatorTypes.IndexOf);
             }
             return base.CreateContext(contextType, name, attributes);
+        }
+        public override string ToString()
+        {
+            if ( _first == null)
+            {
+                return "empty";
+            }
+            else
+            {
+                return _first.ToString();
+            }
         }
 
     }

@@ -158,6 +158,20 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitIndexSuffix([NotNull] TxMarkParser.IndexSuffixContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.indexOperand"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitIndexOperand([NotNull] TxMarkParser.IndexOperandContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.indexOf_subexpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitIndexOf_subexpression([NotNull] TxMarkParser.IndexOf_subexpressionContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.index_subexpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -117,6 +117,26 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 */
 	void exitIndexSuffix(TxMarkParser.IndexSuffixContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#indexOperand}.
+	 * @param ctx the parse tree
+	 */
+	void enterIndexOperand(TxMarkParser.IndexOperandContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#indexOperand}.
+	 * @param ctx the parse tree
+	 */
+	void exitIndexOperand(TxMarkParser.IndexOperandContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#indexOf_subexpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIndexOf_subexpression(TxMarkParser.IndexOf_subexpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#indexOf_subexpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIndexOf_subexpression(TxMarkParser.IndexOf_subexpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#index_subexpression}.
 	 * @param ctx the parse tree
 	 */

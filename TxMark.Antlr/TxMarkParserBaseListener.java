@@ -147,6 +147,30 @@ public class TxMarkParserBaseListener implements TxMarkParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIndexOperand(TxMarkParser.IndexOperandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIndexOperand(TxMarkParser.IndexOperandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIndexOf_subexpression(TxMarkParser.IndexOf_subexpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIndexOf_subexpression(TxMarkParser.IndexOf_subexpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIndex_subexpression(TxMarkParser.Index_subexpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}

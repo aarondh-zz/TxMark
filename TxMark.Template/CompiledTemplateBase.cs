@@ -35,13 +35,101 @@ namespace TxMark.Template
                 return property;
             }
         }
+        public bool Contains(object value, object key)
+        {
+            throw new NotImplementedException("\"contains\" is not implemented");
+        }
+        public bool IsIn(object value, object key)
+        {
+            throw new NotImplementedException("\"is in\" is not implemented");
+        }
+        private int LengthOf(object value)
+        {
+            if ( value == null)
+            {
+                return 0;
+            }
+            else if (value.GetType().IsArray)
+            {
+                var array = value as Array;
+                return array.Length;
+            }
+            else if (value is IList)
+            {
+                var list = value as IList;
+                return list.Count;
+            }
+            else if (value is IEnumerable)
+            {
+                int length = 0;
+                var enumerable = value as IEnumerable;
+                foreach (var item in enumerable)
+                {
+                    length++;
+                }
+                return length;
+            }
+            else
+            {
+                var lengthProperty = value.GetType().GetProperty("Length");
+                if (lengthProperty != null)
+                {
+                    return (int)lengthProperty.GetValue(value);
+                }
+                var countProperty = value.GetType().GetProperty("Count");
+                if (countProperty != null)
+                {
+                    return (int)countProperty.GetValue(value);
+                }
+            }
+            return 0;
+        }
+        private object IndexOf(object value, int index)
+        {
+            if (value != null && index > 0)
+            {
+                if (value.GetType().IsArray)
+                {
+                    var array = value as Array;
+                    return array.GetValue(index - 1);
+                }
+                else if (value is IList)
+                {
+                    var list = value as IList;
+                    return list[index - 1];
+                }
+                else if (value is IEnumerable)
+                {
+                    var enumerable = value as IEnumerable;
+                    foreach (var item in enumerable)
+                    {
+                        if (index-- == 0)
+                        {
+                            return item;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
         public object Index(object value, object key)
         {
             try
             {
-                if (value == null || key == null)
+                if (key == null)
                 {
                     return null;
+                }
+                else if (value == null)
+                {
+                    if (key.ToString().Equals("length", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else if (value is IDictionary)
                 {
@@ -50,40 +138,27 @@ namespace TxMark.Template
                 }
                 else if (key is int || key is float || key is double)
                 {
-                    var index = (int)key;
-                    if (index > 0)
-                    {
-                        if (value.GetType().IsArray)
-                        {
-                            var array = value as Array;
-                            return array.GetValue(index - 1);
-                        }
-                        else if (value is IList)
-                        {
-                            var list = value as IList;
-                            return list[index - 1];
-                        }
-                        else if (value is IEnumerable)
-                        {
-                            var enumerable = value as IEnumerable;
-                            foreach (var item in enumerable)
-                            {
-                                if (index-- == 0)
-                                {
-                                    return item;
-                                }
-                            }
-                        }
-                    }
+                    return IndexOf(value, (int)key);
                 }
                 else
                 {
                     var type = value.GetType();
                     var name = key.ToString();
                     var member = GetPropertyOrField(type, name);
-                    if ( member == null && name.Equals("length",StringComparison.InvariantCultureIgnoreCase) )
+                    if ( member == null )
                     {
-                        member = GetPropertyOrField(type, "Count");
+                        if (name.Equals("length", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            member = GetPropertyOrField(type, "Count");
+                        }
+                        else if (name.Equals("first", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            return IndexOf(value, 1);
+                        }
+                        else if (name.Equals("last", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            return IndexOf(value, LengthOf(value));
+                        }
                     }
                     if (member is PropertyInfo)
                     {
@@ -112,6 +187,11 @@ namespace TxMark.Template
         }
         [Macro]
         public static string Print(object value)
+        {
+            return value?.ToString();
+        }
+        [Macro]
+        public static string Text(object value)
         {
             return value?.ToString();
         }

@@ -43,6 +43,14 @@ namespace TxMark.Compiler
             {
                 _compileContext.Word(context.GetText());
             }
+            else if (context.Parent is TxMarkParser.ExpressionContext)
+            {
+                _compileContext.Word(context.GetText());
+            }
+            else if (context.Parent is TxMarkParser.IndexOperandContext)
+            {
+                _compileContext.Word(context.GetText());
+            }
             else if (context.Parent is TxMarkParser.ConstantContext)
             {
                 _compileContext.Quote(context.GetText());
@@ -482,7 +490,19 @@ namespace TxMark.Compiler
             }
             else if (booleanOperator.OPERATOR_IS() != null)
             {
+                if (booleanOperator.OPERATOR_NOT() != null)
+                {
+                    return OperatorTypes.IsNot;
+                }
+                else if (booleanOperator.OPERATOR_IN() != null)
+                {
+                    return OperatorTypes.IsIn;
+                }
                 return OperatorTypes.Is;
+            }
+            else if (booleanOperator.OPERATOR_CONTAINS() != null)
+            {
+                return OperatorTypes.Contains;
             }
             else if (booleanOperator.OPERATOR_LESS_OR_EQUAL() != null)
             {
@@ -491,10 +511,6 @@ namespace TxMark.Compiler
             else if (booleanOperator.OPERATOR_LESS_THAN() != null)
             {
                 return OperatorTypes.LessThan;
-            }
-            else if (booleanOperator.OPERATOR_NOT() != null)
-            {
-                return OperatorTypes.IsNot;
             }
             else if (booleanOperator.OPERATOR_MINUS() != null)
             {
@@ -541,30 +557,40 @@ namespace TxMark.Compiler
         }
         public override void EnterIndex_expression([NotNull] TxMarkParser.Index_expressionContext context)
         {
-            _compileContext.Push(CodeContextTypes.Expression);
-        }
-
-        public override void EnterIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context)
-        {
-            if (context.OPERATOR_POSSESSIVE() != null)
-            {
-                _compileContext.Push(CodeContextTypes.IndexExpression);
-            }
-            else if (context.OPERATOR_OF() != null)
+            if (context.OPERATOR_OF() != null)
             {
                 _compileContext.Push(CodeContextTypes.OfExpression);
             }
+
+        }
+        public override void ExitIndex_expression([NotNull] TxMarkParser.Index_expressionContext context)
+        {
+            if (context.OPERATOR_OF() != null)
+            {
+                _compileContext.Pop();
+            }
+        }
+
+
+        public override void EnterIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context)
+        {
+            _compileContext.Push(CodeContextTypes.IndexExpression);
         }
 
         public override void ExitIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context)
         {
             _compileContext.Pop();
         }
-        public override void ExitIndex_expression([NotNull] TxMarkParser.Index_expressionContext context)
+
+        public override void EnterIndexOf_subexpression([NotNull] TxMarkParser.IndexOf_subexpressionContext context)
+        {
+            _compileContext.Push(CodeContextTypes.OfExpression);
+        }
+
+        public override void ExitIndexOf_subexpression([NotNull] TxMarkParser.IndexOf_subexpressionContext context)
         {
             _compileContext.Pop();
         }
-
         public override void EnterOperand([NotNull] TxMarkParser.OperandContext context)
         {
             if ( context.OPEN_PARENTHESES()!=null)
@@ -577,6 +603,23 @@ namespace TxMark.Compiler
             }
         }
         public override void ExitOperand([NotNull] TxMarkParser.OperandContext context)
+        {
+            _compileContext.Pop();
+        }
+
+        public override void EnterIndexOperand([NotNull] TxMarkParser.IndexOperandContext context)
+        {
+            if (context.OPEN_PARENTHESES() != null)
+            {
+                _compileContext.Push(CodeContextTypes.ParenthesizedExpression);
+            }
+            else
+            {
+                _compileContext.Push(CodeContextTypes.Expression);
+            }
+        }
+
+        public override void ExitIndexOperand([NotNull] TxMarkParser.IndexOperandContext context)
         {
             _compileContext.Pop();
         }

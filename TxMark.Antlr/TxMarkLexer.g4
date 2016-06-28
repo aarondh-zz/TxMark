@@ -237,8 +237,16 @@ OPERATOR_AND
     : A N D
     ;
 
+OPERATOR_CONTAINS
+    : C O N T A I N S
+    ;
+
 OPERATOR_OR
     : O R
+    ;
+
+OPERATOR_IN
+    : I N
     ;
 
 OPERATOR_IS
