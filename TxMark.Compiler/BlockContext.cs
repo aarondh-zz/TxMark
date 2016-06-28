@@ -83,6 +83,11 @@ namespace TxMark.Compiler
                     {
                         Add(ifStatement);
                     });
+                case CodeContextTypes.Choose:
+                    return new ChooseContext((chooseStatement) =>
+                    {
+                        Add(chooseStatement);
+                    });
                 case CodeContextTypes.Each:
                     return new EachContext(name, (eachStatement) =>
                     {

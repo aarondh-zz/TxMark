@@ -509,6 +509,36 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 */
 	void exitIf_clause(TxMarkParser.If_clauseContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#when_clause}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhen_clause(TxMarkParser.When_clauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#when_clause}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhen_clause(TxMarkParser.When_clauseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#otherwise_clause}.
+	 * @param ctx the parse tree
+	 */
+	void enterOtherwise_clause(TxMarkParser.Otherwise_clauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#otherwise_clause}.
+	 * @param ctx the parse tree
+	 */
+	void exitOtherwise_clause(TxMarkParser.Otherwise_clauseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#choose_clause}.
+	 * @param ctx the parse tree
+	 */
+	void enterChoose_clause(TxMarkParser.Choose_clauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#choose_clause}.
+	 * @param ctx the parse tree
+	 */
+	void exitChoose_clause(TxMarkParser.Choose_clauseContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#set_clause}.
 	 * @param ctx the parse tree
 	 */

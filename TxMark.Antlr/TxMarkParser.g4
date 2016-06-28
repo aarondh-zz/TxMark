@@ -250,7 +250,7 @@ if_clause
 
 when_clause
 	: MACRO_OPEN KEYWORD_WHEN MCOLON macroArgument CLOSE_PARENTHESES (whitespace? hook)?
-	  (whitespace? (elseIf_clause | else_clause))?
+	  (whitespace? (when_clause | otherwise_clause))?
 	;
 
 otherwise_clause
@@ -258,7 +258,7 @@ otherwise_clause
 	;
 	
 choose_clause
-	: MACRO_OPEN KEYWORD_CHOOSE MCOLON macroArgument CLOSE_PARENTHESES (whitespace? hook)?
+	: MACRO_OPEN KEYWORD_CHOOSE MCOLON macroArgument CLOSE_PARENTHESES
 	  (whitespace? (when_clause | otherwise_clause))?
 	;
 
