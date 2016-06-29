@@ -5,7 +5,7 @@ using System.Dynamic;
 
 namespace TxMark.Template
 {
-    public interface IState<TModel> : IDictionary<string, object>, ICollection<KeyValuePair<string, object>>, IEnumerable<KeyValuePair<string, object>>, IEnumerable, INotifyPropertyChanged, IDynamicMetaObjectProvider
+    public interface IState<TModel> : IDynamicMetaObjectProvider
     {
         void Push();
         IValue Pop();

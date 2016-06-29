@@ -94,25 +94,6 @@ namespace TxMark.Template
                 return _model;
             }
         }
-        public object this[string key]
-        {
-            get
-            {
-                return Get(key);
-            }
-
-            set
-            {
-                Set(key, value);
-            }
-        }
-        private void FirePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
         public void Set(string key, object value)
         {
             object oldValue = null;
@@ -128,7 +109,6 @@ namespace TxMark.Template
                 }
             }
             _values[key] = value;
-            FirePropertyChanged(key);
         }
 
         public object Get(string key)
@@ -142,127 +122,6 @@ namespace TxMark.Template
                 return _values[key];
             }
         }
-
-        public int Count
-        {
-            get
-            {
-                if (_values == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return _values.Count;
-                }
-            }
-        }
-
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public ICollection<string> Keys
-        {
-            get
-            {
-                if (_values == null)
-                {
-                    return new string[] { };
-                }
-                else
-                {
-                    return _values.Keys;
-                }
-            }
-        }
-        public ICollection<object> Values
-        {
-            get
-            {
-                if (_values == null)
-                {
-                    return new object[] { };
-                }
-                else
-                {
-                    return _values.Values;
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void Add(KeyValuePair<string, object> item)
-        {
-            Add(item.Key, item.Value);
-        }
-
-        public void Add(string key, object value)
-        {
-            if (_values == null)
-            {
-                _values = new Dictionary<string, object>();
-            }
-            _values.Add(key, value);
-            PropertyChanged(this, new PropertyChangedEventArgs(key));
-        }
-
-        public void Clear()
-        {
-            if (_values != null)
-            {
-                _values.Clear();
-            }
-        }
-
-        public bool Contains(KeyValuePair<string, object> item)
-        {
-            if (_values == null)
-            {
-                return false;
-            }
-            else
-            {
-                return _values.Contains(item);
-            }
-        }
-
-        public bool ContainsKey(string key)
-        {
-            if (_values == null)
-            {
-                return false;
-            }
-            else
-            {
-                return _values.ContainsKey(key);
-            }
-        }
-
-        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
-        {
-            if (_values != null)
-            {
-                _values.ToArray().CopyTo(array, arrayIndex);
-            }
-        }
-
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-        {
-            if (_values == null)
-            {
-                return new KeyValuePair<string, object>[] { }.GetEnumerator() as IEnumerator<KeyValuePair<string, object>>;
-            }
-            else
-            {
-                return _values.GetEnumerator();
-            }
-        }
         public IValue Pop()
         {
             var current = _currentFrame;
@@ -274,45 +133,6 @@ namespace TxMark.Template
         {
             _frameStack.Push(_currentFrame);
             _currentFrame = new Frame(_currentFrame);
-        }
-
-        public bool Remove(KeyValuePair<string, object> item)
-        {
-            if (_values != null && _values.Remove(item.Key))
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(item.Key));
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool Remove(string key)
-        {
-            if (_values != null && _values.Remove(key))
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(key));
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool TryGetValue(string key, out object value)
-        {
-            if (_values == null)
-            {
-                value = null;
-                return false;
-            }
-            else
-            {
-                return _values.TryGetValue(key, out value);
-            }
         }
 
         public void Write(double value)
@@ -338,18 +158,6 @@ namespace TxMark.Template
         public void Write(object value)
         {
             _formatter.Write(_currentFrame.Writer, value);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            if (_values == null)
-            {
-                return new KeyValuePair<string, object>[] { }.GetEnumerator();
-            }
-            else
-            {
-                return _values.GetEnumerator();
-            }
         }
 
         public bool WriteOpenTag(string tagName, bool isClosing, params object[] attributeNameValues)

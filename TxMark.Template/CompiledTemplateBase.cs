@@ -1,5 +1,4 @@
-﻿#define USE_DYNAMIC
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -13,12 +12,7 @@ namespace TxMark.Template
         public CompiledTemplateBase(  )
         {
         }
-#if USE_DYNAMIC
         public abstract IValue View(dynamic state);
-#else
-       public abstract IValue View(IState<TModel> state);
-#endif
-
         public string View(IViewOptions viewOptions, TModel model)
         {
             var state = new TemplateState<TModel>(viewOptions, model);
