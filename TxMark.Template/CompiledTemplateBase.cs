@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace TxMark.Template
@@ -174,6 +175,36 @@ namespace TxMark.Template
             {
             }
             return NullValue.Instance;
+        }
+        public object IndexFromLast(object value, int key)
+        {
+            var last = LengthOf(value);
+            return IndexOf(value, last - key + 1);
+        }
+
+        [Macro(alias: "a")]
+        public IListValue Array(params Object[] values)
+        {
+            return new ListValue<object>(values);
+        }
+        [Macro]
+        public IDatamapValue DataMap(params Object[] values)
+        {
+            var datamap = new DatamapValue<object>();
+            if ( values != null)
+            {
+                for (int i = 0; i < values.Length; i += 2)
+                {
+                    string key = values[i].ToString();
+                    object value = "";
+                    if ( i+1 < values.Length)
+                    {
+                        value = values[i + 1];
+                    }
+                    datamap[key] = values;
+                }
+            }
+            return datamap;
         }
         [Macro]
         public int Count(IEnumerable value)

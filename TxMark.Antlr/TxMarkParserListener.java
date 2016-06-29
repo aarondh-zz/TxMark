@@ -579,6 +579,16 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 */
 	void exitMacro(TxMarkParser.MacroContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#submacro}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubmacro(TxMarkParser.SubmacroContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#submacro}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubmacro(TxMarkParser.SubmacroContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#hook}.
 	 * @param ctx the parse tree
 	 */

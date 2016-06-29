@@ -40,13 +40,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompiledTemplateBase.cs" />
+    <Compile Include="DatamapValue.cs" />
     <Compile Include="ICompiledTemplate.cs" />
+    <Compile Include="IDatamapValue.cs" />
+    <Compile Include="IListValue.cs" />
     <Compile Include="IRawValue.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="Fomatters\IFormatter.cs" />
     <Compile Include="ITemplateWriter.cs" />
     <Compile Include="IValue.cs" />
     <Compile Include="IViewOptions.cs" />
+    <Compile Include="ListValue.cs" />
     <Compile Include="MacroArgument.cs" />
     <Compile Include="Fomatters\HtmlMappingFormatter.cs" />
     <Compile Include="NullValue.cs" />

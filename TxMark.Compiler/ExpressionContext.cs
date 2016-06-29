@@ -92,7 +92,6 @@ namespace TxMark.Compiler
                 this.Operator = Operator.Noop;
                 this.Expression = expression;
             }
-
             public ExpressionSyntax ToExpression()
             {
                 if ( this.Expression != null)
@@ -113,6 +112,10 @@ namespace TxMark.Compiler
                         return MethodCallContext.CreateMethodCall("Index", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression()) });
                     case OperatorTypes.IndexOf:
                         return MethodCallContext.CreateMethodCall("Index", false, new ArgumentSyntax[] { SF.Argument(Right.ToExpression()), SF.Argument(Left.ToExpression()) });
+                    case OperatorTypes.LastIndex:
+                        return MethodCallContext.CreateMethodCall("IndexFromLast", false, new ArgumentSyntax[] { SF.Argument(Left.ToExpression()), SF.Argument(Right.ToExpression())});
+                    case OperatorTypes.LastIndexOf:
+                        return MethodCallContext.CreateMethodCall("IndexFromLast", false, new ArgumentSyntax[] { SF.Argument(Right.ToExpression()), SF.Argument(Left.ToExpression())});
                     case OperatorTypes.Noop:
                         return Right.ToExpression();
                     default:
@@ -149,6 +152,8 @@ namespace TxMark.Compiler
 
             RegisterOperator(OperatorTypes.Index, 3, SyntaxKind.None, "[]");
             RegisterOperator(OperatorTypes.IndexOf, 3, SyntaxKind.None, "of");
+            RegisterOperator(OperatorTypes.LastIndex, 3, SyntaxKind.None, "[last]");
+            RegisterOperator(OperatorTypes.LastIndexOf, 3, SyntaxKind.None, "last of");
 
             RegisterOperator(OperatorTypes.Divide, 5, SyntaxKind.DivideExpression,"/");
             RegisterOperator(OperatorTypes.Modulo, 5, SyntaxKind.ModuloExpression,"%");
@@ -384,15 +389,17 @@ namespace TxMark.Compiler
                     }
                     break;
                 case CodeContextTypes.IndexExpression:
+                    bool last = attributes?.Get<bool>("last", false) ?? false;
                     return new ExpressionContext((expression) =>
                     {
-                        Add(OperatorTypes.Index, expression);
+                        Add(last?OperatorTypes.LastIndex:OperatorTypes.Index, expression);
                     });
                 case CodeContextTypes.OfExpression:
+                    bool lastOf = attributes?.Get<bool>("last", false) ?? false;
                     return new ExpressionContext((expression) =>
                     {
                         Add(_defaultOperator, expression);
-                    }, OperatorTypes.IndexOf);
+                    }, lastOf? OperatorTypes.LastIndexOf:OperatorTypes.IndexOf);
             }
             return base.CreateContext(contextType, name, attributes);
         }

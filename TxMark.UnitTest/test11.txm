@@ -1,0 +1,14 @@
+<div>
+  (a:
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "sex"
+  )
+  (set: $array to (a:"one","two","three","four","five","sex"))
+  (each: $array as $item)[
+    Entry: $item
+  ]
+</div>

@@ -59,7 +59,7 @@
     <Compile Include="DiffEventArgs.cs" />
     <Compile Include="DiffType.cs" />
     <Compile Include="SimpleDiff.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="EngineUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +88,10 @@
     <None Include="packages.config" />
     <None Include="test0.txm" />
     <None Include="test1.txm" />
+    <None Include="test11.expected" />
+    <None Include="test11.txm">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="test10.expected" />
     <None Include="test2.expected" />
     <None Include="test2.txm" />
@@ -108,7 +112,6 @@
     <None Include="test9.txm">
       <SubType>Designer</SubType>
     </None>
-    <None Include="test8.expected" />
     <None Include="test8.txm">
       <SubType>Designer</SubType>
     </None>

@@ -671,6 +671,17 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	void ExitMacro([NotNull] TxMarkParser.MacroContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.submacro"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSubmacro([NotNull] TxMarkParser.SubmacroContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.submacro"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSubmacro([NotNull] TxMarkParser.SubmacroContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.hook"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

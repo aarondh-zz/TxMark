@@ -48,7 +48,7 @@ namespace TxMark.Compiler
                     {
                         if (expression == null)
                         {
-                            _valueExpression = SF.LiteralExpression(SyntaxKind.NullKeyword);
+                            _valueExpression = SF.LiteralExpression(SyntaxKind.NullLiteralExpression);
                         }
                         else
                         {

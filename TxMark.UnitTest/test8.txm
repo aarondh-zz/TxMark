@@ -4,4 +4,8 @@
   This should also be "three": (print: 3rd of $array)
   This should also be "three": (print: (5 * 2 - 7) of $array)
   This should be "6": (print: length of $array)
+  This should be "one": (print: first of $array)
+  This should be "six": (print: last of $array)
+  This should be "five": (print: 2nd last of $array)
+  This should be "four": (print: 3nd last of $array)
 </div>

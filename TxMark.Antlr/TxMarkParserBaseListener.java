@@ -687,6 +687,18 @@ public class TxMarkParserBaseListener implements TxMarkParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSubmacro(TxMarkParser.SubmacroContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSubmacro(TxMarkParser.SubmacroContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterHook(TxMarkParser.HookContext ctx) { }
 	/**
 	 * {@inheritDoc}

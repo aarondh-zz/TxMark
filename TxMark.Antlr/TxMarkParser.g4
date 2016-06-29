@@ -45,9 +45,10 @@ quote
 operand
   : variable 
   | hookName 
+  | submacro 
   | constant
   | word 
-  | ( OPEN_PARENTHESES expression CLOSE_PARENTHESES ) 
+  | ( OPEN_PARENTHESIS expression CLOSE_PARENTHESIS ) 
   ;
 
 indexSuffix
@@ -58,8 +59,9 @@ indexSuffix
 	;
 
 indexOperand
-	: number indexSuffix
-	| OPEN_PARENTHESES expression CLOSE_PARENTHESES
+	: number indexSuffix OPERATOR_LAST?
+	| OPERATOR_LAST
+	| OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
 	| quote
 	| word
 	;
@@ -244,43 +246,47 @@ macro_clause
 	;
 
 each_clause
-	: MACRO_OPEN KEYWORD_EACH MCOLON macroArgument (OPERATOR_AS variable)? CLOSE_PARENTHESES (whitespace? hook)?
+	: MACRO_OPEN KEYWORD_EACH MCOLON macroArgument (OPERATOR_AS variable)? CLOSE_PARENTHESIS (whitespace? hook)?
 	;
 
 elseIf_clause
-	: MACRO_OPEN KEYWORD_ELSEIF MCOLON macroArgument CLOSE_PARENTHESES (whitespace? hook)?
+	: MACRO_OPEN KEYWORD_ELSEIF MCOLON macroArgument CLOSE_PARENTHESIS (whitespace? hook)?
 	  (whitespace? (elseIf_clause | else_clause))?
 	;
 
 else_clause
-	: MACRO_OPEN KEYWORD_ELSE MCOLON CLOSE_PARENTHESES (whitespace? hook)?
+	: MACRO_OPEN KEYWORD_ELSE MCOLON CLOSE_PARENTHESIS (whitespace? hook)?
 	;
 
 if_clause
-	: MACRO_OPEN KEYWORD_IF MCOLON macroArgument CLOSE_PARENTHESES (whitespace? hook)?
+	: MACRO_OPEN KEYWORD_IF MCOLON macroArgument CLOSE_PARENTHESIS (whitespace? hook)?
 	  (whitespace? (elseIf_clause | else_clause))?
 	;
 
 when_clause
-	: MACRO_OPEN KEYWORD_WHEN MCOLON macroArgument CLOSE_PARENTHESES (whitespace? hook)?
+	: MACRO_OPEN KEYWORD_WHEN MCOLON macroArgument CLOSE_PARENTHESIS (whitespace? hook)?
 	  (whitespace? (when_clause | otherwise_clause))?
 	;
 
 otherwise_clause
-	: MACRO_OPEN KEYWORD_OTHERWISE MCOLON CLOSE_PARENTHESES (whitespace? hook)?
+	: MACRO_OPEN KEYWORD_OTHERWISE MCOLON CLOSE_PARENTHESIS (whitespace? hook)?
 	;
 	
 choose_clause
-	: MACRO_OPEN KEYWORD_CHOOSE MCOLON macroArgument CLOSE_PARENTHESES
+	: MACRO_OPEN KEYWORD_CHOOSE MCOLON macroArgument CLOSE_PARENTHESIS
 	  (whitespace? (when_clause | otherwise_clause))?
 	;
 
 set_clause
-	: MACRO_OPEN KEYWORD_SET MCOLON variable KEYWORD_TO macroArgument CLOSE_PARENTHESES
+	: MACRO_OPEN KEYWORD_SET MCOLON variable KEYWORD_TO macroArgument CLOSE_PARENTHESIS
 	;
 
 macro
-    :  MACRO_OPEN macroName MCOLON (macroArgument (MCOMMA macroArgument )*)? (OPERATOR_AS variable)? CLOSE_PARENTHESES
+    :  MACRO_OPEN macroName MCOLON (macroArgument (MCOMMA macroArgument )*)? (OPERATOR_AS variable)? CLOSE_PARENTHESIS
+    ;
+
+submacro
+    : OPEN_PARENTHESIS macroName MCOLON (macroArgument (MCOMMA macroArgument )*)? CLOSE_PARENTHESIS
     ;
 
 hook

@@ -249,6 +249,10 @@ OPERATOR_IN
     : I N
     ;
 
+OPERATOR_LAST
+    : L A S T
+    ;
+
 OPERATOR_IS
     : I S
     ;
@@ -293,11 +297,11 @@ OPERATOR_POWER
     : '^'
     ;
 
-OPEN_PARENTHESES
+OPEN_PARENTHESIS
     : '(' -> pushMode(MACRO_MODE)
     ;
 
-CLOSE_PARENTHESES
+CLOSE_PARENTHESIS
     : ')' -> popMode
     ;
 

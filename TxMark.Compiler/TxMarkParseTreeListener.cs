@@ -91,6 +91,23 @@ namespace TxMark.Compiler
             }
         }
 
+        public override void EnterSubmacro([NotNull] TxMarkParser.SubmacroContext context)
+        {
+            var macroName = context.macroName().GetText();
+            var macroDefinition = _compileContext.ResolveMacro(macroName);
+            if (!macroDefinition.Defined)
+            {
+                _compileContext.Log(LogLevel.Error, $"Macro ({macroName}:) was not found.", context.Start.Line, context.Start.Column);
+            }
+            _compileContext.SetLocation(context.Start.Line, context.Start.Column);
+            _compileContext.PushMacro(macroDefinition, null);
+        }
+
+        public override void ExitSubmacro([NotNull] TxMarkParser.SubmacroContext context)
+        {
+            base.ExitSubmacro(context);
+        }
+
         public override void EnterMacro_clause([NotNull] TxMarkParser.Macro_clauseContext context)
         {
             var macroName = context.macro().macroName().GetText();
@@ -546,8 +563,7 @@ namespace TxMark.Compiler
         {
             var operatorType = GetOperatorType(context);
                 _compileContext.Push(CodeContextTypes.BinaryExpression,
-                    null,
-                    new Bag<string>().Add<OperatorTypes>("operator",operatorType.Value)
+                    attributes: new Bag<string>().Add<OperatorTypes>("operator",operatorType.Value)
                     );
         }
 
@@ -559,7 +575,8 @@ namespace TxMark.Compiler
         {
             if (context.OPERATOR_OF() != null)
             {
-                _compileContext.Push(CodeContextTypes.OfExpression);
+                bool relativeToLast = context.indexOperand()?.OPERATOR_LAST() != null;
+                _compileContext.Push(CodeContextTypes.OfExpression, attributes:new Bag<string>().Add<bool>("last", relativeToLast));
             }
 
         }
@@ -574,7 +591,9 @@ namespace TxMark.Compiler
 
         public override void EnterIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context)
         {
-            _compileContext.Push(CodeContextTypes.IndexExpression);
+            var indexOperand = context.indexOperand();
+            bool relativeToLast = indexOperand.OPERATOR_LAST() != null;
+            _compileContext.Push(CodeContextTypes.IndexExpression, attributes: new Bag<string>().Add<bool>("last", relativeToLast));
         }
 
         public override void ExitIndex_subexpression([NotNull] TxMarkParser.Index_subexpressionContext context)
@@ -593,7 +612,7 @@ namespace TxMark.Compiler
         }
         public override void EnterOperand([NotNull] TxMarkParser.OperandContext context)
         {
-            if ( context.OPEN_PARENTHESES()!=null)
+            if ( context.OPEN_PARENTHESIS()!=null)
             {
                 _compileContext.Push(CodeContextTypes.ParenthesizedExpression);
             }
@@ -609,13 +628,20 @@ namespace TxMark.Compiler
 
         public override void EnterIndexOperand([NotNull] TxMarkParser.IndexOperandContext context)
         {
-            if (context.OPEN_PARENTHESES() != null)
+            if (context.OPEN_PARENTHESIS() != null)
             {
                 _compileContext.Push(CodeContextTypes.ParenthesizedExpression);
             }
             else
             {
                 _compileContext.Push(CodeContextTypes.Expression);
+                if ( context.OPERATOR_LAST()!= null)
+                {
+                    if ( context.number() == null)
+                    {
+                        _compileContext.Number("1");
+                    }
+                }
             }
         }
 

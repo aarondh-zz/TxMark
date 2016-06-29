@@ -438,6 +438,13 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitMacro([NotNull] TxMarkParser.MacroContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.submacro"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSubmacro([NotNull] TxMarkParser.SubmacroContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.hook"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

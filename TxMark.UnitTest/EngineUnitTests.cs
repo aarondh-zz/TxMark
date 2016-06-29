@@ -10,7 +10,7 @@ using System.Dynamic;
 namespace TxMark.UnitTest
 {
     [TestClass]
-    public class UnitTest1
+    public class EngineUnitTests
     {
         private dynamic LoadModel( string modelPath)
         {
@@ -87,148 +87,87 @@ namespace TxMark.UnitTest
         {
             Environment.CurrentDirectory = @"C:\Users\v-adai\Documents\Visual Studio 2015\Projects\TxMark\TxMark.UnitTest";
         }
-        [TestMethod]
-        public void Text0()
+        private void TestWith<TModel>(TModel model,string templatePath)
         {
-            var model = new TestModel();
             var options = new TxMark.Options()
             {
                 ForceCompile = true,
                 DiagnosticLevel = DiagnosticLevel.Information,
             };
-            TxMark.Result result = TxMark.Engine.Execute<TestModel>("test0.txm", model, options);
+            TxMark.Result result = TxMark.Engine.Execute<TModel>(templatePath, model, options);
             AssertSuccess(result);
-            CheckOutput("test0.expected", result.OutputStream);
+            var expectedOutputPath = Path.Combine(Path.GetDirectoryName(templatePath), Path.GetFileNameWithoutExtension(templatePath) + ".expected");
+            CheckOutput(expectedOutputPath, result.OutputStream);
+        }
+        private void TestWith<TModel>(string templatePath)
+        {
+            var model = Activator.CreateInstance<TModel>();
+            TestWith<TModel>(model, templatePath);
+        }
+        private void TestWithDynamic(string modelPath, string templatePath)
+        {
+            var model = LoadModel(modelPath);
+            TestWith<dynamic>(model, templatePath);
+        }
+        [TestMethod]
+        public void Text0()
+        {
+            TestWith<TestModel>("test0.txm");
         }
         [TestMethod]
         public void Text1()
         {
-            var model = new TestModel();
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<TestModel>("test1.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test1.expected", result.OutputStream);
+            TestWith<TestModel>("test1.txm");
         }
         [TestMethod]
         public void Text2()
         {
-            var model = new TestModel();
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<TestModel>("test2.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test2.expected", result.OutputStream);
+            TestWith<TestModel>("test2.txm");
         }
         [TestMethod]
         public void Text3()
         {
-            var model = new TestModel();
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<TestModel>("test3.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test3.expected", result.OutputStream);
+            TestWith<TestModel>("test3.txm");
         }
         [TestMethod]
         public void Text4()
         {
-            var model = new TestModel();
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<TestModel>("test4.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test4.expected", result.OutputStream);
+            TestWith<TestModel>("test4.txm");
         }
         [TestMethod]
         public void Text5()
         {
-            var model = new TestModel();
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<TestModel>("test5.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test5.expected", result.OutputStream);
+            TestWith<TestModel>("test5.txm");
         }
         [TestMethod]
         public void Text6()
         {
-            var model = new TestModel();
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<TestModel>("test6.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test6.expected", result.OutputStream);
+            TestWith<TestModel>("test6.txm");
         }
         [TestMethod]
         public void Text7()
         {
-            var model = LoadModel("test7.json");
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<dynamic>("test7.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test7.expected", result.OutputStream);
+            TestWithDynamic("test7.json", "test7.txm");
         }
         [TestMethod]
         public void Text8()
         {
-            var model = LoadModel("test7.json");
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<dynamic>("test8.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test8.expected", result.OutputStream);
+            TestWithDynamic("test7.json", "test8.txm");
         }
         [TestMethod]
         public void Text9()
         {
-            var model = LoadModel("test7.json");
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<dynamic>("test9.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test9.expected", result.OutputStream);
+            TestWithDynamic("test7.json", "test9.txm");
         }
         [TestMethod]
         public void Text10()
         {
-            var model = LoadModel("test7.json");
-            var options = new TxMark.Options()
-            {
-                ForceCompile = true,
-                DiagnosticLevel = DiagnosticLevel.Information,
-            };
-            TxMark.Result result = TxMark.Engine.Execute<dynamic>("test10.txm", model, options);
-            AssertSuccess(result);
-            CheckOutput("test10.expected", result.OutputStream);
+            TestWithDynamic("test7.json", "test10.txm");
+        }
+        [TestMethod]
+        public void Text11()
+        {
+            TestWithDynamic("test7.json", "test11.txm");
         }
     }
 }

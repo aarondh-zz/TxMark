@@ -789,6 +789,19 @@ public partial class TxMarkParserBaseListener : ITxMarkParserListener {
 	public virtual void ExitMacro([NotNull] TxMarkParser.MacroContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.submacro"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSubmacro([NotNull] TxMarkParser.SubmacroContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.submacro"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSubmacro([NotNull] TxMarkParser.SubmacroContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.hook"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

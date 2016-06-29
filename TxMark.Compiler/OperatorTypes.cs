@@ -28,6 +28,8 @@ namespace TxMark.Compiler
         IsIn,
         Index,
         IndexOf,
+        LastIndex,
+        LastIndexOf,
         Power,
     }
 }

@@ -49,7 +49,7 @@ namespace TxMark.VisualStudioExtensions
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.macroName().MWORD().Symbol, Classify(PredefinedClassificationTypeNames.Identifier));
             AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
-            AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.CLOSE_PARENTHESIS().Symbol, Classify("HTML Tag Delimiter"));
         }
 
         public override void EnterHook([NotNull] TxMarkParser.HookContext context)
@@ -104,7 +104,7 @@ namespace TxMark.VisualStudioExtensions
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.KEYWORD_IF().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
             AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
-            AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.CLOSE_PARENTHESIS().Symbol, Classify("HTML Tag Delimiter"));
         }
 
         public override void EnterElseIf_clause([NotNull] TxMarkParser.ElseIf_clauseContext context)
@@ -112,7 +112,7 @@ namespace TxMark.VisualStudioExtensions
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.KEYWORD_ELSEIF().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
             AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
-            AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.CLOSE_PARENTHESIS().Symbol, Classify("HTML Tag Delimiter"));
         }
 
         public override void EnterElse_clause([NotNull] TxMarkParser.Else_clauseContext context)
@@ -120,7 +120,7 @@ namespace TxMark.VisualStudioExtensions
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.KEYWORD_ELSE().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
             AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
-            AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.CLOSE_PARENTHESIS().Symbol, Classify("HTML Tag Delimiter"));
         }
 
         public override void EnterSet_clause([NotNull] TxMarkParser.Set_clauseContext context)
@@ -128,7 +128,7 @@ namespace TxMark.VisualStudioExtensions
             AddTag(context.MACRO_OPEN().Symbol, Classify("HTML Tag Delimiter"));
             AddTag(context.KEYWORD_SET().Symbol, Classify(PredefinedClassificationTypeNames.Keyword));
             AddTag(context.MCOLON().Symbol, Classify("HTML Operator"));
-            AddTag(context.CLOSE_PARENTHESES().Symbol, Classify("HTML Tag Delimiter"));
+            AddTag(context.CLOSE_PARENTHESIS().Symbol, Classify("HTML Tag Delimiter"));
         }
 
         public override void EnterHtmlOpenTag([NotNull] TxMarkParser.HtmlOpenTagContext context)
