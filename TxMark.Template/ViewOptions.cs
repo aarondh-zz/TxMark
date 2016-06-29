@@ -10,8 +10,10 @@ namespace TxMark.Template
         };
         public ViewOptions()
         {
-
+            IsModelReadOnly = true;
         }
+
+        public bool IsModelReadOnly { get; set; }
         public IFormatter Formatter { get; set; }
     }
 }

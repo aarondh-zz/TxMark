@@ -51,7 +51,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -61,6 +63,7 @@
     <Compile Include="SimpleDiff.cs" />
     <Compile Include="EngineUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateStateUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -88,7 +91,6 @@
     <None Include="packages.config" />
     <None Include="test0.txm" />
     <None Include="test1.txm" />
-    <None Include="test11.expected" />
     <None Include="test11.txm">
       <SubType>Designer</SubType>
     </None>
@@ -117,6 +119,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TxMark.Template\TxMark.Template.csproj">
+      <Project>{1ad70b4f-fcef-496a-8ff1-496dadcc82e9}</Project>
+      <Name>TxMark.Template</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TxMark.Utilities\TxMark.Utilities.csproj">
       <Project>{7b17244e-fd7d-42e0-a002-6ac283227c06}</Project>
       <Name>TxMark.Utilities</Name>

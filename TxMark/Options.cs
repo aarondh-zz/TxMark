@@ -37,6 +37,7 @@ namespace TxMark
         /// Output the parser result
         /// </summary>
         public bool OutputParser { get; set; }
+        public bool IsModelReadOnly { get; set; }
         public Encoding Encoding { get; set; }
 
         public IFormatter Formatter { get; set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿#define USE_DYNAMIC
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,14 @@ namespace TxMark.Compiler
     {
         public static ExpressionSyntax MakeStateVariableExpression(string variableName)
         {
+#if USE_DYNAMIC
+            return SF.MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    SF.IdentifierName("_this"),
+                    SF.IdentifierName(variableName)
+                );
+
+#else
             return SF.ElementAccessExpression(
                 SF.IdentifierName("_this"), 
                 SF.BracketedArgumentList(
@@ -26,6 +35,7 @@ namespace TxMark.Compiler
                     )
                 )
             );
+#endif
         }
 
         public static ExpressionSyntax MakeModelVariableExpression(string variableName)
@@ -39,6 +49,6 @@ namespace TxMark.Compiler
                 ),
                 SF.IdentifierName(variableName)
             );
-        }
     }
+}
 }

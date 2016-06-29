@@ -109,8 +109,34 @@ namespace TxMark.Template
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _items.GetEnumerator();
         }
+        public override string ToString()
+        {
+            switch (_items.Count)
+            {
+                case 0:
+                    return "";
+                case 1:
+                    return _items[0]?.ToString();
+                case 2:
+                    return $"{_items[0]} and {_items[1]}";
+            }
+            var result = new StringBuilder();
+            for( int i = 0; i < _items.Count - 1; i++)
+            {
+                if ( result.Length > 0)
+                {
+                    result.Append(", ");
+                }
+                result.Append(_items[i]);
+            }
 
+            result.Append(" and ");
+
+            result.Append(_items[_items.Count-1]);
+
+            return result.ToString();
+        }
     }
 }

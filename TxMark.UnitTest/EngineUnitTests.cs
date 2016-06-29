@@ -30,7 +30,7 @@ namespace TxMark.UnitTest
         }
         private void CheckOutput(string expectedResultPath, Stream outputStream)
         {
-            Assert.IsNotNull(outputStream);
+            Assert.IsNotNull(outputStream, "Template did not produce output");
             using (var reader = new StreamReader(outputStream))
             {
                 var result = reader.ReadToEnd();

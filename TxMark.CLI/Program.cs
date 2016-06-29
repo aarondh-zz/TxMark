@@ -45,8 +45,16 @@ namespace TxMark.CLI
                         break;
                 }
                 var startTime = DateTime.Now;
-                var model = LoadModel(options.ModelPath);
-                TxMark.Result result = TxMark.Engine.Execute<dynamic>(options.TemplatePath, model, txMarkOptions);
+                TxMark.Result result;
+                if (string.IsNullOrEmpty(options.ModelPath))
+                {
+                    result = TxMark.Engine.Execute<TestModel>(options.TemplatePath, new TestModel(), txMarkOptions);
+                }
+                else
+                {
+                    var model = LoadModel(options.ModelPath);
+                    result = TxMark.Engine.Execute<dynamic>(options.TemplatePath, model, txMarkOptions);
+                }
                 var endTime = DateTime.Now;
                 if (options.OutputPreprocessor)
                 {

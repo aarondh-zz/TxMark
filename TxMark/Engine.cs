@@ -44,7 +44,7 @@ namespace TxMark
                 return new StringReader("");
             }
 
-    var endTime = DateTime.Now;
+            var endTime = DateTime.Now;
             result.PreprocessorTime = endTime - startTime;
             if ( options.OutputPreprocessor)
             {

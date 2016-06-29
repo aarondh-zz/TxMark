@@ -1,13 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
+using TxMark.Template.Formatters;
 
 namespace TxMark.Template
 {
-    public class TemplateState<TModel> : IState<TModel>
+    public class TemplateState<TModel> : DynamicObject, IState<TModel>
     {
         private class Frame : IValue
         {
@@ -41,11 +46,11 @@ namespace TxMark.Template
             {
                 get
                 {
-                    if ( _text == null )
+                    if (_text == null)
                     {
                         return '\0';
                     }
-                    else if ( _text.Length == 0 )
+                    else if (_text.Length == 0)
                     {
                         return '\0';
                     }
@@ -55,7 +60,7 @@ namespace TxMark.Template
                     }
                 }
             }
-        public override string ToString()
+            public override string ToString()
             {
                 if (_text == null)
                 {
@@ -70,14 +75,25 @@ namespace TxMark.Template
         private Frame _currentFrame;
         private Stack<Frame> _frameStack;
         private Dictionary<string, object> _values;
+        private IViewOptions _viewOptions;
+        private IFormatter _formatter;
+        private TModel _model;
         public TemplateState(IViewOptions viewOptions, TModel model)
         {
-            this.Model = model;
-            this.ViewOptions = viewOptions;
+            _model = model;
+            _viewOptions = viewOptions;
+            _formatter = viewOptions.Formatter;
             _currentFrame = new Frame();
             _frameStack = new Stack<Frame>();
         }
-        public TModel Model { get; private set; }
+
+        public TModel Model
+        {
+            get
+            {
+                return _model;
+            }
+        }
         public object this[string key]
         {
             get
@@ -90,9 +106,9 @@ namespace TxMark.Template
                 Set(key, value);
             }
         }
-        private void FirePropertyChanged( string propertyName )
+        private void FirePropertyChanged(string propertyName)
         {
-            if ( PropertyChanged != null)
+            if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
@@ -104,9 +120,9 @@ namespace TxMark.Template
             {
                 _values = new Dictionary<string, object>();
             }
-            else if ( _values.TryGetValue(key, out oldValue))
+            else if (_values.TryGetValue(key, out oldValue))
             {
-                if ( oldValue.Equals(value))
+                if (oldValue.Equals(value))
                 {
                     return;
                 }
@@ -164,7 +180,6 @@ namespace TxMark.Template
                 }
             }
         }
-        public IViewOptions ViewOptions { get; private set; }
         public ICollection<object> Values
         {
             get
@@ -263,7 +278,7 @@ namespace TxMark.Template
 
         public bool Remove(KeyValuePair<string, object> item)
         {
-            if ( _values != null && _values.Remove(item.Key) )
+            if (_values != null && _values.Remove(item.Key))
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(item.Key));
                 return true;
@@ -302,27 +317,27 @@ namespace TxMark.Template
 
         public void Write(double value)
         {
-            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
+            _formatter.Write(_currentFrame.Writer, value);
         }
 
         public void Write(bool value)
         {
-            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
+            _formatter.Write(_currentFrame.Writer, value);
         }
 
         public void Write(int value)
         {
-            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
+            _formatter.Write(_currentFrame.Writer, value);
         }
 
         public void Write(char value)
         {
-            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
+            _formatter.Write(_currentFrame.Writer, value);
         }
 
         public void Write(object value)
         {
-            this.ViewOptions.Formatter.Write(_currentFrame.Writer, value);
+            _formatter.Write(_currentFrame.Writer, value);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -340,19 +355,151 @@ namespace TxMark.Template
         public bool WriteOpenTag(string tagName, bool isClosing, params object[] attributeNameValues)
         {
             Dictionary<string, string> attributes = new Dictionary<string, string>();
-            if ( attributeNameValues != null )
+            if (attributeNameValues != null)
             {
                 for (int i = 0; i < attributeNameValues.Length; i += 2)
                 {
                     attributes[attributeNameValues[i].ToString()] = attributeNameValues[i + 1].ToString();
                 }
             }
-            return this.ViewOptions.Formatter.WriteOpenTag(_currentFrame.Writer, tagName, isClosing, attributes);
+            return _formatter.WriteOpenTag(_currentFrame.Writer, tagName, isClosing, attributes);
         }
 
         public void WriteCloseTag(string tagName)
         {
-            this.ViewOptions.Formatter.WriteCloseTag(_currentFrame.Writer, tagName);
+            _formatter.WriteCloseTag(_currentFrame.Writer, tagName);
         }
+
+        #region Dynamic support
+        public override bool TryGetMember(GetMemberBinder binder,
+                                          out object result)
+        {
+            try
+            {
+                if (_values != null && _values.TryGetValue(binder.Name, out result))
+                {
+                    return true;
+                }
+                else
+                {
+                    Type modelType = _model.GetType();
+                    var property = modelType.GetProperty(binder.Name);
+                    if (property != null)
+                    {
+                        result = property.GetValue(_model);
+                        return true;
+                    }
+                    else
+                    {
+                        var field = modelType.GetField(binder.Name);
+                        if (field != null)
+                        {
+                            result = field.GetValue(_model);
+                            return true;
+                        }
+                        else
+                        {
+                            var indexMethod = modelType.GetMethod("get_Item", new Type[] { typeof(string) });
+                            if (indexMethod != null)
+                            {
+                                result = indexMethod.Invoke(_model, new object[] { binder.Name });
+                                return true;
+                            }
+                            else
+                            {
+                                result = null;
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
+        }
+
+        public override bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            try
+            {
+                if (_values != null && _values.ContainsKey(binder.Name))
+                {
+                    Set(binder.Name, value);
+                    return true;
+                }
+                else if ( _viewOptions.IsModelReadOnly )
+                {
+                    Set(binder.Name, value);
+                    return true;
+
+                }
+                else
+                {
+                    Type modelType = _model.GetType();
+                    var property = modelType.GetProperty(binder.Name);
+                    if (property != null)
+                    {
+                        property.SetValue(_model, value);
+                        return true;
+                    }
+                    else
+                    {
+                        var field = modelType.GetField(binder.Name);
+                        if (field != null)
+                        {
+                            field.SetValue(_model, value);
+                            return true;
+                        }
+                        else
+                        {
+                            var indexMethod = modelType.GetMethod("set_Item");
+                            if (indexMethod != null)
+                            {
+                                indexMethod.Invoke(_model, new object[] { binder.Name, value });
+                                return true;
+                            }
+                            else
+                            {
+                                Set(binder.Name, value);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                Set(binder.Name, value);
+                return true;
+            }
+        }
+
+        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        {
+            var member = GetType().GetMethod(binder.Name);
+            if (member != null)
+            {
+                result = member.Invoke(this, args);
+                return true;
+            }
+            else
+            {
+                member = _model.GetType().GetMethod(binder.Name);
+                if (member != null)
+                {
+                    result = member.Invoke(this, args);
+                    return true;
+                }
+                else
+                {
+                    result = null;
+                    return false;
+                }
+            }
+        }
+        #endregion
     }
 }

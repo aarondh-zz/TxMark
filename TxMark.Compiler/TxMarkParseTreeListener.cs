@@ -105,7 +105,7 @@ namespace TxMark.Compiler
 
         public override void ExitSubmacro([NotNull] TxMarkParser.SubmacroContext context)
         {
-            base.ExitSubmacro(context);
+            _compileContext.Pop();
         }
 
         public override void EnterMacro_clause([NotNull] TxMarkParser.Macro_clauseContext context)

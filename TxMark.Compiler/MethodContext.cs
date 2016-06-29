@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿#define USE_DYNAMIC
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
@@ -31,7 +32,11 @@ namespace TxMark.Compiler
         public override void Enter(ICompileContext context, ICodeContext parent)
         {
             base.Enter(context, parent);
+#if USE_DYNAMIC
+            _parameters.Add(SF.Parameter(SF.Identifier("_this")).WithType(SF.ParseTypeName("dynamic")));
+#else
             _parameters.Add(SF.Parameter(SF.Identifier("_this")).WithType(SF.ParseTypeName(this.Context.StateTypeName)));
+#endif
         }
 
         public override void Exit()

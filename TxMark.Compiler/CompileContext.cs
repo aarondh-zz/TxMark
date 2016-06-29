@@ -1,12 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+﻿#define USE_DYNAMIC
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Formatting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.Options;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
@@ -75,8 +74,10 @@ namespace TxMark.Compiler
             _codeContextStack = new Stack<ICodeContext>();
 
             _metadataReferenceManager = new MetadataReferenceManager();
-
-            if (_modelTypeName == "dynamic")
+#if USE_DYNAMIC
+#else
+            //if (_modelTypeName == "dynamic")
+#endif
             {
                 AddNamespaceFor(typeof(Microsoft.CSharp.RuntimeBinder.RuntimeBinderException));
                 AddNamespaceFor(typeof(DynamicObject));

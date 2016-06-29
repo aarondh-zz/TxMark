@@ -5,5 +5,6 @@ namespace TxMark.Template
     public interface IViewOptions
     {
         IFormatter Formatter { get; }
+        bool IsModelReadOnly { get; }
     }
 }
