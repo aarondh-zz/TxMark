@@ -125,7 +125,7 @@ namespace TxMark.Compiler
                 }
                 else
                 {
-                    hookName = _compileContext.ResolveHookName(context.hook());
+                    hookName = _compileContext.ResolveHookName(context);
                 }
             }
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
@@ -157,7 +157,7 @@ namespace TxMark.Compiler
             }
             else
             {
-                hookName = _compileContext.ResolveHookName(context.hook());
+                hookName = _compileContext.ResolveHookName(context);
             }
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.Push(CodeContextTypes.Each, hookName);
@@ -188,7 +188,7 @@ namespace TxMark.Compiler
             }
             else
             {
-                hookName = _compileContext.ResolveHookName(context.hook());
+                hookName = _compileContext.ResolveHookName(context);
             }
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.Push(CodeContextTypes.When, hookName);
@@ -208,7 +208,7 @@ namespace TxMark.Compiler
             }
             else
             {
-                hookName = _compileContext.ResolveHookName(context.hook());
+                hookName = _compileContext.ResolveHookName(context);
             }
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.Push(CodeContextTypes.Otherwise, hookName);
@@ -228,7 +228,7 @@ namespace TxMark.Compiler
             }
             else
             {
-                hookName = _compileContext.ResolveHookName(context.hook());
+                hookName = _compileContext.ResolveHookName(context);
             }
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.Push(CodeContextTypes.If, hookName);
@@ -249,7 +249,7 @@ namespace TxMark.Compiler
             }
             else
             {
-                hookName = _compileContext.ResolveHookName(context.hook());
+                hookName = _compileContext.ResolveHookName(context);
             }
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.Push(CodeContextTypes.ElseIf, hookName);
@@ -269,7 +269,7 @@ namespace TxMark.Compiler
             }
             else
             {
-                hookName = _compileContext.ResolveHookName(context.hook());
+                hookName = _compileContext.ResolveHookName(context);
             }
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.Push(CodeContextTypes.Else, hookName);
@@ -312,12 +312,14 @@ namespace TxMark.Compiler
         }
         public override void EnterHookName([NotNull] TxMarkParser.HookNameContext context)
         {
+            _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.NameTag(context.word().GetText());
         }
         public override void EnterHook([NotNull] TxMarkParser.HookContext context)
         {
             _compileContext.SetLocation(context.Start.Line, context.Start.Column);
-            _compileContext.Push(CodeContextTypes.Hook, _compileContext.ResolveHookName(context));
+            var hookName = _compileContext.ResolveHookName(context.Parent);
+            _compileContext.Push(CodeContextTypes.Hook, hookName);
         }
 
         public override void ExitHook([NotNull] TxMarkParser.HookContext context)
@@ -329,6 +331,7 @@ namespace TxMark.Compiler
         {
             if ( context.Parent is TxMarkParser.HtmlElementContext || context.Parent is TxMarkParser.EmphasisContext)
             {
+                _compileContext.SetLocation(context.Start.Line, context.Start.Column);
                 _compileContext.Push(CodeContextTypes.Block);
             }
         }
@@ -368,6 +371,7 @@ namespace TxMark.Compiler
         }
         public override void EnterHtmlAttribute([NotNull] TxMarkParser.HtmlAttributeContext context)
         {
+            _compileContext.SetLocation(context.Start.Line, context.Start.Column);
             _compileContext.Push(CodeContextTypes.Attribute, context.htmlAttributeName().GetText());
         }
 

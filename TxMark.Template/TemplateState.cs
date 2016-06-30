@@ -14,7 +14,7 @@ namespace TxMark.Template
 {
     public class TemplateState<TModel> : DynamicObject, IState<TModel>
     {
-        private class Frame : IValue
+        private class Frame : IRawValue
         {
             public Frame Parent { get; private set; }
             private StringBuilder _text;
@@ -60,6 +60,15 @@ namespace TxMark.Template
                     }
                 }
             }
+
+            public int Length
+            {
+                get
+                {
+                    return _text.Length;
+                }
+            }
+
             public override string ToString()
             {
                 if (_text == null)
@@ -176,6 +185,16 @@ namespace TxMark.Template
         public void WriteCloseTag(string tagName)
         {
             _formatter.WriteCloseTag(_currentFrame.Writer, tagName);
+        }
+
+        public string GetClue()
+        {
+            while ( _frameStack.Count>0)
+            {
+                var result = Pop();
+                _formatter.Write(_currentFrame.Writer, result);
+            }
+            return _currentFrame.ToString();
         }
 
         #region Dynamic support

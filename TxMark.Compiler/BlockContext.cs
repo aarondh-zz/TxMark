@@ -135,7 +135,10 @@ namespace TxMark.Compiler
         }
         public override void NewLine()
         {
-            _text.AppendLine();
+            if (_text.Length == 0 || _text[_text.Length - 1] != '\n')
+            {
+                _text.AppendLine();
+            }
         }
         public override void Number(string numberText)
         {
@@ -159,7 +162,10 @@ namespace TxMark.Compiler
         }
         public override void Whitespace()
         {
-            _text.Append(" ");
+            if ( _text.Length == 0 || !char.IsWhiteSpace(_text[_text.Length-1]))
+            {
+                _text.Append(" ");
+            }
         }
         public override void Word(string word)
         {

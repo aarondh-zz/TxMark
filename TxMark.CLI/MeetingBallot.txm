@@ -95,7 +95,7 @@
             ]
         </ul>
         <p>Please let me know all the times that work for you as soon as you get a chance, so I can get it scheduled.</p>
-    }
+    ]
     (else:)[
         <p>
             I'm helping (displayName: $Creator) schedule a

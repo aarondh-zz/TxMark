@@ -33,6 +33,7 @@ namespace TxMark.CLI
                 var txMarkOptions = new TxMark.Options();
                 txMarkOptions.ForceCompile = options.Compile;
                 txMarkOptions.DiagnosticLevel = TxMark.DiagnosticLevel.Diagnostics;
+                txMarkOptions.MarkdownPreprocessor = !options.MarkdownPreprocessor;
                 txMarkOptions.OutputPreprocessor = options.OutputPreprocessor;
                 txMarkOptions.OutputParser = options.List;
                 switch ( options.OutputStyle)

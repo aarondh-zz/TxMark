@@ -9,7 +9,7 @@ namespace TxMark.CLI
         public string TemplatePath { get; set; }
         [Option('o', "output", Required = false, HelpText = "Template execution Output path.")]
         public string OutputPath { get; set; }
-        [Option('m', "markdown", DefaultValue = true, HelpText = "Enable the markdown pre-processor.")]
+        [Option('m', "markdown", DefaultValue = false, HelpText = "Disable the markdown pre-processor.")]
         public bool MarkdownPreprocessor { get; set; }
         [Option('d', "model", Required = false, HelpText = "The path for the dynamic json model source.")]
         public string ModelPath { get; set; }

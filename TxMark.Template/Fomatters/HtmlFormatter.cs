@@ -3,15 +3,15 @@ using System.IO;
 
 namespace TxMark.Template.Formatters
 {
-    public class HtmlFormatter : FormatterBase
+    public class HtmlFormatter : TextFormatter
     {
         public override void WriteCloseTag(TextWriter writer, string tagName)
         {
-            writer.Write("</" + tagName + ">");
+            base.Write(writer, "</" + tagName + ">");
         }
         public override void Write(TextWriter writer, char value)
         {
-            writer.Write(System.Net.WebUtility.HtmlEncode(value.ToString()));
+            base.Write(writer,System.Net.WebUtility.HtmlEncode(value.ToString()));
         }
 
         public override void Write(TextWriter writer, object value)
@@ -22,16 +22,16 @@ namespace TxMark.Template.Formatters
             }
             else if (value is IRawValue)
             {
-                writer.Write(value.ToString());
+                base.Write(writer, value);
             }
             else
             {
-                writer.Write(System.Net.WebUtility.HtmlEncode(value.ToString()));
+                base.Write(writer, System.Net.WebUtility.HtmlEncode(value.ToString()));
             }
         }
         public override bool WriteOpenTag(TextWriter writer, string tagName, bool isClosing, IDictionary<string, string> attributes)
         {
-            writer.Write("<" + tagName);
+            base.Write(writer, "<" + tagName);
             if ( attributes != null )
             {
                 foreach( var attribute in attributes)
@@ -44,17 +44,17 @@ namespace TxMark.Template.Formatters
                             value = attribute.Key;
                         }
                         value = System.Net.WebUtility.HtmlEncode(value);
-                        writer.Write($" {attribute.Key}=\"{value}\"");
+                        base.Write(writer,$" {attribute.Key}=\"{value}\"");
                     }
                 }
             }
             if ( isClosing )
             {
-                writer.Write("/>");
+                base.Write(writer, "/>");
             }
             else
             {
-                writer.Write(">");
+                base.Write(writer, ">");
             }
             return true;
         }

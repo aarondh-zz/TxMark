@@ -6,34 +6,32 @@ using System.Threading.Tasks;
 
 namespace TxMark.Template
 {
-    public class StringValue : IStringValue
+    public class RawValue : IRawValue
     {
-        public string Value { get; private set; }
+        private string _value;
+        public RawValue(string value)
+        {
+            _value = value;
+        }
 
         public int Length
         {
             get
             {
-                if ( Value == null)
+                if (_value == null)
                 {
                     return 0;
                 }
                 else
                 {
-                    return Value.Length;
+                    return _value.Length;
                 }
             }
         }
 
-        public StringValue(string value)
-        {
-            this.Value = value;
-        }
-
-
         public override string ToString()
         {
-            return this.Value;
+            return _value;
         }
     }
 }

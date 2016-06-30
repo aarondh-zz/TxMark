@@ -36,6 +36,7 @@
     <AssemblyOriginatorKeyFile>TxMark.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Fomatters\FormatterBase.cs" />
     <Compile Include="Fomatters\HtmlFormatter.cs" />
+    <Compile Include="RawValue.cs" />
     <Compile Include="StringValue.cs" />
     <Compile Include="TemplateState.cs" />
     <Compile Include="Fomatters\TextFormatter.cs" />

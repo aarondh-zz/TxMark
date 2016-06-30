@@ -12,7 +12,11 @@ namespace TxMark.Utilities
         [Macro]
         public string DisplayName(dynamic user)
         {
-            if (string.IsNullOrWhiteSpace(user.FirstName)) {
+            if ( user == null)
+            {
+                return "";
+            }
+            else if (string.IsNullOrWhiteSpace(user.FirstName)) {
                 return user.LastName;
             }
             else {
@@ -22,7 +26,42 @@ namespace TxMark.Utilities
         [Macro]
         public string CasualDisplayName(dynamic user)
         {
-            return user.FirstName ?? user.LastName;
+            if (user == null)
+            {
+                return "";
+            }
+            else
+            {
+                return user.FirstName ?? user.LastName;
+            }
+        }
+        [Macro]
+        public string DurationInMinutes(dynamic durationInMinutes)
+        {
+            var hours = durationInMinutes / 60;
+            if (hours > 0)
+            {
+                durationInMinutes -= hours * 60;
+                var hourUnits = "hour" + (hours == 1 ? "" : "s");
+                var minuteUnits = "minute" + (durationInMinutes == 1 ? "" : "s");
+                if ( durationInMinutes >  0)
+                {
+                    return $"{hours} {hourUnits} {durationInMinutes} minute";
+                }
+                else
+                {
+                    return $"{hours} {hourUnits}";
+                }
+            }
+            else
+            {
+                return $"{durationInMinutes} minute";
+            }
+        }
+        [Macro]
+        public string AddUnicodeToDatetime(dynamic time)
+        {
+            return time.ToString();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace TxMark.Template
@@ -15,9 +16,17 @@ namespace TxMark.Template
         public abstract IValue View(dynamic state);
         public string View(IViewOptions viewOptions, TModel model)
         {
+            Debugger.Launch();
             var state = new TemplateState<TModel>(viewOptions, model);
-            var result = View(state);
-            return result?.ToString();
+            try
+            {
+                var result = View(state);
+                return result?.ToString();
+            }
+            catch(Exception e)
+            {
+                throw new Exception($"Error during template processing:{e.Message}.  After producing:{state.GetClue()}",e);
+            }
         }
         public string View(IViewOptions viewOptions, object model)
         {
@@ -71,20 +80,24 @@ namespace TxMark.Template
             }
             else
             {
-                var lengthProperty = value.GetType().GetProperty("Length");
+                var type = value.GetType();
+                var lengthProperty = type.GetProperty("Length");
                 if (lengthProperty != null)
                 {
                     return (int)lengthProperty.GetValue(value);
                 }
-                var countProperty = value.GetType().GetProperty("Count");
+                var countProperty = type.GetProperty("Count");
                 if (countProperty != null)
                 {
                     return (int)countProperty.GetValue(value);
                 }
+                else
+                {
+                    return 1;
+                }
             }
-            return 0;
         }
-        private object IndexOf(object value, int index)
+        private dynamic IndexOf(object value, int index)
         {
             if (value != null && index > 0)
             {
@@ -110,15 +123,15 @@ namespace TxMark.Template
                     }
                 }
             }
-            return null;
+            return NullValue.Instance;
         }
-        public dynamic Index(object value, object key)
+        public dynamic Index(dynamic value, object key)
         {
             try
             {
                 if (key == null)
                 {
-                    return null;
+                    return NullValue.Instance;
                 }
                 else if (value == null)
                 {
@@ -128,7 +141,7 @@ namespace TxMark.Template
                     }
                     else
                     {
-                        return null;
+                        return NullValue.Instance;
                     }
                 }
                 else if (value is IDictionary)
@@ -145,11 +158,11 @@ namespace TxMark.Template
                     var type = value.GetType();
                     var name = key.ToString();
                     var member = GetPropertyOrField(type, name);
-                    if ( member == null )
+                    if (member == null)
                     {
                         if (name.Equals("length", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            member = GetPropertyOrField(type, "Count");
+                            return LengthOf(value);
                         }
                         else if (name.Equals("first", StringComparison.InvariantCultureIgnoreCase))
                         {
@@ -158,6 +171,22 @@ namespace TxMark.Template
                         else if (name.Equals("last", StringComparison.InvariantCultureIgnoreCase))
                         {
                             return IndexOf(value, LengthOf(value));
+                        }
+                        else
+                        {
+                            var indexMethod = type.GetMethod("get_Item", new Type[] { key.GetType() });
+                            if (indexMethod == null)
+                            {
+                                indexMethod = type.GetMethod("get_Item", new Type[] { typeof(string) });
+                                if (indexMethod != null)
+                                {
+                                    return indexMethod.Invoke(value, new object[] { key.ToString() });
+                                }
+                            }
+                            else
+                            {
+                                return indexMethod.Invoke(value, new object[] { key });
+                            }
                         }
                     }
                     if (member is PropertyInfo)
@@ -170,9 +199,11 @@ namespace TxMark.Template
                     }
                 }
             }
-            catch
+            catch (Exception e)
             {
+                //throw new IndexOutOfRangeException($"index \"{key}\" not found in {value.GetType().FullName}",e);
             }
+            //throw new IndexOutOfRangeException($"index \"{key}\" not found in {value.GetType().FullName}");
             return NullValue.Instance;
         }
         public object IndexFromLast(object value, int key)
@@ -224,19 +255,6 @@ namespace TxMark.Template
         public static string Text(object value)
         {
             return value?.ToString();
-        }
-        private class RawValue : IRawValue
-        {
-            private string _value;
-            public RawValue( string value )
-            {
-                _value = value;
-            }
-
-            public override string ToString()
-            {
-                return _value;
-            }
         }
         [Macro]
         public IRawValue Raw(object value)
