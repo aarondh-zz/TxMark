@@ -167,7 +167,7 @@ namespace TxMark.Compiler
 
             RegisterOperator(OperatorTypes.GreaterOrEqual, 20, SyntaxKind.GreaterThanOrEqualExpression,">=");
             RegisterOperator(OperatorTypes.GreaterThan, 20, SyntaxKind.GreaterThanExpression,">");
-            RegisterOperator(OperatorTypes.Is, 20, SyntaxKind.IsExpression,"==");
+            RegisterOperator(OperatorTypes.Is, 20, SyntaxKind.EqualsExpression,"==");
             RegisterOperator(OperatorTypes.IsNot, 20, SyntaxKind.NotEqualsExpression,"!=");
             RegisterOperator(OperatorTypes.LessOrEqual, 20, SyntaxKind.LessThanOrEqualExpression,"<=");
             RegisterOperator(OperatorTypes.LessThan, 20, SyntaxKind.LessThanExpression,"<");

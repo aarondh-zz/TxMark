@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using TxMark.Template;
 using TxMark.Template.Formatters;
 
@@ -45,6 +46,8 @@ namespace TxMark
         /// Force compile even if compiled template already exists in the specified compile path
         /// </summary>
         public bool ForceCompile { get; set; }
+
+        public Type TemplateBaseClass { get; set; }
 
         public DiagnosticLevel DiagnosticLevel { get; set; }
     }

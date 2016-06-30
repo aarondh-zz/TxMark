@@ -15,7 +15,7 @@ namespace TxMark.Compiler
         public MacroManager(Type templateType)
         {
             _templateType = templateType;
-            foreach ( var method in templateType.GetMethods() )
+            foreach ( var method in templateType.GetMethods(BindingFlags.Public|BindingFlags.Instance|BindingFlags.Static|BindingFlags.NonPublic|BindingFlags.FlattenHierarchy|BindingFlags.InvokeMethod) )
             {
                 var macroAttributes = method.GetCustomAttributes(typeof(MacroAttribute)).Cast<MacroAttribute>().ToArray();
                 if (macroAttributes.Length > 0)

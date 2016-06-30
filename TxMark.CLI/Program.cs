@@ -49,9 +49,11 @@ namespace TxMark.CLI
                 if (string.IsNullOrEmpty(options.ModelPath))
                 {
                     result = TxMark.Engine.Execute<TestModel>(options.TemplatePath, new TestModel(), txMarkOptions);
-                }
+                    txMarkOptions.TemplateBaseClass = typeof(CHCompiledTemplateBase<TestModel>);
+               }
                 else
                 {
+                    txMarkOptions.TemplateBaseClass = typeof(CHCompiledTemplateBase<dynamic>);
                     var model = LoadModel(options.ModelPath);
                     result = TxMark.Engine.Execute<dynamic>(options.TemplatePath, model, txMarkOptions);
                 }

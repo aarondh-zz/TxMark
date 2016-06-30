@@ -73,6 +73,7 @@
     <None Include="EmailTemplates\AppointmentResponses.txm" />
     <None Include="EmailTemplates\Assistant.txm" />
     <None Include="EmailTemplates\Macro.txm" />
+    <None Include="EmailTemplates\MeetingBallotModel.json" />
     <None Include="EmailTemplates\MissingAttendees.txm" />
     <None Include="EmailTemplates\MissingMeetingTimes.txm" />
     <None Include="EmailTemplates\Nag.txm" />

@@ -14,13 +14,40 @@ using System.Text;
 using System.Threading.Tasks;
 using TxMark.Compiler;
 using TxMark.Template;
+using Antlr4.Runtime.Misc;
+using Microsoft.CodeAnalysis.Emit;
 
 namespace TxMark
 {
     public static class Engine
     {
-        private static TextReader Preprocessor(TextReader reader, Options options, ref Result result)
+        private class PreprocessorErrorListener : IAntlrErrorListener<IToken>
         {
+            public PreprocessorErrorListener(Result result)
+            {
+
+            }
+            public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+            {
+            }
+        }
+        private class ParserErrorListener : IAntlrErrorListener<IToken>
+        {
+            private Result _result;
+            public ParserErrorListener(Result result)
+            {
+                _result = result;
+            }
+            public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+            {
+                _result.AddDiagnostic(
+                    new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Parser, "parse", msg, line, charPositionInLine)
+                    );
+            }
+        }
+        private static TextReader Preprocessor(TextReader reader, Options options, Result result)
+        {
+            
             MarkdownPreprocessorParser.DocumentContext preprocessorParseTree;
             var startTime = DateTime.Now;
 
@@ -28,6 +55,8 @@ namespace TxMark
             var markdownLexer = new MarkdownPreprocessorLexer(inputStream);
             var tokens = new CommonTokenStream(markdownLexer);
             var markdownParser = new MarkdownPreprocessorParser(tokens);
+            markdownParser.RemoveErrorListeners();
+            markdownParser.AddErrorListener( new PreprocessorErrorListener(result));
             markdownParser.BuildParseTree = true;
             preprocessorParseTree = markdownParser.document();
             var markdownListener = new MarkdownPreprocessorParseTreeListener();
@@ -52,7 +81,7 @@ namespace TxMark
             }
             return markdownListener.ToTextReader();
         }
-        private static CompileContext Parse<TModel>(TextReader reader, string templatePath, Options options, ref Result result)
+        private static CompileContext Parse<TModel>(TextReader reader, string templatePath, Options options, Result result)
         {
             DateTime startTime = DateTime.Now;
 
@@ -65,6 +94,8 @@ namespace TxMark
             var tokens = new CommonTokenStream(txMarkLexer);
 
             var txMarkParser = new TxMarkParser(tokens);
+            txMarkParser.RemoveErrorListeners();
+            txMarkParser.AddErrorListener(new ParserErrorListener(result));
 
             txMarkParser.BuildParseTree = true;
 
@@ -75,23 +106,23 @@ namespace TxMark
             result.ParserTime = parseTime - startTime;
             List<Diagnostic> diagnostics = new List<Diagnostic>();
             var compileContext = new CompileContext(
-                typeof(CompiledTemplateBase<TModel>),
+                options.TemplateBaseClass??typeof(CompiledTemplateBase<TModel>),
                 typeof(TModel),
                 templateName: MakeTemplateName(options,templatePath),
                 templatePath: templatePath,
                 logHandler: (level, message, line, column) =>
                 {
-                    Debug.WriteLine($"{level}: {message} at or near line {line}, column {column}");
+                    //Debug.WriteLine($"{level}: {message} at or near line {line}, column {column}");
                     switch (level)
                     {
                         case LogLevel.Warning:
                             diagnostics.Add(
-                                new Diagnostic(DiagnosticSeverity.Warning, Result.Sources.Preprocessor, null, message, line, column)
+                                new Diagnostic(DiagnosticSeverity.Warning, Result.Sources.Parser, null, message, line, column)
                                 );
                             break;
                         case LogLevel.Error:
                             diagnostics.Add(
-                                new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Preprocessor, null, message, line, column)
+                                new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Parser, null, message, line, column)
                                 );
                             break;
                     }
@@ -178,7 +209,7 @@ namespace TxMark
             }
             return templateName;
         }
-        private static bool Compile<TModel>(CompileContext compileContext, string templatePath, Options options, ref Result result)
+        private static bool Compile<TModel>(CompileContext compileContext, string templatePath, Options options, Result result)
         {
             DateTime startTime = DateTime.Now;
             if (options.DiagnosticLevel == DiagnosticLevel.Diagnostics)
@@ -197,31 +228,37 @@ namespace TxMark
                 .AddReferences(referenceManager.References)
                 .AddSyntaxTrees(compileContext.CompilationUnit.SyntaxTree)
                 .WithOptions(compilationOptions);
-
-            var emitResult = compilation.Emit(assemblyPath);
-
-            DateTime compileTime = DateTime.Now;
-
-            result.CompileTime = compileTime - startTime;
-
-            foreach (var diagnostic in emitResult.Diagnostics)
+            try
             {
-                var location = diagnostic.Location.GetMappedLineSpan();
-                switch (diagnostic.Severity)
-                {
-                    case Microsoft.CodeAnalysis.DiagnosticSeverity.Error:
-                        result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Roslyn, "error", diagnostic.GetMessage(), location.StartLinePosition.Line + 1, -1));
-                        break;
-                    case Microsoft.CodeAnalysis.DiagnosticSeverity.Warning:
-                        result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Warning, Result.Sources.Roslyn, "warning", diagnostic.GetMessage(), location.StartLinePosition.Line + 1, -1));
-                        break;
-                    case Microsoft.CodeAnalysis.DiagnosticSeverity.Info:
-                        result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Info, Result.Sources.Roslyn, "info", diagnostic.GetMessage(), location.StartLinePosition.Line + 1, -1));
-                        break;
-                }
-            }
+                var emitResult = compilation.Emit(assemblyPath);
 
-            return emitResult.Success;
+                DateTime compileTime = DateTime.Now;
+
+                result.CompileTime = compileTime - startTime;
+
+                foreach (var diagnostic in emitResult.Diagnostics)
+                {
+                    var location = diagnostic.Location.GetMappedLineSpan();
+                    switch (diagnostic.Severity)
+                    {
+                        case Microsoft.CodeAnalysis.DiagnosticSeverity.Error:
+                            result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Roslyn, "error", diagnostic.GetMessage(), location.StartLinePosition.Line + 1, -1));
+                            break;
+                        case Microsoft.CodeAnalysis.DiagnosticSeverity.Warning:
+                            result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Warning, Result.Sources.Roslyn, "warning", diagnostic.GetMessage(), location.StartLinePosition.Line + 1, -1));
+                            break;
+                        case Microsoft.CodeAnalysis.DiagnosticSeverity.Info:
+                            result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Info, Result.Sources.Roslyn, "info", diagnostic.GetMessage(), location.StartLinePosition.Line + 1, -1));
+                            break;
+                    }
+                }
+                return emitResult.Success;
+            }
+            catch (Exception e)
+            {
+                result.AddDiagnostic(new Diagnostic(DiagnosticSeverity.Error, Result.Sources.Roslyn, "emit", e.Message));
+                return false;
+            }
         }
         public static Result Build<TModel>(string templatePath, Options options)
         {
@@ -235,7 +272,7 @@ namespace TxMark
             {
                 try
                 {
-                    var preprocessorResultReader = Preprocessor(templateReader, options, ref result);
+                    var preprocessorResultReader = Preprocessor(templateReader, options, result);
                     templateReader.Close();
                     templateReader = preprocessorResultReader;
                 }
@@ -249,10 +286,10 @@ namespace TxMark
             if (result.Success)
             {
                 DateTime startTime = DateTime.Now;
-                var compileContext = Parse<TModel>(templateReader, templatePath, options, ref result);
+                var compileContext = Parse<TModel>(templateReader, templatePath, options, result);
                 if (result.Success)
                 {
-                    result.Success = Compile<TModel>(compileContext, templatePath, options, ref result);
+                    result.Success = Compile<TModel>(compileContext, templatePath, options, result);
                 }
             }
             return result;

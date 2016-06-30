@@ -1,0 +1,60 @@
+﻿{
+  "ServiceName": "calendar.help",
+  "RootUrl": "https://calendar.help",
+  "Agent": {
+    "FirstName": "Edi",
+    "LastName": "Alen",
+    "Email": "edi@calendar.help"
+  },
+
+  "Recipient": {
+    "FirstName": "Kat",
+    "LastName": "Larson",
+    "Email": "kat.larson@microsoft.com"
+  },
+  "IsCreator": false,
+  "OtherAttendees": [
+    {
+      "FirstName": "Joe",
+      "LastName": "Contoso",
+      "Email": "joe.Contoso@contoso.com"
+    },
+    {
+      "FirstName": "John",
+      "LastName": "Doe",
+      "Email": "John.doe@microsoft.com"
+    }
+
+  ],
+  "Location": {
+    "RemoteLocationType": "None",
+    "IsInPerson": false,
+    "Originator": {
+      "FirstName": "Kat",
+      "LastName": "Larson",
+      "Email": "kat.larson@microsoft.com"
+    },
+    "MeetingLocation": "office 112/2357",
+    "ContactInfo": [
+      {
+        "User": {
+          "FirstName": "Joe",
+          "LastName": "Contoso",
+          "Email": "joe.Contoso@contoso.com"
+        },
+        "Contact": "123.456.7890"
+      }
+    ]
+  },
+  "MeetingSubject": "DARE",
+  "TimeOptions": [
+    "Wednesday June 23, 3:30pm",
+    "Thursday June 24, 9:00am",
+    "Thursday June 24, 11:00am",
+    "Thursday June 24, 2:00pm"
+  ],
+  "TimeZone": "PST",
+  "DurationInMinutes": 30,
+  "NeedsContactInfo": false,
+  "NeedsTimeInfo": false
+}

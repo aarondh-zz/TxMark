@@ -112,7 +112,7 @@ namespace TxMark.Template
             }
             return null;
         }
-        public object Index(object value, object key)
+        public dynamic Index(object value, object key)
         {
             try
             {
