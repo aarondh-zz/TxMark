@@ -5,6 +5,10 @@ namespace TxMark.Template.Formatters
 {
     public class HtmlFormatter : TextFormatter
     {
+        public HtmlFormatter()
+        {
+            this.RemoveCarriageReturns = true;
+        }
         public override void WriteCloseTag(TextWriter writer, string tagName)
         {
             base.Write(writer, "</" + tagName + ">");
