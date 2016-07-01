@@ -166,6 +166,13 @@ public interface IMarkdownPreprocessorVisitor<Result> : IParseTreeVisitor<Result
 	Result VisitText([NotNull] MarkdownPreprocessorParser.TextContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.safeText"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSafeText([NotNull] MarkdownPreprocessorParser.SafeTextContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.attributeContent"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -199,6 +206,13 @@ public interface IMarkdownPreprocessorVisitor<Result> : IParseTreeVisitor<Result
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitTag([NotNull] MarkdownPreprocessorParser.TagContext context);
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.parenthesisClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitParenthesisClause([NotNull] MarkdownPreprocessorParser.ParenthesisClauseContext context);
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.openTag"/>.

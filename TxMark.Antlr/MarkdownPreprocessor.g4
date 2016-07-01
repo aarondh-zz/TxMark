@@ -83,10 +83,15 @@ paragraph_end
 	;
 
 text
-   : nonWhitespace+ (whitespace|nonWhitespace | HASH | ASTERISK | LESS_THAN | SLASH | PERIOD)*
-   | openTag textLine*
-   | closeTag textLine*
+   : nonWhitespace+ safeText*
+   |  parenthesisClause textLine*
+   |  openTag textLine*
+   |  closeTag textLine*
    ;
+
+safeText
+	: (whitespace | nonWhitespace | HASH | ASTERISK | LESS_THAN | SLASH | PERIOD)
+	;
 
 attributeContent
 	: (whitespace|anyNonWhitespace|CARRIAGE_RETURN)*
@@ -109,13 +114,19 @@ tag
 	: identifier
 	;
 
+parenthesisClause
+	: safeText* OPEN_PARENTHESIS (whitespace | nonWhitespace | HASH | ASTERISK | GREATER_THAN | LESS_THAN | SLASH | PERIOD | parenthesisClause )* CLOSE_PARENTHESIS
+	;
+
 openTag
-	: LESS_THAN tag attribute* anyWhitespace* SLASH? GREATER_THAN
+	: safeText* LESS_THAN tag attribute* anyWhitespace* SLASH? GREATER_THAN
 	;
 
 closeTag
-	: LESS_THAN SLASH tag anyWhitespace* GREATER_THAN
+	: safeText* LESS_THAN SLASH tag anyWhitespace* GREATER_THAN
 	;
+
+
 
 identifier
 	: (LETTER | COLON)+ (LETTER | DIGIT | COLON | UNDERBAR | DASH | PERIOD | COLON)*
@@ -165,6 +176,14 @@ SINGLE_QUOTE
 	: '\''
 	;
 
+OPEN_PARENTHESIS
+	: '('
+	;
+
+CLOSE_PARENTHESIS
+	: ')'
+	;
+
 ASTERISK
 	: '*'
 	;
@@ -200,7 +219,7 @@ LETTER
 	;
 
 PUNCTUATION
-	: [~`!@$%^&()+{\[}\]|\\;,?]
+	: [~`!@$%^&+{\[}\]|\\;,?]
 	;
 
 TAB

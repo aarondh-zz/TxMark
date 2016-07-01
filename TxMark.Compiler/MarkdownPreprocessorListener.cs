@@ -241,6 +241,17 @@ public interface IMarkdownPreprocessorListener : IParseTreeListener {
 	void ExitText([NotNull] MarkdownPreprocessorParser.TextContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.safeText"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSafeText([NotNull] MarkdownPreprocessorParser.SafeTextContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.safeText"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSafeText([NotNull] MarkdownPreprocessorParser.SafeTextContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.attributeContent"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -294,6 +305,17 @@ public interface IMarkdownPreprocessorListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitTag([NotNull] MarkdownPreprocessorParser.TagContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.parenthesisClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterParenthesisClause([NotNull] MarkdownPreprocessorParser.ParenthesisClauseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.parenthesisClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitParenthesisClause([NotNull] MarkdownPreprocessorParser.ParenthesisClauseContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.openTag"/>.

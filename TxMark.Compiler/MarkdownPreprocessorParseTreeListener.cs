@@ -123,7 +123,7 @@ namespace TxMark.Compiler
         }
         public override void EnterText([NotNull] MarkdownPreprocessorParser.TextContext context)
         {
-            if ( context.openTag() == null && context.closeTag() == null)
+            if ( context.openTag() == null && context.closeTag() == null && context.parenthesisClause() == null)
             {
                 _context.Append(context.GetText());
             }
@@ -319,6 +319,15 @@ namespace TxMark.Compiler
             Pop();
             PopTo(ContextTypes.OpenTag, tag);
         }
+
+        public override void EnterParenthesisClause([NotNull] MarkdownPreprocessorParser.ParenthesisClauseContext context)
+        {   
+            if ( !(context.Parent is MarkdownPreprocessorParser.ParenthesisClauseContext) )
+            {
+                _context.Append(context.GetText());
+            }
+        }
+
         public override string ToString()
         {
             return _context.ToString();

@@ -244,6 +244,17 @@ public partial class MarkdownPreprocessorBaseVisitor<Result> : AbstractParseTree
 	public virtual Result VisitText([NotNull] MarkdownPreprocessorParser.TextContext context) { return VisitChildren(context); }
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.safeText"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitSafeText([NotNull] MarkdownPreprocessorParser.SafeTextContext context) { return VisitChildren(context); }
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.attributeContent"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -297,6 +308,17 @@ public partial class MarkdownPreprocessorBaseVisitor<Result> : AbstractParseTree
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	public virtual Result VisitTag([NotNull] MarkdownPreprocessorParser.TagContext context) { return VisitChildren(context); }
+
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.parenthesisClause"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitParenthesisClause([NotNull] MarkdownPreprocessorParser.ParenthesisClauseContext context) { return VisitChildren(context); }
 
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="MarkdownPreprocessorParser.openTag"/>.

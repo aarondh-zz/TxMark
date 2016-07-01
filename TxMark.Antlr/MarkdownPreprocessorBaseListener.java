@@ -243,6 +243,18 @@ public class MarkdownPreprocessorBaseListener implements MarkdownPreprocessorLis
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSafeText(MarkdownPreprocessorParser.SafeTextContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSafeText(MarkdownPreprocessorParser.SafeTextContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAttributeContent(MarkdownPreprocessorParser.AttributeContentContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -298,6 +310,18 @@ public class MarkdownPreprocessorBaseListener implements MarkdownPreprocessorLis
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTag(MarkdownPreprocessorParser.TagContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParenthesisClause(MarkdownPreprocessorParser.ParenthesisClauseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParenthesisClause(MarkdownPreprocessorParser.ParenthesisClauseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

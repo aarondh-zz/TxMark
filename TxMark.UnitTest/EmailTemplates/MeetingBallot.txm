@@ -1,5 +1,5 @@
 ﻿|attendees:[
-    (if:$otherAttendees is null OR length of otherAttendees is 0)[
+   (if:length of $otherAttendees is 0)[
         (if: $IsCreator is not true)[for you both.]
     ]
     (else-if: length of $otherAttendees is 1)[
@@ -17,7 +17,6 @@
         (else:)[with you, (casualDisplayName: otherAttendees's 1st), and others.]
     ]
 ]
-
 |CalendarPossessive:[
     (if: $otherAttendees is null or length of $otherAttendees is 0)[
         (if: $IsCreator)[your calendar]
@@ -29,7 +28,6 @@
     ]
     (else:)[all of your calendars]
 ]
-
 |ContactType:[
     (if: IsInPerson of $location)[meeting (if: (text:RemoteLocationType of $location) is None)[ and ]
     ]
@@ -41,7 +39,6 @@
     (when:Other)			[online meeting]
     (otherwise:)[(if:IsInPerson of $Location is not true)[meeting]]
 ]
-
 |ContactMediumName:[
     (choose: (text:RemoteLocationType of $Location))
     (when:Phone)			[phone]
@@ -49,18 +46,15 @@
     (when:Hangout)			[Google Hangout]
     (when:ConferenceCall)	[conference call]
 ]
-
 |ContactInfoType:[
     (choose: (text:RemoteLocationType of $Location))
     (when:Phone)	[phone number]
     (when:Skype)	[Skype address]
     (when:Hangout)	[gmail address]
 ]
-
 |AddPhysicalLocation:[
     (if: IsInPerson of $Location is true and length of (MeetingLocation of $Location) is 0)[The meeting will be held at (print: MeetingLocation of $Location)]
 ]
-
 |RequestContactInfo:[
     (if: $NeedsContactInfo is true)[
         <p>Kindly (if: $NeedsTimeInfo is true)[also] <strong>provide your preferred ?ContactInfoType</strong>, so that
@@ -76,7 +70,6 @@
         </p>
     ]
 ]
-
 <p>
     (if:length of (FirstName of $Recipient) > 0)[Hi (print: FirstName of $Recipient),]
     (else:)[Hi,]
@@ -114,7 +107,6 @@
                 ]
             </ul>
         ]
-
         (if: length of $TimeOptions is 1)[
             <p>Let me know as soon as you can so I can lock in a time on ?CalendarPossessive.</p>
         ]
@@ -131,5 +123,4 @@
         <p>I'm helping (displayName: $Creator) schedule a (durationInMinutes: $DurationInMinutes) ?ContactType ?attendees</p>
     ]
 ]
-
 ?RequestContactInfo

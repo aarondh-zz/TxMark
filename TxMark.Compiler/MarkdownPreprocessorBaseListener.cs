@@ -283,6 +283,19 @@ public partial class MarkdownPreprocessorBaseListener : IMarkdownPreprocessorLis
 	public virtual void ExitText([NotNull] MarkdownPreprocessorParser.TextContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.safeText"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSafeText([NotNull] MarkdownPreprocessorParser.SafeTextContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.safeText"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSafeText([NotNull] MarkdownPreprocessorParser.SafeTextContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.attributeContent"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -346,6 +359,19 @@ public partial class MarkdownPreprocessorBaseListener : IMarkdownPreprocessorLis
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitTag([NotNull] MarkdownPreprocessorParser.TagContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.parenthesisClause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterParenthesisClause([NotNull] MarkdownPreprocessorParser.ParenthesisClauseContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="MarkdownPreprocessorParser.parenthesisClause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitParenthesisClause([NotNull] MarkdownPreprocessorParser.ParenthesisClauseContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="MarkdownPreprocessorParser.openTag"/>.

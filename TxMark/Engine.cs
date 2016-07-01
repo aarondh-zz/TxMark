@@ -21,9 +21,9 @@ namespace TxMark
 {
     public static class Engine
     {
-        private class PreprocessorErrorListener : IAntlrErrorListener<IToken>
+        private class IgnoreErrorListener : IAntlrErrorListener<IToken>
         {
-            public PreprocessorErrorListener(Result result)
+            public IgnoreErrorListener(Result result)
             {
 
             }
@@ -56,7 +56,7 @@ namespace TxMark
             var tokens = new CommonTokenStream(markdownLexer);
             var markdownParser = new MarkdownPreprocessorParser(tokens);
             markdownParser.RemoveErrorListeners();
-            markdownParser.AddErrorListener( new PreprocessorErrorListener(result));
+            markdownParser.AddErrorListener( new ParserErrorListener(result));
             markdownParser.BuildParseTree = true;
             preprocessorParseTree = markdownParser.document();
             var markdownListener = new MarkdownPreprocessorParseTreeListener();

@@ -197,6 +197,16 @@ public interface MarkdownPreprocessorListener extends ParseTreeListener {
 	 */
 	void exitText(MarkdownPreprocessorParser.TextContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MarkdownPreprocessorParser#safeText}.
+	 * @param ctx the parse tree
+	 */
+	void enterSafeText(MarkdownPreprocessorParser.SafeTextContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MarkdownPreprocessorParser#safeText}.
+	 * @param ctx the parse tree
+	 */
+	void exitSafeText(MarkdownPreprocessorParser.SafeTextContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MarkdownPreprocessorParser#attributeContent}.
 	 * @param ctx the parse tree
 	 */
@@ -246,6 +256,16 @@ public interface MarkdownPreprocessorListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTag(MarkdownPreprocessorParser.TagContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MarkdownPreprocessorParser#parenthesisClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenthesisClause(MarkdownPreprocessorParser.ParenthesisClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MarkdownPreprocessorParser#parenthesisClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenthesisClause(MarkdownPreprocessorParser.ParenthesisClauseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MarkdownPreprocessorParser#openTag}.
 	 * @param ctx the parse tree
