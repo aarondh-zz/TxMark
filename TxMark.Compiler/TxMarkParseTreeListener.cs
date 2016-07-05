@@ -147,6 +147,28 @@ namespace TxMark.Compiler
         {
             _compileContext.Pop();
         }
+        public override void EnterHook_definition_clause([NotNull] TxMarkParser.Hook_definition_clauseContext context)
+        {
+            _compileContext.SetLocation(context.Start.Line, context.Start.Column);
+            string hookName;
+            var hookNameContext = context.hookName();
+            if (hookNameContext != null )
+            {
+                hookName = hookNameContext.word().GetText();
+                _compileContext.AddNameTag(context, hookName);
+            }
+            else
+            {
+                hookName = this._compileContext.ResolveHookName(context);
+            }
+            _compileContext.Push(CodeContextTypes.HookDefinition, hookName);
+
+        }
+
+        public override void ExitHook_definition_clause([NotNull] TxMarkParser.Hook_definition_clauseContext context)
+        {
+            _compileContext.Pop();
+        }
 
         public override void EnterEach_clause([NotNull] TxMarkParser.Each_clauseContext context)
         {

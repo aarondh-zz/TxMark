@@ -28,7 +28,7 @@
   ],
   "Location": {
     "RemoteLocationType": "None",
-    "IsInPerson": false,
+    "IsInPerson": true,
     "Originator": {
       "FirstName": "Kat",
       "LastName": "Larson",

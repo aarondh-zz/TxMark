@@ -776,6 +776,19 @@ public partial class TxMarkParserBaseListener : ITxMarkParserListener {
 	public virtual void ExitSet_clause([NotNull] TxMarkParser.Set_clauseContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.hook_definition_clause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterHook_definition_clause([NotNull] TxMarkParser.Hook_definition_clauseContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.hook_definition_clause"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitHook_definition_clause([NotNull] TxMarkParser.Hook_definition_clauseContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.macro"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

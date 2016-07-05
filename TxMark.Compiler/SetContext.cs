@@ -15,6 +15,13 @@ namespace TxMark.Compiler
         private ContentContextExitHandler<StatementSyntax> _exitHandler;
         private ExpressionSyntax _valueExpression;
         private string _variableName;
+        protected bool HasVariableName
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(_variableName);
+            }
+        }
         public SetContext(string hookName, ContentContextExitHandler<StatementSyntax> exitHandler)
         {
             _hookName = hookName;

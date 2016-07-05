@@ -431,6 +431,13 @@ public interface ITxMarkParserVisitor<Result> : IParseTreeVisitor<Result> {
 	Result VisitSet_clause([NotNull] TxMarkParser.Set_clauseContext context);
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.hook_definition_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitHook_definition_clause([NotNull] TxMarkParser.Hook_definition_clauseContext context);
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.macro"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -219,6 +219,7 @@ element
 	| choose_clause
 	| each_clause
 	| set_clause
+	| hook_definition_clause
 	| macro_clause (whitespace? macro_clause)*
 	| hook_clause 
 	| htmlElement
@@ -279,6 +280,10 @@ choose_clause
 
 set_clause
 	: MACRO_OPEN KEYWORD_SET MCOLON variable KEYWORD_TO macroArgument CLOSE_PARENTHESIS
+	;
+
+hook_definition_clause
+	: MACRO_OPEN KEYWORD_HOOK MCOLON (variable | hookName) CLOSE_PARENTHESIS hook
 	;
 
 macro

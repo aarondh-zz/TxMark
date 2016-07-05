@@ -675,6 +675,18 @@ public class TxMarkParserBaseListener implements TxMarkParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterHook_definition_clause(TxMarkParser.Hook_definition_clauseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitHook_definition_clause(TxMarkParser.Hook_definition_clauseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMacro(TxMarkParser.MacroContext ctx) { }
 	/**
 	 * {@inheritDoc}

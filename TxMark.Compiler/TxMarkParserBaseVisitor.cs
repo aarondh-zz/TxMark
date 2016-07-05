@@ -657,6 +657,17 @@ public partial class TxMarkParserBaseVisitor<Result> : AbstractParseTreeVisitor<
 	public virtual Result VisitSet_clause([NotNull] TxMarkParser.Set_clauseContext context) { return VisitChildren(context); }
 
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TxMarkParser.hook_definition_clause"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitHook_definition_clause([NotNull] TxMarkParser.Hook_definition_clauseContext context) { return VisitChildren(context); }
+
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TxMarkParser.macro"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>

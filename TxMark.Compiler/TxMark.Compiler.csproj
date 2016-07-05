@@ -113,6 +113,7 @@
     <Compile Include="AttributeContext.cs" />
     <Compile Include="Bag.cs" />
     <Compile Include="BlockContext.cs" />
+    <Compile Include="HookDefinitionContext.cs" />
     <Compile Include="WhenContext.cs" />
     <Compile Include="ClassContext.cs" />
     <Compile Include="CodeContextBase.cs" />

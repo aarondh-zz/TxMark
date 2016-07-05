@@ -1,61 +1,64 @@
-﻿|attendees:[
-   (if:length of $otherAttendees is 0)[
+(hook: ?attendees)[
+   (choose:length of $OtherAttendees)
+   (when: 0)[
         (if: $IsCreator is not true)[for you both.]
     ]
-    (else-if: length of $otherAttendees is 1)[
-        (if:$IsCreator)[with]
+    (when: 1)[
+        (if:$IsCreator is true)[with]
         (else:)[with you and]
         (casualDisplayName: otherAttendees's 1st).
     ]
-    (else-if: length of $otherAttendees is 2)[
-        (if:$IsCreator)[with]
+    (when: 2)[
+        (if:$IsCreator is true)[with]
         (else:)[with you ]
-        (casualDisplayName: otherAttendees's 1st), and (casualDisplayName: otherAttendees's 2nd).
+        (casualDisplayName: $OtherAttendees's 1st), and (casualDisplayName: $OtherAttendees's 2nd).
     ]
-    (else:)[
-        (if:$IsCreator)[with (casualDisplayName: otherAttendees's 1st), (casualDisplayName: otherAttendees's 2nd), and others.]
-        (else:)[with you, (casualDisplayName: otherAttendees's 1st), and others.]
+    (otherwise:)[
+        (if:$IsCreator is true)[with (casualDisplayName: $OtherAttendees's 1st), (casualDisplayName: $OtherAttendees's 2nd), and others.]
+        (else:)[with you, (casualDisplayName: $OtherAttendees's 1st), and others.]
     ]
 ]
-|CalendarPossessive:[
-    (if: $otherAttendees is null or length of $otherAttendees is 0)[
-        (if: $IsCreator)[your calendar]
+(hook: ?CalendarPossessive)[
+    (if: $OtherAttendees is null or length of $OtherAttendees is 0)[
+        (if: $IsCreator is true)[your calendar]
         (else:)[both of your calendars]
     ]
-    (else-if: length of $otherAttendees is 1)[
-        (if: $IsCreator)[both of your calendars]
+    (else-if: length of $OtherAttendees is 1)[
+        (if: $IsCreator is true)[both of your calendars]
         (else:)[all of calendars]
     ]
     (else:)[all of your calendars]
 ]
-|ContactType:[
-    (if: IsInPerson of $location)[meeting (if: (text:RemoteLocationType of $location) is None)[ and ]
-    ]
+(hook: ?ContactType)[
+    (if: IsInPerson of $location)[meeting (if: (text:RemoteLocationType of $location) is None)[ and ] ]
     (choose: (text:RemoteLocationType of $Location))
     (when:Phone)			[phone call]
     (when:Skype)			[Skype call]
     (when:Hangout)			[Google Hangout]
     (when:ConferenceCall)	[conference call]
     (when:Other)			[online meeting]
-    (otherwise:)[(if:IsInPerson of $Location is not true)[meeting]]
+    (otherwise:)			[
+		(if:IsInPerson of $Location is not true)[meeting]
+	]
 ]
-|ContactMediumName:[
+(hook: ?ContactMediumName)[
     (choose: (text:RemoteLocationType of $Location))
     (when:Phone)			[phone]
     (when:Skype)			[Skype]
     (when:Hangout)			[Google Hangout]
     (when:ConferenceCall)	[conference call]
 ]
-|ContactInfoType:[
+(hook: ?ContactInfoType)[
     (choose: (text:RemoteLocationType of $Location))
     (when:Phone)	[phone number]
     (when:Skype)	[Skype address]
     (when:Hangout)	[gmail address]
 ]
-|AddPhysicalLocation:[
-    (if: IsInPerson of $Location is true and length of (MeetingLocation of $Location) is 0)[The meeting will be held at (print: MeetingLocation of $Location)]
+(hook: ?physicalLocation)[
+Meet at FUBAR
+    (if: IsInPerson of $Location is true and length of (MeetingLocation of $Location) is not 0)[The meeting will be held at (print: MeetingLocation of $Location)]
 ]
-|RequestContactInfo:[
+(hook: ?RequestContactInfo)[
     (if: $NeedsContactInfo is true)[
         <p>Kindly (if: $NeedsTimeInfo is true)[also] <strong>provide your preferred ?ContactInfoType</strong>, so that
             (if: $IsCreator is true)[
@@ -77,10 +80,10 @@
 (if: $NeedsTimeInfo is true)[
     (if: $IsCreator is true)[
         (if: length of $OtherAttendees > 0)[
-            <p>I've picked a few possible times for a (DurationInMinutes: $DurationInMinutes) ?ContactType ?attendees ?AddPhysicalLocation</p>
+            <p>I've picked a few possible times for a (DurationInMinutes: $DurationInMinutes) ?ContactType ?attendees ?physicalLocation</p>
         ]
         (else:)[
-            <p>I've picked a few possible times for a (DurationInMinutes: $DurationInMinutes) ?ContactType. ?AddPhysicalLocation</p>
+            <p>I've picked a few possible times for a (DurationInMinutes: $DurationInMinutes) ?ContactType. ?physicalLocation</p>
         ]
         <ul>
             (each: $TimeOptions as $option)[

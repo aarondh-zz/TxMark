@@ -16,7 +16,6 @@ namespace TxMark.Template
         public abstract IValue View(dynamic state);
         public string View(IViewOptions viewOptions, TModel model)
         {
-            Debugger.Launch();
             var state = new TemplateState<TModel>(viewOptions, model);
             try
             {

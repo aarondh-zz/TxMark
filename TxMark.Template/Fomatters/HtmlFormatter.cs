@@ -7,7 +7,6 @@ namespace TxMark.Template.Formatters
     {
         public HtmlFormatter()
         {
-            this.RemoveCarriageReturns = true;
         }
         public override void WriteCloseTag(TextWriter writer, string tagName)
         {

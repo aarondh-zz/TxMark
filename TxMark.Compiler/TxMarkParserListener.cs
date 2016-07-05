@@ -660,6 +660,17 @@ public interface ITxMarkParserListener : IParseTreeListener {
 	void ExitSet_clause([NotNull] TxMarkParser.Set_clauseContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TxMarkParser.hook_definition_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterHook_definition_clause([NotNull] TxMarkParser.Hook_definition_clauseContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TxMarkParser.hook_definition_clause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitHook_definition_clause([NotNull] TxMarkParser.Hook_definition_clauseContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TxMarkParser.macro"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

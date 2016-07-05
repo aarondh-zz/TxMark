@@ -569,6 +569,16 @@ public interface TxMarkParserListener extends ParseTreeListener {
 	 */
 	void exitSet_clause(TxMarkParser.Set_clauseContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TxMarkParser#hook_definition_clause}.
+	 * @param ctx the parse tree
+	 */
+	void enterHook_definition_clause(TxMarkParser.Hook_definition_clauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TxMarkParser#hook_definition_clause}.
+	 * @param ctx the parse tree
+	 */
+	void exitHook_definition_clause(TxMarkParser.Hook_definition_clauseContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TxMarkParser#macro}.
 	 * @param ctx the parse tree
 	 */

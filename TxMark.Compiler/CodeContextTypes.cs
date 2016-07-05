@@ -19,6 +19,7 @@ namespace TxMark.Compiler
         ElseIf,
         Expression,
         Hook,
+        HookDefinition,
         If,
         IndexExpression,
         Method,

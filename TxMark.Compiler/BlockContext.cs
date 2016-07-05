@@ -98,6 +98,11 @@ namespace TxMark.Compiler
                     {
                         Add(setStatement);
                     });
+                case CodeContextTypes.HookDefinition:
+                    return new HookDefinitionContext(name, (setStatement) =>
+                    {
+                        Add(setStatement);
+                    });
                 case CodeContextTypes.TagOpen:
                     return new TagOpenContext(name, null, (expression) =>
                     {

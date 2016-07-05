@@ -73,7 +73,7 @@ namespace TxMark.Template
             {
                 if (_text == null)
                 {
-                    return null;
+                    return "";
                 }
                 else
                 {
