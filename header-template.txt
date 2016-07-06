@@ -1,5 +1,5 @@
 /*
- *  TxMark 1.0.0.alpha-0-g0639c8a
+ *  TxMark {version}
  *
  *  Copyright (c) 2016 Aaron G. Daisley-Harrison
  *
@@ -15,19 +15,3 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TxMark.Compiler
-{
-    public interface ICodeContext : IContent
-    {
-        string Label { get; }
-        void Enter(ICompileContext context, ICodeContext parent);
-        void Exit();
-        ICodeContext CreateContext(CodeContextTypes contextType, string name = null, Bag<string> attributes = null);
-    }
-}

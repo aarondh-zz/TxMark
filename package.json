@@ -1,0 +1,39 @@
+{
+  "name": "txmark",
+  "version": "0.0.10",
+  "description": "TxMark is a text templating language",
+  "main": "TxMark.CLI",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aarondh/TxMark.git"
+  },
+  "keywords": [
+    "Markdown",
+    "template",
+    "compiled"
+  ],
+  "author": "Aaron G. Daisley-Harrison",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/aarondh/TxMark/issues"
+  },
+  "homepage": "https://github.com/aarondh/TxMark#readme",
+  "devDependencies": {
+    "del": "2.2.0",
+    "fs": "0.0.2",
+    "git": "^0.1.5",
+    "graceful-fs": "^4.1.4",
+    "gulp": "^3.9.1",
+    "gulp-debug": "^2.1.2",
+    "gulp-file-to-json": "^1.1.2",
+    "gulp-git": "^1.8.0",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-replace": "^0.5.4",
+    "gulp-text-simple": "^0.4.0",
+    "gulp-util": "^3.0.7",
+    "shelljs": "^0.6.0"
+  }
+}

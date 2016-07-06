@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TxMark.CLI", "TxMark.CLI\TxMark.CLI.csproj", "{869D21FC-C52B-4F1D-8FD7-6844A40AB1C0}"
 EndProject
@@ -16,7 +16,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE60D4AD-66F9-4FE2-9ECD-F5CC4E7BED91}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		gulpfile.js = gulpfile.js
+		header-template.txt = header-template.txt
+		LICENSE.TXT = LICENSE.TXT
+		package.json = package.json
 		README.md = README.md
+		version.json = version.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TxMark.Utilities", "TxMark.Utilities\TxMark.Utilities.csproj", "{7B17244E-FD7D-42E0-A002-6AC283227C06}"
