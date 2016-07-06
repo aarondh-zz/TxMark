@@ -1,12 +1,12 @@
-<p><h1>header 1 </h1>
+<p><h1>header 1</h1>
 The quick brown fox jumped over the lazy dog.
 <h2>header2</h2>
 The quick brown fox jumped over the lazy dog.
-<h3>header 3 </h3>
+<h3>header 3</h3>
 The quick brown fox jumped over the lazy dog.
-<h4>header 4 </h4>
+<h4>header 4</h4>
 The quick brown fox jumped over the lazy dog.
-<h5>header 5 </h5>
+<h5>header 5</h5>
 The quick brown fox jumped over the lazy dog.
 <h6>header6</h6>
 </p><p>
@@ -45,4 +45,3 @@ on more than one line.
 </li><li>list 2 item 2
 </li></ul></li><li>list 1 item 3
 </li></ul></blockquote></blockquote></p>
-

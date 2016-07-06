@@ -114,6 +114,9 @@
     <Compile Include="Bag.cs" />
     <Compile Include="BlockContext.cs" />
     <Compile Include="HookDefinitionContext.cs" />
+    <Compile Include="MarkdownPreprocessorBaseVisitor.cs" />
+    <Compile Include="MarkdownPreprocessorListener.cs" />
+    <Compile Include="MarkdownPreprocessorVisitor.cs" />
     <Compile Include="WhenContext.cs" />
     <Compile Include="ClassContext.cs" />
     <Compile Include="CodeContextBase.cs" />
@@ -125,9 +128,7 @@
     <Compile Include="ChooseContext.cs" />
     <Compile Include="MarkdownPreprocessorBaseListener.cs" />
     <Compile Include="MarkdownPreprocessorLexer.cs" />
-    <Compile Include="MarkdownPreprocessorListener.cs" />
     <Compile Include="MarkdownPreprocessorParser.cs" />
-    <Compile Include="MarkdownPreprocessorVisitor.cs" />
     <Compile Include="StateHelper.cs" />
     <Compile Include="HtmlTagTypes.cs" />
     <Compile Include="ICodeContext.cs" />

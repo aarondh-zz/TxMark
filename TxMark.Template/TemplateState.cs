@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  TxMark 1.0.0.alpha-0-g0639c8a
  *
  *  Copyright (c) 2016 Aaron G. Daisley-Harrison
@@ -299,7 +299,7 @@ namespace TxMark.Template
                         }
                         else
                         {
-                            var indexMethod = modelType.GetMethod("set_Item");
+                            var indexMethod = modelType.GetMethod("set_Item", new Type[] { typeof(string) });
                             if (indexMethod != null)
                             {
                                 indexMethod.Invoke(_model, new object[] { binder.Name, value });

@@ -70,6 +70,9 @@
     <None Include="show.bat" />
     <None Include="showp.bat" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="gulpfile.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

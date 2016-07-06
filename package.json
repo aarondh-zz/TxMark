@@ -30,6 +30,7 @@
     "gulp-debug": "^2.1.2",
     "gulp-file-to-json": "^1.1.2",
     "gulp-git": "^1.8.0",
+    "gulp-ignore": "^2.0.1",
     "gulp-load-plugins": "^1.2.4",
     "gulp-replace": "^0.5.4",
     "gulp-text-simple": "^0.4.0",

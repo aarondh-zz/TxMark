@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  TxMark 1.0.0.alpha-0-g0639c8a
  *
  *  Copyright (c) 2016 Aaron G. Daisley-Harrison
@@ -215,7 +215,7 @@ namespace TxMark.Template
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //throw new IndexOutOfRangeException($"index \"{key}\" not found in {value.GetType().FullName}",e);
             }
