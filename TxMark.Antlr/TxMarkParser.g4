@@ -93,7 +93,7 @@ index_subexpression
 
 index_expression
 	: operand index_subexpression*
-	| indexOperand OPERATOR_OF operand
+	| indexOperand OPERATOR_OF index_expression
 	;
 
 signed_index_expression

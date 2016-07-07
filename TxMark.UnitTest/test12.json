@@ -1,0 +1,31 @@
+﻿{
+  "array": [
+    "one",
+    {
+      "one": "one",
+      "two": "two",
+      "three": {
+        "one": "one",
+        "two": "two",
+        "three": "three",
+        "four": {
+          "one": "one",
+          "two": "two",
+          "three": "three",
+          "four": "four",
+          "five": "five",
+          "six": "six"
+        },
+        "five": "five",
+        "six": "six"
+      },
+      "four": "four",
+      "five": "five",
+      "six": "six"
+    },
+    "three",
+    "four",
+    "five",
+    "six"
+  ]
+}

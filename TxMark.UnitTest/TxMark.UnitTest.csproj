@@ -92,6 +92,10 @@
     <None Include="packages.config" />
     <None Include="test0.txm" />
     <None Include="test1.txm" />
+    <None Include="test11.expected" />
+    <None Include="test12.txm">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="test11.txm">
       <SubType>Designer</SubType>
     </None>
@@ -105,6 +109,7 @@
     <None Include="Test5.txm" />
     <None Include="test6.expected" />
     <None Include="test6.txm" />
+    <None Include="test12.json" />
     <None Include="test7.expected" />
     <None Include="test7.json" />
     <None Include="test7.txm" />

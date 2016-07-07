@@ -238,7 +238,7 @@ namespace TxMark.Compiler
                     _last.Set(new ExpressionNode(oper, _last.Clone(), expressionNode));
                 }
             }
-            else if (oper.Precidence <= expressionNode.Operator.Precidence)
+            else if (oper.Precidence <= expressionNode.Operator.Precidence && oper.OperatorType != OperatorTypes.IndexOf)
             {
                 if (_last.IsUnary)
                 {

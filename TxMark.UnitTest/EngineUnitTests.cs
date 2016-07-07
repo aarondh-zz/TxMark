@@ -186,5 +186,10 @@ namespace TxMark.UnitTest
         {
             TestWithDynamic("test7.json", "test11.txm");
         }
+        [TestMethod]
+        public void Text12()
+        {
+            TestWithDynamic("test12.json", "test12.txm");
+        }
     }
 }
