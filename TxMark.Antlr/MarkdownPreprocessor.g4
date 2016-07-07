@@ -132,7 +132,7 @@ tag
 	;
 
 parenthesisClause
-	: safeText* OPEN_PARENTHESIS (whitespace | nonWhitespace | HASH | ASTERISK | GREATER_THAN | LESS_THAN | SLASH | PERIOD | parenthesisClause )* CLOSE_PARENTHESIS
+	: safeText* OPEN_PARENTHESIS (anyWhitespace | nonWhitespace | HASH | ASTERISK | GREATER_THAN | LESS_THAN | SLASH | PERIOD | parenthesisClause )* CLOSE_PARENTHESIS
 	;
 
 openTag

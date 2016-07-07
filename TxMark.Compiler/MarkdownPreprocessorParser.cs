@@ -2215,11 +2215,11 @@ public partial class MarkdownPreprocessorParser : Parser {
 		public SafeTextContext safeText(int i) {
 			return GetRuleContext<SafeTextContext>(i);
 		}
-		public WhitespaceContext[] whitespace() {
-			return GetRuleContexts<WhitespaceContext>();
+		public AnyWhitespaceContext[] anyWhitespace() {
+			return GetRuleContexts<AnyWhitespaceContext>();
 		}
-		public WhitespaceContext whitespace(int i) {
-			return GetRuleContext<WhitespaceContext>(i);
+		public AnyWhitespaceContext anyWhitespace(int i) {
+			return GetRuleContext<AnyWhitespaceContext>(i);
 		}
 		public NonWhitespaceContext[] nonWhitespace() {
 			return GetRuleContexts<NonWhitespaceContext>();
@@ -2302,14 +2302,14 @@ public partial class MarkdownPreprocessorParser : Parser {
 			State = 336;
 			_errHandler.Sync(this);
 			_la = _input.La(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << DOUBLE_QUOTE) | (1L << SINGLE_QUOTE) | (1L << OPEN_PARENTHESIS) | (1L << ASTERISK) | (1L << HASH) | (1L << PERIOD) | (1L << COLON) | (1L << UNDERBAR) | (1L << DASH) | (1L << DIGIT) | (1L << LETTER) | (1L << PUNCTUATION) | (1L << TAB) | (1L << EQUAL) | (1L << SPACE) | (1L << LESS_THAN) | (1L << GREATER_THAN) | (1L << SLASH) | (1L << NON_WHITESPACE))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << DOUBLE_QUOTE) | (1L << SINGLE_QUOTE) | (1L << OPEN_PARENTHESIS) | (1L << ASTERISK) | (1L << HASH) | (1L << PERIOD) | (1L << COLON) | (1L << UNDERBAR) | (1L << DASH) | (1L << DIGIT) | (1L << LETTER) | (1L << PUNCTUATION) | (1L << TAB) | (1L << EQUAL) | (1L << SPACE) | (1L << LESS_THAN) | (1L << GREATER_THAN) | (1L << SLASH) | (1L << CARRIAGE_RETURN) | (1L << NON_WHITESPACE))) != 0)) {
 				{
 				State = 334;
 				_errHandler.Sync(this);
 				switch ( Interpreter.AdaptivePredict(_input,44,_ctx) ) {
 				case 1:
 					{
-					State = 325; whitespace();
+					State = 325; anyWhitespace();
 					}
 					break;
 
@@ -3213,7 +3213,7 @@ public partial class MarkdownPreprocessorParser : Parser {
 		"\x2\x13E\x13F\x5:\x1E\x2\x13F\x33\x3\x2\x2\x2\x140\x142\x5(\x15\x2\x141"+
 		"\x140\x3\x2\x2\x2\x142\x145\x3\x2\x2\x2\x143\x141\x3\x2\x2\x2\x143\x144"+
 		"\x3\x2\x2\x2\x144\x146\x3\x2\x2\x2\x145\x143\x3\x2\x2\x2\x146\x152\a\x5"+
-		"\x2\x2\x147\x151\x5<\x1F\x2\x148\x151\x5\x44#\x2\x149\x151\a\b\x2\x2\x14A"+
+		"\x2\x2\x147\x151\x5\x46$\x2\x148\x151\x5\x44#\x2\x149\x151\a\b\x2\x2\x14A"+
 		"\x151\a\a\x2\x2\x14B\x151\a\x14\x2\x2\x14C\x151\a\x13\x2\x2\x14D\x151"+
 		"\a\x15\x2\x2\x14E\x151\a\t\x2\x2\x14F\x151\x5\x34\x1B\x2\x150\x147\x3"+
 		"\x2\x2\x2\x150\x148\x3\x2\x2\x2\x150\x149\x3\x2\x2\x2\x150\x14A\x3\x2"+
