@@ -105,6 +105,7 @@
     <None Include="test3.expected" />
     <None Include="test3.txm" />
     <None Include="test4.txm" />
+    <None Include="test5.expected" />
     <None Include="Test5.txm" />
     <None Include="test6.expected" />
     <None Include="test6.txm" />

@@ -41,7 +41,7 @@ namespace TxMark.UnitTest
             return state.Pop();
         }
         [TestMethod]
-        public void TestMethod1()
+        public void LowLevelTemplateStateTest()
         {
             var result = Hook(new TemplateState<TestModel>(ViewOptions.Default, new TestModel()));
             Trace.WriteLine(result);

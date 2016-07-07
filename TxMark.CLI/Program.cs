@@ -52,7 +52,7 @@ namespace TxMark.CLI
                 txMarkOptions.DiagnosticLevel = TxMark.DiagnosticLevel.Diagnostics;
                 txMarkOptions.MarkdownPreprocessor = !options.MarkdownPreprocessor;
                 txMarkOptions.OutputPreprocessor = options.OutputPreprocessor;
-                txMarkOptions.OutputParser = options.List;
+                txMarkOptions.OutputParser = options.List||options.SourcePath!=null;
                 switch ( options.OutputStyle)
                 {
                     case OutputFormats.Html:
@@ -131,6 +131,46 @@ namespace TxMark.CLI
                     if (options.Verbose)
                     {
                         Console.Out.WriteLine("\n=================");
+                    }
+                }
+                if (options.SourcePath != null)
+                {
+                    try
+                    {
+                        using (var sourcePathWriter = File.CreateText(options.SourcePath))
+                        {
+                            result.ParserStream.Seek(0, SeekOrigin.Begin);
+                            sourcePathWriter.Write(new StreamReader(result.ParserStream).ReadToEnd());
+                            if (options.Verbose)
+                            {
+                                Console.Out.WriteLine($"Source written to: {options.SourcePath}");
+                            }
+                            sourcePathWriter.Flush();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Error.WriteLine(e.Message);
+                    }
+                }
+                if (options.OutputPath != null)
+                {
+                    try
+                    {
+                        using (var outputPathWriter = File.CreateText(options.OutputPath))
+                        {
+                            result.OutputStream.Seek(0, SeekOrigin.Begin);
+                            outputPathWriter.Write(new StreamReader(result.OutputStream).ReadToEnd());
+                            if (options.Verbose)
+                            {
+                                Console.Out.WriteLine($"Output written to: {options.OutputPath}");
+                            }
+                            outputPathWriter.Flush();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Error.WriteLine(e.Message);
                     }
                 }
                 int warnings = 0;

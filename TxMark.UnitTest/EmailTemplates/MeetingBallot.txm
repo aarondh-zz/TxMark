@@ -56,7 +56,7 @@
 ]
 (hook: ?physicalLocation)[
 Meet at FUBAR
-    (if: IsInPerson of $Location is true and length of (MeetingLocation of $Location) is not 0)[The meeting will be held at (print: MeetingLocation of $Location)]
+    (if: IsInPerson of $Location is true and length of MeetingLocation of $Location is not 0)[The meeting will be held at (print: MeetingLocation of $Location)]
 ]
 (hook: ?RequestContactInfo)[
     (if: $NeedsContactInfo is true)[
@@ -67,7 +67,7 @@ Meet at FUBAR
                 ]
                 (else:)[the others know]
             ]
-            (else-if: length of (Originator of $Location) is 0)[(casualDisplayName: Originator of $Location) knows]
+            (else-if: length of Originator of $Location is 0)[(casualDisplayName: Originator of $Location) knows]
             (else:)[(casualDisplayName: $Creator) knows]
             how to reach you.
         </p>

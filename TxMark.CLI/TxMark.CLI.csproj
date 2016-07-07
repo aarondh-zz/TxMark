@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="MeetingBallot.txm" />
     <None Include="packages.config" />
     <None Include="TxMark.pfx" />
   </ItemGroup>
