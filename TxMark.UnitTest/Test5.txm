@@ -2,4 +2,6 @@
 (set: $fubar to 3.14159 * 42 / 2)
 
  fubar = (print: $fubar) 
+
 fubar = (print: $fubar) and don't you forget it!
+

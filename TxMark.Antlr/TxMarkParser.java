@@ -66,8 +66,8 @@ public class TxMarkParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, null, null, "'['", "']'", null, null, null, "'?'", null, "'|'", 
-		null, null, null, "'\"'", "'''", null, null, "''''", "'//'", "'~~'", "'^^'", 
+		null, null, null, "'['", "']'", null, null, null, null, null, "'|'", null, 
+		null, null, "'\"'", "'''", null, null, "''''", "'//'", "'~~'", "'^^'", 
 		"'**'", null, null, null, null, null, null, null, "','", null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, "'<='", "'>='", 
@@ -908,6 +908,9 @@ public class TxMarkParser extends Parser {
 			return getRuleContext(IndexOperandContext.class,0);
 		}
 		public TerminalNode OPERATOR_OF() { return getToken(TxMarkParser.OPERATOR_OF, 0); }
+		public Index_expressionContext index_expression() {
+			return getRuleContext(Index_expressionContext.class,0);
+		}
 		public Index_expressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -959,7 +962,7 @@ public class TxMarkParser extends Parser {
 				setState(182);
 				match(OPERATOR_OF);
 				setState(183);
-				operand();
+				index_expression();
 				}
 				break;
 			}
@@ -4242,7 +4245,7 @@ public class TxMarkParser extends Parser {
 		"\r\2\u00af\35\3\2\2\2\u00b0\u00b4\5\24\13\2\u00b1\u00b3\5\34\17\2\u00b2"+
 		"\u00b1\3\2\2\2\u00b3\u00b6\3\2\2\2\u00b4\u00b2\3\2\2\2\u00b4\u00b5\3\2"+
 		"\2\2\u00b5\u00bc\3\2\2\2\u00b6\u00b4\3\2\2\2\u00b7\u00b8\5\30\r\2\u00b8"+
-		"\u00b9\7E\2\2\u00b9\u00ba\5\24\13\2\u00ba\u00bc\3\2\2\2\u00bb\u00b0\3"+
+		"\u00b9\7E\2\2\u00b9\u00ba\5\36\20\2\u00ba\u00bc\3\2\2\2\u00bb\u00b0\3"+
 		"\2\2\2\u00bb\u00b7\3\2\2\2\u00bc\37\3\2\2\2\u00bd\u00bf\7G\2\2\u00be\u00bd"+
 		"\3\2\2\2\u00be\u00bf\3\2\2\2\u00bf\u00c0\3\2\2\2\u00c0\u00c1\5\36\20\2"+
 		"\u00c1!\3\2\2\2\u00c2\u00d5\7<\2\2\u00c3\u00d5\7>\2\2\u00c4\u00d5\7\67"+

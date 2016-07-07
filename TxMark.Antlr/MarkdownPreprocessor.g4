@@ -35,7 +35,7 @@ carriageReturn
 	;
 
 softCarriageReturn 
-	: CARRIAGE_RETURN
+	: space? CARRIAGE_RETURN
 	;
 
 hardCarriageReturn 
